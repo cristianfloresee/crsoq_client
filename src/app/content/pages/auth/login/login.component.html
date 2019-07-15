@@ -1,0 +1,112 @@
+<div class="m-login__signin">
+   <div class="m-login__title">
+      <h3>Iniciar Sesión</h3>
+   </div>
+
+   <div *ngIf="!error_response.show" class="m-alert m-alert--outline m-alert--outline-2x alert fade show" [ngClass]="{'alert-danger': type === 'error', 'alert-success': type === 'success', 'alert-info': type === 'info'}"
+      role="alert" #alertNotice>
+      <span>Use la cuenta <strong>demo@demo.com</strong> y la contraseña <strong>demo</strong> para continuar.</span>
+   </div>
+
+
+   <div class="m-alert m-alert--icon alert alert-warning" role="alert" *ngIf="error_response.show">
+      <div class="m-alert__icon">
+         <i class="flaticon-danger"></i>
+      </div>
+      <div class="m-alert__text">
+         <strong>{{error_response.title}}</strong> {{error_response.message}}
+      </div>
+   </div>
+
+
+   <!--===================== FORMULARIO =====================-->
+   <!-- FIN FORMULARIO -->
+
+   <!--begin::Form-->
+   <form class="m-form m-form--state m-form--label-align-right" [formGroup]="loginForm" style="margin: 4rem auto">
+      <div class="m-portlet__body">
+
+
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : loginForm.controls.email.invalid && loginForm.controls.email.touched }">
+            <label class="form-control-label">Correo Eletrónico:</label>
+            <input type="text" class="form-control m-input" formControlName="email" maxlength="35" autocomplete="nope">
+            <!--===================== ERRORES DE EMAIL =====================-->
+            <div class="form-control-feedback" *ngIf="loginForm.controls['email'].hasError('required') && (loginForm.controls['email'].dirty || loginForm.controls['email'].touched)">
+               Este campo es requerido.
+            </div>
+            <div class="form-control-feedback" *ngIf="loginForm.controls['email'].hasError('email') && (loginForm.controls['email'].dirty && loginForm.controls['email'].touched)">
+               Este campo debe ser una dirección de correo electrónico válida.
+            </div>
+            <!-- FIN ERRORES DE EMAIL -->
+         </div>
+
+
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : loginForm.controls.password.invalid && loginForm.controls.password.touched }">
+            <!-- has-success / has-danger-->
+            <label>Contraseña:</label>
+            <input type="password" class="form-control m-input" formControlName="password" minlegth="4" maxlength="25"
+               autocomplete="new-password">
+            <!--===================== ERRORES DE PASSWORD =====================-->
+            <div class="form-control-feedback" *ngIf="loginForm.controls['password'].hasError('required') && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)">
+               Este campo es requerido.
+            </div>
+            <div class="form-control-feedback" *ngIf="loginForm.controls['password'].hasError('minlength') && (loginForm.controls['password'].dirty && loginForm.controls['password'].touched)">
+               La contraseña debe tener al menos 4 carácteres.
+            </div>
+            <!-- FIN ERRORES DE PASSWORD  -->
+         </div>
+      </div>
+   </form>
+
+   <!--end::Form-->
+
+
+
+   <!--===================== ACCIONES =====================-->
+   <div class="m-login__action m-login__action--fit">
+      <a href="javascript:;" (click)="forgotPasswordPage()" class="m-link">
+         <span>¿Olvidó su contraseña?</span>
+      </a>
+      <button class="btn btn-primary" (click)="login()" [disabled]="loginForm.invalid">Ingresar</button>
+   </div>
+   <!-- FIN ACCIONES -->
+
+
+   <!--===================== LÍNEA HORIZONTAL =====================-->
+   <div class="m-login__form-divider">
+      <div class="m-divider">
+         <span></span>
+         <span>o ingrese con</span>
+         <span></span>
+      </div>
+   </div>
+   <!--FIN LÍNEA HORIZONTAL -->
+
+
+   <!--===================== INGRESO USANDO REDES SOCIALES =====================-->
+   <div class="m-login__options">
+      <a href="javascript:;" mat-raised-button color="primary">
+         <span>
+            <i class="fab fa-facebook-f"></i>&nbsp;
+            <span>Facebook</span>
+         </span>
+      </a>
+
+      <a href="javascript:;" mat-raised-button color="accent">
+         <span>
+            <i class="fab fa-twitter"></i>&nbsp;
+            <span>Twitter</span>
+         </span>
+      </a>
+
+      <a href="javascript:;" mat-raised-button color="warn">
+         <span>
+            <i class="fab fa-google"></i>&nbsp;
+            <span>Google</span>
+         </span>
+      </a>
+   </div>
+   <!--FIN REDES SOCIALES -->
+
+
+</div>

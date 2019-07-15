@@ -1,0 +1,81 @@
+<div class="form-group m-form__group m
+--margin-top-10">
+   <div class="alert m-alert m-alert--default" role="alert">
+      En esta sección se encuentran los cursos creados para la asignatura.
+   </div>
+</div>
+
+<div class="m-portlet__body">
+
+   <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+      <div class="row align-items-center">
+         <div class="col-xl-12 order-1 order-xl-2 m--align-right">
+
+            <button (click)="createCourse()" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
+               <span>
+                  <span>Crear Curso</span>
+               </span>
+            </button>
+            <div class="m-separator m-separator--dashed d-xl-none"></div>
+         </div>
+      </div>
+   </div>
+
+   <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+
+      <table class="cw-table">
+         <thead>
+            <tr>
+               <th class="center">#</th>
+               <th>Curso</th>
+               <th>Código</th>
+               <th>Meta por Curso</th>
+               <th>Meta por Estudiante</th>
+               <th>Año</th>
+               <th>Semestre</th>
+               <th>Estado</th>
+               <th class="center">Fecha de Creación</th>
+               <th class="center">Fecha de Actualización</th>
+               <th class="center">Acciones</th>
+            </tr>
+         </thead>
+
+
+         <tbody>
+
+            <tr *ngFor="let course of data_courses; let i=index">
+               <td>{{i+1}}</td>
+               <td class="nowrap">{{course.name}}</td>
+               <td class="center">{{course.code | uppercase}}</td>
+               <td class="center">{{course.course_goal}}</td>
+               <td class="center">{{course.student_goal}}</td>
+               <td class="center">{{course.year}}</td>
+               <td class="center">{{course.semester}}</td>
+               <td class="nowrap">
+                  <span style="width: 100%">
+                     <span class="m-badge m-badge--dot" [ngClass]="course.active ? 'm-badge--success' : 'm-badge--danger'"></span>
+                     &nbsp;
+                     <span class="m--font-bold" [ngClass]="course.active ? 'm--font-success' : 'm--font-danger'">
+                        {{course.active ? 'Activo': 'Inactivo'}}</span>
+                  </span>
+               </td>
+               <td class="nowrap center">{{course.created_at | timeAgo}}</td>
+               <td class="nowrap center">{{course.updated_at | timeAgo}}</td>
+               <td>
+                  <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
+                     <a (click)="updateCourse(course)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
+                        <i class="la la-edit"></i>
+                     </a>
+                     <a (click)="deleteCourse(course)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                        <i class="la la-trash"></i>
+                     </a>
+                     <!-- <swal #deleteSwal (confirm)="deleteCourse(course.id_course)" [options]="SWAL_DELETE_COURSE"></swal> -->
+                  </span>
+               </td>
+            </tr>
+
+         </tbody>
+         <swal #successSwal [options]="SWAL_SUCCESS_DELETE_COURSE"></swal>
+      </table>
+   </div>
+</div>

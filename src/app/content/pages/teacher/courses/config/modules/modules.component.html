@@ -1,0 +1,62 @@
+<div class="form-group m-form__group m--margin-top-10">
+   <div class="alert m-alert m-alert--default" role="alert">
+      Los modulos representan una forma de separar las clases para indicar el tipo de clase que se realizará.
+   </div>
+</div>
+
+
+<div class="m-portlet__body">
+
+   <!-- SECCIÓN DE FILTRO Y BUSQUEDA -->
+   <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+      <div class="row align-items-center">
+         <div class="col-xl-12 order-1 order-xl-2 m--align-right">
+
+            <button (click)="createModule()" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
+               <span>
+                  <span>Crear Modulo</span>
+               </span>
+            </button>
+            <div class="m-separator m-separator--dashed d-xl-none"></div>
+         </div>
+      </div>
+   </div>
+   <!-- FIN FILTRO/BUSQUEDA -->
+
+   <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+
+      <table class="cw-table">
+         <thead>
+            <tr>
+               <th class="center">#</th>
+               <th>Modulo</th>
+               <th class="center">Creado</th>
+               <th class="center">Actualizado</th>
+               <th class="center">Acciones</th>
+            </tr>
+         </thead>
+
+         <tbody>
+            <tr *ngFor="let module of modules; let i=index">
+               <td>{{i+1}}</td>
+               <td class="nowrap">{{module.name}}</td>
+               <td class="nowrap center">{{module.created_at | timeAgo}}</td>
+               <td class="nowrap center">{{module.updated_at | timeAgo}}</td>
+               <td>
+                  <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
+                     <a (click)="updateModule(module)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
+                        <i class="la la-edit"></i>
+                     </a>
+                     <a [swal]="deleteSwal" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                        <i class="la la-trash"></i>
+                     </a>
+                     <swal #deleteSwal (confirm)="deleteModule(module.id_module)" [options]="SWAL_DELETE_MODULE"></swal>
+                     <swal #successSwal [options]="SWAL_SUCCESS_DELETE_MODULE"></swal>
+                  </span>
+               </td>
+            </tr>
+         </tbody>
+
+      </table>
+   </div>
+</div>

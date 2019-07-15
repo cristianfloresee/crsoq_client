@@ -1,0 +1,60 @@
+<div class="row">
+   <div class="col-xl-12">
+      <div class="m-portlet m-portlet--ngviewer">
+
+         <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+               <div class="m-portlet__head-title">
+                  <h3 class="m-portlet__head-text">
+                     Configuración
+                  </h3>
+               </div>
+            </div>
+         </div>
+
+         <div class="m-portlet__body m-portlet__body--no-padding">
+            <div class="m-portlet__preview">
+               <div class="m-section">
+                  <div class="m-section__content">
+                     <ngb-tabset>
+                        <!--
+                        <ngb-tab>
+                           <ng-template ngbTabTitle>
+                              <b>General</b>
+                           </ng-template>
+                           <ng-template ngbTabContent>
+                              <cw-general [id_course]=id_course></cw-general>
+                           </ng-template>
+                        </ngb-tab>-->
+                        <ngb-tab>
+                           <ng-template ngbTabTitle>
+                              <b>Categorías</b>
+                           </ng-template>
+                           <ng-template ngbTabContent>
+                              <cw-categories [id_subject]=id_subject [id_user]=id_user></cw-categories>
+                           </ng-template>
+                        </ngb-tab>
+                        <ngb-tab>
+                           <ng-template ngbTabTitle>
+                              <b>Subcategorías</b>
+                           </ng-template>
+                           <ng-template ngbTabContent>
+                              <cw-subcategories [id_subject]=id_subject [id_user]=id_user></cw-subcategories>
+                           </ng-template>
+                        </ngb-tab>
+                        <ngb-tab>
+                           <ng-template ngbTabTitle>
+                              <b>Cursos</b>
+                           </ng-template>
+                           <ng-template ngbTabContent>
+                              <cw-courses2 [id_subject]=id_subject [id_user]=id_user></cw-courses2>
+                           </ng-template>
+                        </ngb-tab>
+                     </ngb-tabset>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

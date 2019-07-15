@@ -1,0 +1,177 @@
+<div class="m-login__signin">
+   <div class="m-login__title">
+      <h3 class="m-login__title">Registrarse</h3>
+      <div class="m-login__desc">Ingrese sus datos para crear la cuenta:</div>
+   </div>
+
+   <!-- <m-auth-notice></m-auth-notice> -->
+
+   <!--begin::Form-->
+   <!-- <form class="m-login__form m-form" name="form" (ngSubmit)="f.form.valid && submit()" #f="ngForm" novalidate>
+
+      <div class="form-group">
+         <mat-form-field>
+            <mat-label>Fullname</mat-label>
+            <input matInput type="text" name="fullname" placeholder="Fullname" autocomplete="off" [(ngModel)]="model.fullname"
+               #fullname="ngModel" required>
+         </mat-form-field>
+      </div>
+
+      <div class="form-group">
+         <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput type="email" name="email" placeholder="Email address" autocomplete="off" [(ngModel)]="model.email"
+               #email="ngModel" email="true" required>
+         </mat-form-field>
+      </div>
+
+      <div class="form-group">
+         <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput minlength="4" type="password" name="password" placeholder="Password" autocomplete="off"
+               [(ngModel)]="model.password" #password="ngModel" required>
+         </mat-form-field>
+      </div>
+
+      <div class="form-group">
+         <mat-form-field>
+            <mat-label>Confirm Password</mat-label>
+            <input matInput minlength="4" type="password" name="rpassword" placeholder="Confirm password" autocomplete="off"
+               [(ngModel)]="model.rpassword" #rpassword="ngModel" required>
+         </mat-form-field>
+      </div>
+
+      <div class="form-group">
+         <mat-checkbox name="agree" required="true" [(ngModel)]="model.agree" #agree="ngModel">Acepto los
+            <a href="javascript:;">términos y condiciones</a>
+         </mat-checkbox>
+      </div>
+   </form> -->
+   <!--end::Form-->
+
+
+   <!--===================== FORMULARIO =====================-->
+   <form [formGroup]="registerForm" class="m-login__form m-form">
+
+      <div class="form-group has-feedback">
+         <input class="form-control" type="text" placeholder="Nombres" formControlName="name" maxlength="30"
+            autocomplete="nope" required />
+         <!--===================== ERRORES NOMBRES =====================-->
+         <span class="text-danger" *ngIf="registerForm.controls['name'].hasError('required') && (registerForm.controls['name'].dirty || registerForm.controls['name'].touched)">
+            Este campo es requerido
+         </span>
+         <!-- FIN ERRORES NOMBRES -->
+      </div>
+
+      <div class="form-group has-feedback">
+         <input class="form-control" type="text" placeholder="Apellido Paterno" formControlName="lastname" minlegth="4"
+            maxlength="20" autocomplete="nope" required />
+         <!--===================== ERRORES APELLIDO PATERNO =====================-->
+         <span class="text-danger" *ngIf="registerForm.controls['lastname'].hasError('required') && (registerForm.controls['lastname'].dirty || registerForm.controls['lastname'].touched)">
+            Este campo es requerido
+         </span>
+         <!-- FIN ERRORES APELLIDO PATERNO  -->
+      </div>
+
+      <div class="form-group has-feedback">
+         <input class="form-control" type="text" placeholder="Apellido Materno" formControlName="middlename" minlegth="4"
+            maxlength="20" autocomplete="nope" required />
+         <!--===================== ERRORES APELLIDO MATERNO =====================-->
+         <span class="text-danger" *ngIf="registerForm.controls['middlename'].hasError('required') && (registerForm.controls['middlename'].dirty || registerForm.controls['middlename'].touched)">
+            Este campo es requerido
+         </span>
+         <!-- FIN ERRORES APELLIDO MATERNO  -->
+      </div>
+
+      <div class="form-group has-feedback">
+         <input class="form-control" type="email" placeholder="Correo Electrónico" formControlName="email" maxlength="35"
+            autocomplete="nope" required />
+
+         <!--===================== ERRORES DE EMAIL =====================-->
+         <span class="text-danger" *ngIf="registerForm.controls['email'].hasError('required') && (registerForm.controls['email'].dirty || registerForm.controls['email'].touched)">
+            Este campo es requerido
+         </span>
+         <span class="text-danger" *ngIf="registerForm.controls['email'].hasError('email') && (registerForm.controls['email'].dirty && registerForm.controls['email'].touched)">
+            Este campo debe ser una dirección de correo electrónico válida
+         </span>
+         <!-- FIN ERRORES EMAIL -->
+      </div>
+
+      <div class="form-group has-feedback">
+            <input class="form-control" type="text" placeholder="Número Telefónico" formControlName="phone" minlegth="4"
+               maxlength="20" autocomplete="nope" required />
+            <!--===================== ERRORES APELLIDO PATERNO =====================-->
+            <span class="text-danger" *ngIf="registerForm.controls['phone'].hasError('required') && (registerForm.controls['phone'].dirty || registerForm.controls['phone'].touched)">
+               Este campo es requerido
+            </span>
+            <!-- FIN ERRORES APELLIDO PATERNO  -->
+         </div>
+
+
+      <div class="form-group has-feedback">
+         <input class="form-control" type="text" placeholder="Número de Documento" formControlName="document" maxlength="35"
+            autocomplete="nope" required />
+         <!--===================== ERRORES DE DOCUMENTO =====================-->
+         <span class="text-danger" *ngIf="registerForm.controls['document'].hasError('required') && (registerForm.controls['document'].dirty || registerForm.controls['document'].touched)">
+            Este campo es requerido
+         </span>
+         <!-- FIN ERRORES DOCUMENTO -->
+      </div>
+
+      <div class="form-group has-feedback">
+         <input class="form-control" type="text" placeholder="Nombre de Usuario" formControlName="username" maxlength="35"
+            autocomplete="nope" required />
+         <!--===================== ERRORES USUARIO =====================-->
+         <span class="text-danger" *ngIf="registerForm.controls['username'].hasError('required') && (registerForm.controls['username'].dirty || registerForm.controls['username'].touched)">
+            Este campo es requerido
+         </span>
+         <!-- FIN ERRORES USUARIO -->
+      </div>
+
+      <div class="form-group has-feedback">
+         <input class="form-control" type="password" placeholder="Contraseña" formControlName="password" maxlength="35"
+            autocomplete="nope" required />
+         <!--===================== ERRORES CONTRASEÑA =====================-->
+         <span class="text-danger" *ngIf="registerForm.controls['password'].hasError('required') && (registerForm.controls['password'].dirty || registerForm.controls['password'].touched)">
+            Este campo es requerido
+         </span>
+         <!-- FIN ERRORES CONTRASEÑA -->
+      </div>
+
+      <div class="form-group has-feedback">
+         <input class="form-control" type="password" placeholder="Repita Contraseña" formControlName="password2"
+            maxlength="35" autocomplete="nope" required />
+         <!--===================== ERRORES CONTRASEÑA =====================-->
+         <span class="text-danger" *ngIf="registerForm.controls['password2'].hasError('required') && (registerForm.controls['password2'].dirty || registerForm.controls['password2'].touched)">
+            Este campo es requerido
+         </span>
+         <span class="text-danger" *ngIf="registerForm.errors?.areEquals && (registerForm.controls['password2'].dirty && registerForm.controls['password2'].touched)">
+            Las contraseñas deben ser iguales
+         </span>
+         <!-- FIN ERRORES CONTRASEÑA -->
+      </div>
+
+      <div class="form-group">
+         <mat-checkbox formControlName="conditions" required>Acepto los
+            <a href="javascript:;">términos y condiciones</a>
+         </mat-checkbox>
+      </div>
+
+
+      <!-- <button [swal]="['Oops!', 'This is not implemented yet :/', 'warning']">
+         Do it!
+      </button> -->
+
+   </form>
+   <!-- FIN FORMULARIO -->
+
+   <!--===================== ACCIONES =====================-->
+   <div class="m-login__action m-login__action--fit">
+      <button mat-stroked-button color="primary" (click)="loginPage()" [disabled]="loading">Volver</button>
+      <button mat-raised-button color="accent" (click)="submit()">Regístrarme</button>
+      <!-- <m-spinner-button [options]="spinner" (click)="submit()">Sign Up</m-spinner-button> -->
+   </div>
+   <!-- FIN ACCIONES -->
+
+
+</div>

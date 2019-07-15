@@ -1,0 +1,25 @@
+<header mHeader #mHeader class="m-grid__item m-header" m-minimize-offset="200" m-minimize-mobile-offset="200">
+   <div class="m-container m-container--full-height m-container--fluid">
+      <div class="m-stack m-stack--ver m-stack--desktop">
+         <cw-brand class="m-stack__item m-brand m-brand--skin-dark"></cw-brand>
+         <!-- <mat-progress-bar class="m-loading-bar" *ngIf="(loader.progress$|async) > 0" [value]="loader.progress$|async"></mat-progress-bar> -->
+         <div class="m-stack__item m-stack__item--fluid m-header-head" id="m_header_nav">
+            <!-- BEGIN: Horizontal Menu -->
+            <ng-container>
+               <!-- show/hide horizontal menu based on menu.header.display option -->
+               <button class="m-aside-header-menu-mobile-close m-aside-header-menu-mobile-close--skin-dark ng-star-inserted"
+                  id="m_aside_header_menu_mobile_close_btn">
+                  <i class="la la-close"></i>
+               </button>
+
+               <cw-menu-horizontal class="m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas m-header-menu--skin-dark m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-dark m-aside-header-menu-mobile--submenu-skin-dark">
+               </cw-menu-horizontal>
+
+            </ng-container>
+            <!-- END: Horizontal Menu -->
+
+            <cw-topbar #m_header_nav class="m-stack__item m-stack__item--fluid m-header-head"></cw-topbar>
+         </div>
+      </div>
+   </div>
+</header>

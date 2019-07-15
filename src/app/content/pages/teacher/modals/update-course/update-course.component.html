@@ -1,0 +1,117 @@
+<div class="modal-header">
+   <h4 class="modal-title">Actualizar Curso</h4>
+   <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
+      <span aria-hidden="true">&times;</span>
+   </button>
+</div>
+
+<form [formGroup]="courseForm" (ngSubmit)="updateCourse(courseForm.value)" class="m-form m-form--state m-form--label-align-right">
+   <div class="modal-body">
+      <div class="m-portlet__body">
+
+         <div class="form-group m-form__group row" [ngClass]="{'has-danger' : courseForm.controls.subject.invalid && courseForm.controls.subject.touched }">
+            <label class="col-xl-3 col-lg-3 col-form-label">Asignatura:</label>
+            <div class="col-xl-9 col-lg-9" style="display: flex; align-items: center">
+               <select formControlName="subject" class="m-datatable__pager-size" style="width:260px">
+                  <option value="">Seleccionar</option>
+                  <option *ngFor="let subject of options_subject" [value]="subject.id_subject">{{subject.name}}</option>
+               </select>
+            </div>
+            <div style="margin-left: 40px;" class="form-control-feedback" *ngIf="courseForm.controls['subject'].hasError('required') && (courseForm.controls['subject'].dirty || courseForm.controls['subject'].touched)">
+               Este campo es requerido.
+            </div>
+         </div>
+
+         <div class="form-group m-form__group row" [ngClass]="{'has-danger' : courseForm.controls.year.invalid && courseForm.controls.year.touched }">
+            <label class="col-xl-3 col-lg-3 col-form-label">Año:</label>
+            <div class="col-xl-9 col-lg-9" style="display: flex; align-items: center">
+               <select formControlName="year" class="m-datatable__pager-size" style="width:260px">
+                  <option value="">Seleccionar</option>
+                  <option *ngFor="let year of options_calendar" [ngValue]="year.options">{{year.year}}</option>
+               </select>
+            </div>
+            <!--===================== ERRORES DE PATERNO =====================-->
+            <div style="margin-left: 40px;" class="form-control-feedback" *ngIf="courseForm.controls['year'].hasError('required') && (courseForm.controls['year'].dirty || courseForm.controls['year'].touched)">
+               Este campo es requerido.
+            </div>
+            <!-- FIN ERRORES DE PATERNO -->
+         </div>
+
+         <div class="form-group m-form__group row" [ngClass]="{'has-danger' : courseForm.controls.semester.invalid && courseForm.controls.semester.touched }">
+            <label class="col-xl-3 col-lg-3 col-form-label">Semestre:</label>
+            <div class="col-xl-9 col-lg-9" style="display: flex; align-items: center">
+               <select formControlName="semester" class="m-datatable__pager-size" style="width:260px">
+                  <option value="">Seleccionar</option>
+                  <ng-container *ngIf="courseForm.value.year">
+                     <option *ngFor="let semester of courseForm.value.year" [value]="semester.id_calendar">{{semester.semester}}</option>
+                  </ng-container>
+               </select>
+            </div>
+            <!--===================== ERRORES DE PATERNO =====================-->
+            <div style="margin-left: 40px;" class="form-control-feedback" *ngIf="courseForm.controls['semester'].hasError('required') && (courseForm.controls['semester'].dirty || courseForm.controls['semester'].touched)">
+               Este campo es requerido.
+            </div>
+            <!-- FIN ERRORES DE PATERNO -->
+         </div>
+
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : courseForm.controls.name.invalid && courseForm.controls.name.touched }">
+            <label class="form-control-label">Nombre del Curso:</label>
+            <input type="text" class="form-control m-input" formControlName="name" maxLength="15" autocomplete="nope">
+            <!--===================== ERRORES DE NOMBRE =====================-->
+            <div class="form-control-feedback" *ngIf="courseForm.controls['name'].hasError('required') && (courseForm.controls['name'].dirty || courseForm.controls['name'].touched)">
+               Este campo es requerido.
+            </div>
+            <!-- FIN ERRORES DE NOMBRE -->
+         </div>
+
+         <ng-container formGroupName="goalsForm">
+
+            <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : courseForm.controls['goalsForm'].controls['course_goal'].invalid && courseForm.controls['goalsForm'].controls['course_goal'].touched }">
+               <label class="form-control-label">Meta por Curso:</label>
+               <input type="text" class="form-control m-input" formControlName="course_goal" autocomplete="nope"
+                  maxLength="4">
+               <!--===================== ERRORES DE NOMBRE =====================-->
+               <div class="form-control-feedback" *ngIf="courseForm.controls['goalsForm'].controls['course_goal'].hasError('required') && (courseForm.controls['goalsForm'].controls['course_goal'].dirty || courseForm.controls['goalsForm'].controls['course_goal'].touched)">
+                  Este campo es requerido.
+               </div>
+               <!-- FIN ERRORES DE NOMBRE -->
+            </div>
+
+            <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : courseForm.controls['goalsForm'].controls['student_goal'].invalid && courseForm.controls['goalsForm'].controls['student_goal'].touched }">
+               <label class="form-control-label">Meta por Estudiante:</label>
+               <input type="text" class="form-control m-input" formControlName="student_goal" autocomplete="nope"
+                  maxLength="4">
+               <!--===================== ERRORES DE NOMBRE =====================-->
+               <div class="form-control-feedback" *ngIf="courseForm.controls['goalsForm'].controls['student_goal'].hasError('required') && (courseForm.controls['goalsForm'].controls['student_goal'].dirty || courseForm.controls['goalsForm'].controls['student_goal'].touched)">
+                  Este campo es requerido.
+               </div>
+
+               <!-- FIN ERRORES DE NOMBRE -->
+            </div>
+            <span class="text-danger" *ngIf="courseForm.controls.goalsForm.errors && courseForm.controls.goalsForm.touched">
+               La meta por estudiante debe ser menor a la meta por curso.
+            </span>
+         </ng-container>
+
+         <div class="form-group m-form__group row" [ngClass]="{'has-danger' : courseForm.controls.active.invalid && courseForm.controls.active.touched }">
+            <label class="col-xl-3 col-lg-3 col-form-label">Estado:</label>
+            <div class="col-xl-9 col-lg-9" style="display: flex; align-items: center">
+               <select formControlName="active" class="m-datatable__pager-size" style="width:260px">
+                  <option value="">Seleccionar</option>
+                  <option [ngValue]="true">{{true | active}}</option>
+                  <option [ngValue]="false">{{false | active}}</option>
+               </select>
+            </div>
+            <div style="margin-left: 40px;" class="form-control-feedback" *ngIf="courseForm.controls['active'].hasError('required') && (courseForm.controls['active'].dirty || courseForm.controls['active'].touched)">
+               Este campo es requerido.
+            </div>
+         </div>
+
+      </div>
+
+   </div>
+   <div class="modal-footer">
+      <button type="button" class="btn btn-info" (click)="activeModal.close()">Cerrar</button>
+      <button type="submit" class="btn btn-info" [disabled]="courseForm.pristine || courseForm.invalid">Actualizar</button>
+   </div>
+</form>

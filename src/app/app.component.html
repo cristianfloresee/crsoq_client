@@ -1,0 +1,14 @@
+<router-outlet>
+   <!-- <div style="width: 100%; height: 100%; background-color: green;"></div> -->
+</router-outlet>
+<!-- <div style="width: 100%; height: 100%; background-color: yellow;"></div> -->
+
+<div #cwLoader>
+   <div [@loader_container]='show_loader' class="loader-container"></div>
+   <div [@loader_content]="show_loader" class="loader-content">
+      <div class="m-blockui" style="margin-left: -80px;">
+         <span>Cargando...</span>
+         <span class="m-loader m-loader--primary"></span>
+      </div>
+   </div>
+</div>

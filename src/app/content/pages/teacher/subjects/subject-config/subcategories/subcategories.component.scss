@@ -1,0 +1,28 @@
+.cw-table {
+   background-color: #fff;
+   border-collapse: separate;
+   overflow-x: auto;
+   display: block;
+
+   tr th {
+      cursor: pointer;
+      white-space: nowrap;
+      padding: 10px 17px;
+      background: #f4f3f8;
+      font-weight: 600;
+   }
+
+   td {
+      padding: 10px 17px;
+   }
+
+   tbody tr:nth-child(even) td {
+      background: #faf9fc;
+   }
+
+   tbody tr:hover td{
+      background: #F7F6FA;
+   }
+
+}
+

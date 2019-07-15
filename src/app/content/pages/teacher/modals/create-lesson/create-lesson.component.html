@@ -1,0 +1,64 @@
+<div class="modal-header">
+      <h4 class="modal-title">Crear Clase</h4>
+      <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
+         <span aria-hidden="true">&times;</span>
+      </button>
+   </div>
+
+   <form [formGroup]="lessonForm" (ngSubmit)="createLesson(lessonForm.value)" class="m-form m-form--state m-form--label-align-right">
+      <div class="modal-body">
+         <div class="m-portlet__body">
+
+            <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : lessonForm.controls.module.invalid && lessonForm.controls.module.touched }">
+               <label class="form-control-label">Modulo:</label>
+               <select formControlName="module" class="m-datatable__pager-size" style="width:160px">
+                  <option value="">Seleccionar</option>
+                  <option *ngFor="let module of options_module" [value]="module.id_module">{{module.name}}</option>
+               </select>
+               <!--===================== ERRORES DE PATERNO =====================-->
+               <div class="form-control-feedback" *ngIf="lessonForm.controls['module'].hasError('required') && (lessonForm.controls['module'].dirty || lessonForm.controls['module'].touched)">
+                  Este campo es requerido.
+               </div>
+               <!-- FIN ERRORES DE PATERNO -->
+            </div>
+
+            <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : lessonForm.controls.description.invalid && lessonForm.controls.description.touched }">
+               <label class="form-control-label">Descripción:</label>
+               <input type="text" class="form-control m-input" formControlName="description" maxLength="15" autocomplete="nope">
+               <!--===================== ERRORES DE NOMBRE =====================-->
+               <div class="form-control-feedback" *ngIf="lessonForm.controls['description'].hasError('required') && (lessonForm.controls['description'].dirty || lessonForm.controls['description'].touched)">
+                  Este campo es requerido.
+               </div>
+               <!-- FIN ERRORES DE NOMBRE -->
+            </div>
+
+            <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : lessonForm.controls.date.invalid && lessonForm.controls.date.touched }">
+                  <label class="form-control-label">Fecha de Realización:</label>
+
+                        <div class="form-group">
+                          <div class="input-group">
+                            <input class="form-control" placeholder="dd-mm-yyyy"
+                                   name="dp" formControlName="date" ngbDatepicker #d="ngbDatepicker">
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
+                                 <i class="la la-calendar"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                  <!--===================== ERRORES DE NOMBRE =====================-->
+                  <div class="form-control-feedback" *ngIf="lessonForm.controls['date'].hasError('required') && (lessonForm.controls['date'].dirty || lessonForm.controls['date'].touched)">
+                     Este campo es requerido.
+                  </div>
+                  <!-- FIN ERRORES DE NOMBRE -->
+               </div>
+
+         </div>
+
+      </div>
+      <div class="modal-footer">
+         <button type="button" class="btn btn-info" (click)="activeModal.close()">Cerrar</button>
+         <button type="submit" class="btn btn-info" [disabled]="lessonForm.invalid">Crear</button>
+      </div>
+   </form>

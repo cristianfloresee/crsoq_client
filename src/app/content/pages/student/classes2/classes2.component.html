@@ -1,0 +1,199 @@
+<!-- LEYENDA -->
+<div class="m-alert m-alert--icon m-alert--air m-alert--square alert alert-dismissible m--margin-bottom-30" role="alert">
+   <div class="m-alert__icon">
+      <i class="flaticon-exclamation m--font-brand"></i>
+   </div>
+   <div class="m-alert__text">
+      En esta sección se encuentran las clases del curso.
+      Cuando una clase este activa podrá ingresar presionando el botón de color verde.
+   </div>
+</div>
+<!-- FIN LEYENDA -->
+
+<div class="m-portlet m-portlet--mobile">
+   <!-- CARD HEADER -->
+   <div class="m-portlet__head">
+      <!-- TITULO HEADER -->
+      <div class="m-portlet__head-caption">
+         <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+               Clases
+            </h3>
+         </div>
+      </div>
+      <!-- FIN TITULO -->
+      <!-- ACCIONES HEADER -->
+
+      <!-- FIN ACCIONES HEADER -->
+   </div>
+   <!-- FIN CARD HEADER -->
+
+   <!-- CARD BODY -->
+   <div class="m-portlet__body">
+
+      <!-- SECCIÓN DE FILTRO Y BUSQUEDA -->
+      <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+
+         <form [formGroup]="filterForm" (ngSubmit)="filterItems(filterForm.value)">
+            <div class="row align-items-center">
+
+               <div class="col-xl-12" style="margin-bottom: 20px;">
+                  <div class="col-xl-12 order-1 order-xl-2 m--align-right">
+                     <button type="submit" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill"
+                        [disabled]="filterForm.value.id_module === lock_id_module && filterForm.value.status === lock_status">
+                        <span>
+                           <span>Filtrar</span>
+                        </span>
+                     </button>
+                  </div>
+               </div>
+
+               <div class="col-xl-12">
+
+                  <div class="form-group m-form__group row align-items-center">
+                     <div class="col-md-4">
+                        <div class="m-form__group m-form__group--inline">
+                           <div class="m-form__label">
+                              <label>Modulo:</label>
+                           </div>
+                           <div class="m-form__control">
+                              <select formControlName="id_module" class="form-control m-bootstrap-select">
+                                 <option value="">Todos</option>
+                                 <option *ngFor="let module of options_module" [value]="module.id_module">{{module.name}}</option>
+                              </select>
+                           </div>
+                        </div>
+                        <div class="d-md-none m--margin-bottom-10"></div>
+                     </div>
+                     <div class="col-md-4">
+                        <div class="m-form__group m-form__group--inline">
+                           <div class="m-form__label">
+                              <label class="m-label m-label--single">Estado:</label>
+                           </div>
+                           <div class="m-form__control">
+                              <select formControlName="status" class="form-control m-bootstrap-select" id="m_form_type">
+                                 <option value="">Todos</option>
+                                 <option [ngValue]="1">no iniciada</option>
+                                 <option [ngValue]="2">activa</option>
+                                 <option [ngValue]="3">terminada</option>
+                              </select>
+                           </div>
+                        </div>
+                        <div class="d-md-none m--margin-bottom-10"></div>
+                     </div>
+                  </div>
+
+               </div>
+            </div>
+         </form>
+      </div>
+      <!-- FIN FILTRO/BUSQUEDA -->
+
+      <!-- TABLE -->
+      <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+
+         <table class="cw-table">
+            <thead>
+               <tr>
+                  <th class="center">#</th>
+                  <th>Descripción</th>
+                  <th>Modulo</th>
+                  <th>Estado</th>
+                  <th>Fecha de Realización</th>
+                  <th>Fecha de Creación</th>
+                  <th>Fecha de Actualización</th>
+                  <th class="center">Acciones</th>
+               </tr>
+            </thead>
+
+
+            <tbody>
+               <tr *ngFor="let class of data_classes; let i=index">
+                  <td>{{i+1}}</td>
+                  <td class="nowrap">{{class.description}}</td>
+                  <td>{{class.module}}</td>
+                  <td class="nowrap">
+                     <span style="width: 100%">
+                        <span class="m-badge m-badge--dot" [ngClass]="(class.status == 1) ? 'm-badge--warning': (class.status == 2 ? 'm-badge--success' : 'm-badge--danger')"></span>
+                        &nbsp;
+                        <span class="m--font-bold" [ngClass]="(class.status == 2) ? 'm--font-success' : (class.status == 1 ? 'm--font-warning' : 'm--font-danger')">
+                           {{class.status == 1 ? 'no iniciada' : class.status == 2 ? 'activa' : 'terminada' }}
+                        </span>
+                     </span>
+                  </td>
+                  <td class="center">{{class.date | date:"MM/dd/yy"}}</td>
+                  <td class="center">{{class.created_at | timeAgo}}</td>
+                  <td class="center">{{class.updated_at | timeAgo}}</td>
+
+                  <td>
+                     <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
+
+                        <!-- <a (click)="lessonDetail(class)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
+
+                           <i class="la la-play"></i>
+                        </a> -->
+
+
+                        <button (click)="enterToClass(class)" [ngClass]="{'btn-success': class.status == 2}" class="btn m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill"
+                        [disabled]="class.status != 2">
+                              <i class="la la-play"></i>
+                        </button>
+                     </span>
+                  </td>
+               </tr>
+            </tbody>
+
+         </table>
+
+
+
+
+         <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
+
+            <ul class="m-datatable__pager-nav">
+
+               <li (click)="getUsersPage(1)">
+                  <a title="Primera" class="m-datatable__pager-link m-datatable__pager-link--first" [ngClass]="{'m-datatable__pager-link--disabled': (from < page_size)}">
+                     <i class="la la-angle-double-left"></i>
+                  </a>
+               </li>
+
+               <li (click)="getUsersPage(page-1)">
+                  <a title="Anterior" class="m-datatable__pager-link m-datatable__pager-link--prev" [ngClass]="{'m-datatable__pager-link--disabled': (from < page_size)}">
+                     <i class="la la-angle-left"></i>
+                  </a>
+               </li>
+
+               <li *ngFor="let _page of total_pages | fillArray" (click)="getUsersPage(_page)">
+                  <a class="m-datatable__pager-link m-datatable__pager-link-number" [ngClass]="{'m-datatable__pager-link--active': _page == page}">{{_page}}</a>
+               </li>
+
+               <li (click)="getUsersPage(page+1)">
+                  <a class="m-datatable__pager-link m-datatable__pager-link--next" [ngClass]="{'m-datatable__pager-link--disabled': ((from/page_size)+1)==total_pages}">
+                     <i class="la la-angle-right"></i>
+                  </a>
+               </li>
+
+               <li (click)="getUsersPage(total_pages)">
+                  <a class="m-datatable__pager-link m-datatable__pager-link--next" [ngClass]="{'m-datatable__pager-link--disabled': ((from/page_size)+1)==total_pages}">
+                     <i class="la la-angle-double-right"></i>
+                  </a>
+               </li>
+            </ul>
+
+            <div class="m-datatable__pager-info">
+               <form [formGroup]="filterForm" style="display:inline;">
+                  <select formControlName="page_size" class="m-datatable__pager-size" style="width:160px" (change)="changePage(filterForm.value)">
+                     <option *ngFor="let page of page_sizes" [ngValue]="page">{{page}}</option>
+                  </select>
+               </form>
+               <span class="m-datatable__pager-detail">Mostrando {{total_items ? ((page-1)*page_size + 1) : 0}} -
+                  {{(page_size*page > total_items) ? total_items : (page_size*page)}} de {{total_items}}
+                  clases
+               </span>
+            </div>
+         </div>
+      </div>
+
+   </div>
+</div>

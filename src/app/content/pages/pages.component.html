@@ -1,0 +1,61 @@
+<ng-container>
+   <cw-header></cw-header>
+
+
+
+   <!-- BODY -->
+   <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+      <button class="m-aside-left-close m-aside-left-close--skin-dark">
+         <i class="la la-close"></i>
+      </button>
+
+      <ng-container>
+         <cw-aside class="m-grid__item m-aside-left m-aside-left--skin-dark"></cw-aside>
+      </ng-container>
+
+      <!-- CONTENIDO CENTRAL -->
+      <div #mContentWrapper class="m-grid__item m-grid__item--fluid m-wrapper">
+
+         <!-- BREADCRUMB Y BOTÓN MENÚ -->
+         <cw-subheader></cw-subheader>
+
+         <!-- PAGES -->
+         <div class="m-content" #mContent>
+            <router-outlet></router-outlet>
+
+            <!-- <a routerLink="/admin">
+               <button class="btn btn-success pull-right"> Add Customer</button>
+            </a> -->
+         </div>
+
+      </div>
+
+
+
+
+
+
+   </div>
+
+
+
+   <!-- <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body" [ngClass]="pageBodyClass$ | async">
+
+         <button class="m-aside-left-close" id="m_aside_left_close_btn" [ngClass]="asideLeftCloseClass | mJoin">
+            <i class="la la-close"></i>
+         </button>
+         <ng-container *ngIf="asideLeftDisplay">
+            <m-aside-left></m-aside-left>
+         </ng-container>
+
+
+
+         <ng-container *ngIf="asideRightDisplay">
+            <m-aside-right></m-aside-right>
+         </ng-container>
+      </div> -->
+
+
+   <!-- FIN BODY -->
+   <cw-footer class="m-grid__item m-footer"></cw-footer>
+</ng-container>

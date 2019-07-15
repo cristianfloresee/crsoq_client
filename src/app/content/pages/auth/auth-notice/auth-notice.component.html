@@ -1,0 +1,8 @@
+<div
+[hidden]="!message"
+class="m-alert m-alert--outline m-alert--outline-2x alert fade show"
+[ngClass]="{'alert-danger': type === 'error', 'alert-success': type === 'success', 'alert-info': type === 'info'}"
+role="alert"
+#alertNotice>
+	<span [innerHTML]="message"></span>
+</div>

@@ -1,0 +1,162 @@
+<div class="modal-header">
+   <h4 class="modal-title">Actualizar Actividad</h4>
+   <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
+      <span aria-hidden="true">&times;</span>
+   </button>
+</div>
+
+<form [formGroup]="activityForm" (ngSubmit)="updateActivity(activityForm.value)" class="m-form m-form--state m-form--label-align-right">
+   <div class="modal-body">
+      <div class="m-portlet__body">
+
+         <!-- LEYENDA -->
+         <div class="form-group m-form__group m--margin-top-10">
+            <div class="alert m-alert m-alert--default" role="alert">
+               Asegúrese de completar todos los campos.
+            </div>
+         </div>
+
+         <!-- CONTENEDOR -->
+
+         <div class="m-portlet__body">
+            <div class="form-group m-form__group row">
+
+               <!-- BODY 1 -->
+               <div class="col-lg-6">
+
+                  <div class="form-group m-form__group row" [ngClass]="{'has-danger' : activityForm.controls.module.invalid && activityForm.controls.module.touched }">
+                     <label class="col-xl-3 col-lg-3 col-form-label">Modulo:</label>
+                     <div class="col-xl-9 col-lg-9" style="display: flex; align-items: center">
+                        <select formControlName="module" class="m-datatable__pager-size" style="width:260px">
+                           <option value="">Seleccionar</option>
+                           <option *ngFor="let module of options_module" [value]="module.id_module">{{module.name}}</option>
+                        </select>
+                     </div>
+                     <div style="margin-left: 20px;" class="form-control-feedback" *ngIf="activityForm.controls['module'].hasError('required') && (activityForm.controls['module'].dirty || activityForm.controls['module'].touched)">
+                        Este campo es requerido.
+                     </div>
+
+                  </div>
+
+
+                  <div class="form-group m-form__group row" [ngClass]="{'has-danger' : activityForm.controls.lesson.invalid && activityForm.controls.lesson.touched }">
+                     <label class="col-xl-3 col-lg-3 col-form-label">Clase:</label>
+                     <div class="col-xl-9 col-lg-9" style="display: flex; align-items: center">
+                        <select formControlName="lesson" class="m-datatable__pager-size" style="width:260px">
+                           <option value="">Seleccionar</option>
+                           <option *ngFor="let lesson of options_lesson" [value]="lesson.id_class">{{lesson.description}}</option>
+                        </select>
+                     </div>
+                     <div style="margin-left: 20px;" class="form-control-feedback" *ngIf="activityForm.controls['lesson'].hasError('required') && (activityForm.controls['lesson'].dirty || activityForm.controls['lesson'].touched)">
+                        Este campo es requerido.
+                     </div>
+
+                  </div>
+
+                  <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : activityForm.controls.name.invalid && activityForm.controls.name.touched }">
+                     <label class="form-control-label">Nombre de la Actividad:</label>
+                     <input type="text" class="form-control m-input" formControlName="name" maxLength="15" autocomplete="nope">
+                     <!--===================== ERRORES DE NOMBRE =====================-->
+                     <div class="form-control-feedback" *ngIf="activityForm.controls['name'].hasError('required') && (activityForm.controls['name'].dirty || activityForm.controls['name'].touched)">
+                        Este campo es requerido.
+                     </div>
+                     <!-- FIN ERRORES DE NOMBRE -->
+                  </div>
+
+                  <div class="form-group m-form__group row" [ngClass]="{'has-danger' : activityForm.controls.mode.invalid && activityForm.controls.mode.touched }">
+                     <label class="col-xl-3 col-lg-3 col-form-label">Modalidad:</label>
+                     <div class="col-xl-9 col-lg-9" style="display: flex; align-items: center">
+                        <select formControlName="mode" class="m-datatable__pager-size" style="width:260px">
+                           <option value="">Seleccionar</option>
+                           <option [ngValue]="1">Individual</option>
+                           <option [ngValue]="2">Grupal</option>
+                        </select>
+                     </div>
+                     <div style="margin-left: 20px;" class="form-control-feedback" *ngIf="activityForm.controls['mode'].hasError('required') && (activityForm.controls['mode'].dirty || activityForm.controls['mode'].touched)">
+                        Este campo es requerido.
+                     </div>
+                  </div>
+
+                  <div class="form-group m-form__group row" [ngClass]="{'has-danger' : activityForm.controls.status.invalid && activityForm.controls.status.touched }">
+                     <label class="col-xl-3 col-lg-3 col-form-label">Estado:</label>
+                     <div class="col-xl-9 col-lg-9" style="display: flex; align-items: center">
+                        <select formControlName="status" class="m-datatable__pager-size" style="width:260px">
+                           <option value="">Seleccionar</option>
+                           <option [ngValue]="1">no iniciada</option>
+                           <option [ngValue]="2">activa</option>
+                           <option [ngValue]="3">terminada</option>
+                        </select>
+                     </div>
+                     <div style="margin-left: 20px;" class="form-control-feedback" *ngIf="activityForm.controls['status'].hasError('required') && (activityForm.controls['status'].dirty || activityForm.controls['status'].touched)">
+                        Este campo es requerido.
+                     </div>
+                  </div>
+
+               </div>
+
+               <!-- BODY 2 -->
+               <div class="col-lg-6">
+                  <label class="form-control-label">Participantes:</label>
+
+                  <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+
+                     <table class="cw-table">
+                        <thead>
+                           <tr>
+                              <th class="center">#</th>
+                              <th>Estudiante</th>
+                              <th>Ganador</th>
+                              <!-- <th class="center">Acciones</th> -->
+                           </tr>
+                        </thead>
+                        <tbody>
+
+                           <tr *ngFor="let student of data_students; let i=index">
+                              <td>{{i+1}}</td>
+
+                              <td class="nowrap">
+                                 <div class="m-widget4__item">
+
+                                    <div class="m-widget4__info">
+                                       <span class="m-widget4__title">
+                                          {{student.name}} {{student.last_name}} {{student.middle_name}}
+                                       </span><br>
+                                       <span class="m-widget4__sub" style="font-size: .8rem;">
+                                          {{student.document}}
+                                       </span>
+                                    </div>
+
+                                 </div>
+                              </td>
+                              <!-- <td>{{student.status}}</td> -->
+                              <td>
+                                 <div style="width: 50%; cursor: pointer;" (click)="changeWinnerStatus(student)">
+                                    <img *ngIf="student.status == 2;else blank" src="assets/images/checked.svg" alt="">
+                                    <ng-template #blank>
+                                       <img src="assets/images/blank.svg" alt="">
+                                    </ng-template>
+                                 </div>
+                              </td>
+
+                           </tr>
+                        </tbody>
+                     </table>
+                     <p>Total de Ganadores: {{total_winners}}</p>
+                  </div>
+
+               </div>
+            </div>
+         </div>
+
+
+
+
+
+      </div>
+
+   </div>
+   <div class="modal-footer">
+      <button type="button" class="btn btn-info" (click)="activeModal.close()">Cerrar</button>
+      <button type="submit" class="btn btn-info" [disabled]="(activityForm.pristine && winner_status_request.length == 0) || activityForm.invalid">Actualizar</button>
+   </div>
+</form>

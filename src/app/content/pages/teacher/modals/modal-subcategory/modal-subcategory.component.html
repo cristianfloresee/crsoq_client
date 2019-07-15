@@ -1,0 +1,62 @@
+<div class="modal-header">
+   <h4 class="modal-title">{{action}} Subcategoría</h4>
+   <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
+      <span aria-hidden="true">&times;</span>
+   </button>
+</div>
+
+<form [formGroup]="subcategoryForm" (ngSubmit)="submitSubcategory(subcategoryForm.value)" class="m-form m-form--state m-form--label-align-right">
+   <div class="modal-body">
+
+      <div class="m-portlet__body">
+
+
+         <div *ngIf="!id_subject" class="form-group m-form__group row" [ngClass]="{'has-danger' : subcategoryForm.controls.id_subject.invalid && subcategoryForm.controls.id_subject.touched }">
+            <label class="col-xl-3 col-lg-3 col-form-label">Asignatura:</label>
+            <div class="col-xl-9 col-lg-9" style="display: flex; align-items: center">
+            <select formControlName="id_subject" class="m-datatable__pager-size" style="width:260px">
+               <option value="">Seleccionar</option>
+               <option *ngFor="let subject of options_subject" [value]="subject.id_subject">{{subject.name}}</option>
+            </select>
+            </div>
+            <!--===================== ERRORES DE PATERNO =====================-->
+            <div style="margin-left: 40px;" class="form-control-feedback" *ngIf="subcategoryForm.controls['id_subject'].hasError('required') && (subcategoryForm.controls['id_subject'].dirty || subcategoryForm.controls['id_subject'].touched)">
+               Este campo es requerido.
+            </div>
+            <!-- FIN ERRORES DE PATERNO -->
+         </div>
+
+
+         <div class="form-group m-form__group row" [ngClass]="{'has-danger' : subcategoryForm.controls.id_category.invalid && subcategoryForm.controls.id_category.touched }">
+            <label class="col-xl-3 col-lg-3 col-form-label">Categoría:</label>
+            <div class="col-xl-9 col-lg-9" style="display: flex; align-items: center">
+            <select formControlName="id_category" class="m-datatable__pager-size" style="width:260px">
+               <option value="">Seleccionar</option>
+               <option *ngFor="let category of options_category" [value]="category.id_category">{{category.name}}</option>
+            </select>
+            </div>
+            <div style="margin-left: 40px;" class="form-control-feedback" *ngIf="subcategoryForm.controls['id_category'].hasError('required') && (subcategoryForm.controls['id_category'].dirty || subcategoryForm.controls['id_category'].touched)">
+               Este campo es requerido.
+            </div>
+
+         </div>
+
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : subcategoryForm.controls.name.invalid && subcategoryForm.controls.name.touched }">
+            <label class="form-control-label">Nombre de la Subcategoría:</label>
+            <input type="text" class="form-control m-input" formControlName="name" maxLength="15" autocomplete="nope">
+
+            <div class="form-control-feedback" *ngIf="subcategoryForm.controls['name'].hasError('required') && (subcategoryForm.controls['name'].dirty || subcategoryForm.controls['name'].touched)">
+               Este campo es requerido.
+            </div>
+
+         </div>
+
+      </div>
+
+   </div>
+   <div class="modal-footer">
+      <button type="button" class="btn btn-info" (click)="activeModal.close()">Cerrar</button>
+      <!-- <button type="submit" class="btn btn-info" [disabled]="categoryForm.invalid">Crear</button> -->
+      <button type="submit" class="btn btn-info" [disabled]="subcategoryForm.pristine || subcategoryForm.invalid">{{action}}</button>
+   </div>
+</form>

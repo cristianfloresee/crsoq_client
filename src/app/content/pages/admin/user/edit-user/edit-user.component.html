@@ -1,0 +1,139 @@
+<div class="modal-header">
+   <h4 class="modal-title">Editar Usuario</h4>
+   <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
+      <span aria-hidden="true">&times;</span>
+   </button>
+</div>
+<form [formGroup]="userForm" (ngSubmit)="editUser(userForm.value)" class="m-form m-form--state m-form--label-align-right">
+   <div class="modal-body">
+      <div class="m-portlet__body">
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : userForm.controls.name.invalid && userForm.controls.name.touched }">
+            <label class="form-control-label">Nombre:</label>
+            <input type="text" class="form-control m-input" formControlName="name" maxlength="35" autocomplete="nope">
+            <!--===================== ERRORES DE NOMBRE =====================-->
+            <div class="form-control-feedback" *ngIf="userForm.controls['name'].hasError('required') && (userForm.controls['name'].dirty || userForm.controls['name'].touched)">
+               Este campo es requerido.
+            </div>
+            <!-- FIN ERRORES DE NOMBRE -->
+         </div>
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : userForm.controls.last_name.invalid && userForm.controls.last_name.touched }">
+            <label class="form-control-label">Apellido Paterno:</label>
+            <input type="text" class="form-control m-input" formControlName="last_name" maxlength="35" autocomplete="nope">
+            <!--===================== ERRORES DE PATERNO =====================-->
+            <div class="form-control-feedback" *ngIf="userForm.controls['last_name'].hasError('required') && (userForm.controls['last_name'].dirty || userForm.controls['last_name'].touched)">
+               Este campo es requerido.
+            </div>
+            <!-- FIN ERRORES DE PATERNO -->
+         </div>
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : userForm.controls.middle_name.invalid && userForm.controls.middle_name.touched }">
+            <label class="form-control-label">Apellido Materno:</label>
+            <input type="text" class="form-control m-input" formControlName="middle_name" maxlength="35" autocomplete="nope">
+            <!--===================== ERRORES DE MATERNO =====================-->
+            <div class="form-control-feedback" *ngIf="userForm.controls['middle_name'].hasError('required') && (userForm.controls['middle_name'].dirty || userForm.controls['middle_name'].touched)">
+               Este campo es requerido.
+            </div>
+            <!-- FIN ERRORES DE MATERNO -->
+         </div>
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : userForm.controls.document.invalid && userForm.controls.document.touched }">
+            <label class="form-control-label">RUT:</label>
+            <input type="text" class="form-control m-input" formControlName="document" maxlength="15" autocomplete="nope">
+            <!--===================== ERRORES DE RUT =====================-->
+            <div class="form-control-feedback" *ngIf="userForm.controls['document'].hasError('required') && (userForm.controls['document'].dirty || userForm.controls['document'].touched)">
+               Este campo es requerido.
+            </div>
+            <!-- FIN ERRORES DE RUT -->
+         </div>
+
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : userForm.controls.email.invalid && userForm.controls.email.touched }">
+            <label class="form-control-label">Correo Eletrónico:</label>
+            <input type="text" class="form-control m-input" formControlName="email" maxlength="35" autocomplete="nope">
+            <!--===================== ERRORES DE EMAIL =====================-->
+            <div class="form-control-feedback" *ngIf="userForm.controls['email'].hasError('required') && (userForm.controls['email'].dirty || userForm.controls['email'].touched)">
+               Este campo es requerido.
+            </div>
+            <div class="form-control-feedback" *ngIf="userForm.controls['email'].hasError('email') && (userForm.controls['email'].dirty && userForm.controls['email'].touched)">
+               Este campo debe ser una dirección de correo electrónico válida.
+            </div>
+            <!-- FIN ERRORES DE EMAIL -->
+         </div>
+
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : userForm.controls.phone.invalid && userForm.controls.phone.touched }">
+            <label class="form-control-label">Teléfono:</label>
+            <input type="text" class="form-control m-input" formControlName="phone" maxlength="35" autocomplete="nope">
+            <!--===================== ERRORES DE TELÉFONO =====================-->
+            <div class="form-control-feedback" *ngIf="userForm.controls['phone'].hasError('required') && (userForm.controls['phone'].dirty || userForm.controls['phone'].touched)">
+               Este campo es requerido.
+            </div>
+            <!-- FIN ERRORES DE TELÉFONO -->
+         </div>
+
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : userForm.controls.username.invalid && userForm.controls.username.touched }">
+            <label class="form-control-label">Nombre de Usuario:</label>
+            <input type="text" class="form-control m-input" formControlName="username" maxlength="35" autocomplete="nope">
+            <!--===================== ERRORES DE USUARIO =====================-->
+            <div class="form-control-feedback" *ngIf="userForm.controls['username'].hasError('required') && (userForm.controls['username'].dirty || userForm.controls['username'].touched)">
+               Este campo es requerido.
+            </div>
+            <!-- FIN ERRORES DE USUARIO -->
+         </div>
+
+         <div formGroupName="roles">
+            <label class="form-control-label">Roles:</label>
+            <!-- <input type="text" class="form-control m-input" formControlName="active" maxlength="35" autocomplete="nope"> -->
+            <div class="m-checkbox-inline">
+               <label class="m-checkbox">
+                  <input type="checkbox" formControlName="admin">Administrador
+                  <span></span>
+               </label>
+               <label class="m-checkbox">
+                  <input type="checkbox" formControlName="teacher">Profesor
+                  <span></span>
+               </label>
+               <label class="m-checkbox">
+                  <input type="checkbox" formControlName="student">Estudiante
+                  <span></span>
+               </label>
+            </div>
+            <span class="text-danger" *ngIf="userForm.controls.roles.errors">
+               Debes selecionar un rol.
+            </span>
+         </div>
+
+         <div class="form-group m-form__group row" [ngClass]="{'has-danger' : userForm.controls.active.invalid && userForm.controls.active.touched }">
+            <label class="col-xl-3 col-lg-3 col-form-label">Estado:</label>
+            <div class="col-xl-9 col-lg-9" style="display: flex; align-items: center">
+               <select formControlName="active" class="m-datatable__pager-size" style="width:260px">>
+                  <option [ngValue]="true">Activo</option>
+                  <option [ngValue]="false">Inactivo</option>
+               </select>
+            </div>
+         </div>
+
+      </div>
+   </div>
+   <div class="modal-footer">
+      <button type="button" class="btn btn-info" (click)="activeModal.close()">Cerrar</button>
+      <button type="submit" class="btn btn-info" [disabled]="userForm.pristine || userForm.invalid">Editar</button>
+   </div>
+</form>
+
+
+
+
+
+
+<!--
+<div class="modal-content">
+   <div class="modal-header">
+      <h4 class="modal-title">{{title}}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
+         <span aria-hidden="true">&times;</span>
+      </button>
+   </div>
+   <div class="modal-body">
+      <ng-content></ng-content>
+   </div>
+   <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+   </div>
+</div> -->

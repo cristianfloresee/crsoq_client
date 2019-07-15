@@ -1,0 +1,171 @@
+<div class="modal-header">
+   <h4 class="modal-title">{{action}} Pregunta</h4>
+   <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
+      <span aria-hidden="true">&times;</span>
+   </button>
+</div>
+
+<form [formGroup]="questionForm" (ngSubmit)="updateQuestion(questionForm.value)" class="m-form m-form--state m-form--label-align-right">
+   <div class="modal-body">
+      <div class="m-portlet__body">
+
+         <div class="form-group m-form__group m--margin-top-10">
+            <div class="alert m-alert m-alert--default" role="alert">
+               Esta pregunta se almacenará en la <b>biblioteca</b> y posteriormente podrás vincularla a
+               tus cursos.
+            </div>
+         </div>
+
+         <div class="m-portlet__body">
+            <div class="form-group m-form__group row">
+               <div class="col-lg-6">
+
+                  <div class="form-group m-form__group row" [ngClass]="{ 'has-danger' : questionForm.controls.subject.invalid && questionForm.controls.subject.touched }">
+                     <label class="col-xl-4 col-lg-4 col-form-label">Asignatura:</label>
+                     <div class="col-xl-7 col-lg-7" style="display: flex; align-items: center">
+                        <select formControlName="subject" class="m-datatable__pager-size" style="width:260px">
+                           <option value="">Seleccionar</option>
+                           <option *ngFor="let subject of options_subject" [value]="subject.id_subject">{{subject.name}}</option>
+                        </select>
+                     </div>
+                     <div class="form-control-feedback" *ngIf="questionForm.controls['subject'].hasError('required') && (questionForm.controls['subject'].dirty || questionForm.controls['subject'].touched)">
+                        Este campo es requerido.
+                     </div>
+
+                  </div>
+
+                  <div class="form-group m-form__group row" [ngClass]="{ 'has-danger' : questionForm.controls.category.invalid && questionForm.controls.category.touched }">
+                     <label class="col-xl-4 col-lg-4 col-form-label">Categoría:</label>
+                     <div class="col-xl-7 col-lg-7" style="display: flex; align-items: center">
+                     <select formControlName="category" class="m-datatable__pager-size" style="width:260px">
+                        <option value="">Seleccionar</option>
+                        <option *ngFor="let category of options_category" [value]="category.id_category">{{category.name}}</option>
+                     </select>
+                     </div>
+                     <div class="form-control-feedback" *ngIf="questionForm.controls['category'].hasError('required') && (questionForm.controls['category'].dirty || questionForm.controls['category'].touched)">
+                        Este campo es requerido.
+                     </div>
+
+                  </div>
+
+                  <div class="form-group m-form__group row" [ngClass]="{ 'has-danger' : questionForm.controls.subcategory.invalid && questionForm.controls.subcategory.touched }">
+                     <label class="col-xl-4 col-lg-4 col-form-label">Subcategoría:</label>
+                     <div class="col-xl-7 col-lg-7" style="display: flex; align-items: center">
+                     <select formControlName="subcategory" class="m-datatable__pager-size" style="width:260px">
+                        <option value="">Seleccionar</option>
+                        <ng-container *ngIf="questionForm.value.category">
+                           <option *ngFor="let subcategory of options_subcategory" [value]="subcategory.id_subcategory">{{subcategory.name}}</option>
+                        </ng-container>
+                     </select>
+                     </div>
+                     <div class="form-control-feedback" *ngIf="questionForm.controls['subcategory'].hasError('required') && (questionForm.controls['subcategory'].dirty || questionForm.controls['subcategory'].touched)">
+                        Este campo es requerido.
+                     </div>
+
+                  </div>
+
+                  <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : questionForm.controls.description.invalid && questionForm.controls.description.touched }">
+                        <label class="form-control-label">Pregunta:</label>
+                        <input type="text" class="form-control m-input" formControlName="description" maxLength="15"
+                           autocomplete="nope">
+
+                        <div class="form-control-feedback" *ngIf="questionForm.controls['description'].hasError('required') && (questionForm.controls['description'].dirty || questionForm.controls['description'].touched)">
+                           Este campo es requerido.
+                        </div>
+
+                     </div>
+
+                  <div class="form-group m-form__group row" [ngClass]="{ 'has-danger' : questionForm.controls.difficulty.invalid && questionForm.controls.difficulty.touched }">
+                     <label class="col-xl-4 col-lg-4 col-form-label">Dificultad:</label>
+                     <div class="col-xl-7 col-lg-7" style="display: flex; align-items: center">
+                     <select formControlName="difficulty" class="m-datatable__pager-size" style="width:260px">
+                        <option value="">Seleccionar</option>
+                        <option *ngFor="let difficulty of options_difficulties" [value]="difficulty.difficulty">{{difficulty.name}}</option>
+                     </select>
+                     </div>
+                     <div class="form-control-feedback" *ngIf="questionForm.controls['difficulty'].hasError('required') && (questionForm.controls['difficulty'].dirty || questionForm.controls['difficulty'].touched)">
+                        Este campo es requerido.
+                     </div>
+                  </div>
+
+                  <div class="form-group m-form__group row" [ngClass]="{ 'has-danger' : questionForm.controls.shared.invalid && questionForm.controls.shared.touched }">
+                     <label class="col-xl-4 col-lg-4 col-form-label">Compartida:</label>
+                     <div class="col-xl-7 col-lg-7" style="display: flex; align-items: center">
+                     <select formControlName="shared" class="m-datatable__pager-size" style="width:260px">
+                        <option value="">Seleccionar</option>
+                        <option [ngValue]="true">Si</option>
+                        <option [ngValue]="false">No</option>
+                     </select>
+                     </div>
+                     <div class="form-control-feedback" *ngIf="questionForm.controls['shared'].hasError('required') && (questionForm.controls['shared'].dirty || questionForm.controls['shared'].touched)">
+                        Este campo es requerido.
+                     </div>
+                  </div>
+
+               </div>
+               <div class="col-xl-6">
+
+
+
+                  <label class="form-control-label">Imagen (opcional):</label>
+                  <div class="upload-section" style="border: 2px dashed #E7E7E7;
+                  padding: 16px;
+                  text-align: center;
+                  margin-bottom: 24px;
+                  cursor: pointer;
+                  position: relative;">
+
+                     <img *ngIf="!image_url" src="https://cf.quizizz.com/img/editor/image-icon.png" alt="" style="text-align: center;
+                     margin: 0 0 12px 0;
+                     padding: 0;
+                     cursor: pointer;">
+
+                     <!-- Mensaje de la imagen -->
+                     <div class="msg" style="font-size: 16px; color: #6B7C93; display: block; text-align: center; font-weight: normal;">Arrastra
+                        y suelta el archivo o haz clic aquí para subir</div>
+                     <input type="file" name="image" (change)="onFileChanged($event)" #image_upload accept="image/gif,image/jpeg, image/jpg, image/svg+xml, image/svg, image/png, image/x-png, image/pjpeg"
+                        style="opacity: 0;
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 100%;
+                        height: 100%;
+                        cursor: pointer;">
+                     <img *ngIf="image_url" [src]="image_url" alt="" style="max-width: 104px;
+                     vertical-align: middle; margin: 0;
+    padding: 0; text-align: center;  border-radius: 20px;">
+
+                     <!-- Botón para eliminar la imagen -->
+                     <div (click)="deleteFile()" *ngIf="image_url" style="    display: flex;
+                     align-items: center;
+                     justify-content: center;width: 40px;
+                     height: 40px;
+                     background-color: #EC0B43;
+                     box-shadow: 0 0 2px 0 rgba(0,0,0,0.5);
+                     color: #fff;
+                     line-height: 12px;
+                     text-align: center;
+                     position: absolute;
+                     top: 0px;
+                     right: 0px;
+                     border-radius: 50%;
+                     z-index: 99; margin: 0; padding: 0;">
+
+                        <i class="fas fa-trash-alt"></i>
+                     </div>
+                  </div>
+
+
+               </div>
+            </div>
+         </div>
+
+
+      </div>
+
+   </div>
+   <div class="modal-footer">
+      <button type="button" class="btn btn-info" (click)="activeModal.close()">Cerrar</button>
+      <button type="submit" class="btn btn-info" [disabled]="questionForm.pristine || questionForm.invalid">{{action}}</button>
+   </div>
+</form>

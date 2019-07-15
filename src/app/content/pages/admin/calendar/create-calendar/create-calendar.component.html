@@ -1,0 +1,50 @@
+<div class="modal-header">
+   <h4 class="modal-title">Crear Período Escolar</h4>
+   <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
+      <span aria-hidden="true">&times;</span>
+   </button>
+</div>
+
+<form [formGroup]="calendarForm" (ngSubmit)="createCalendar(calendarForm.value)" class="m-form m-form--state m-form--label-align-right">
+   <div class="modal-body">
+      <div class="m-portlet__body">
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : calendarForm.controls.year.invalid && calendarForm.controls.year.touched }">
+            <label class="form-control-label">Año:</label>
+            <input type="number" class="form-control m-input" formControlName="year" autocomplete="nope">
+            <!--===================== ERRORES DE NOMBRE =====================-->
+            <div class="form-control-feedback" *ngIf="calendarForm.controls['year'].hasError('required') && (calendarForm.controls['year'].dirty || calendarForm.controls['year'].touched)">
+               Este campo es requerido.
+            </div>
+            <div class="form-control-feedback" *ngIf="(calendarForm.controls.year.hasError('min') || calendarForm.controls.year.hasError('max')) && (calendarForm.controls['year'].dirty && calendarForm.controls['year'].touched)">
+               Este campo debe ser un año válido.
+            </div>
+            <!-- FIN ERRORES DE NOMBRE -->
+         </div>
+         <div class="form-group m-form__group row" [ngClass]="{'has-danger' : calendarForm.controls.semester.invalid && calendarForm.controls.semester.touched }">
+            <label class="col-xl-3 col-lg-3 col-form-label">Semestre:</label>
+            <div class="col-xl-9 col-lg-9" style="display: flex; align-items: center">
+               <select formControlName="semester" class="m-datatable__pager-size" style="width:260px">
+                  <option value="">Seleccionar</option>
+                  <option [ngValue]="1">1</option>
+                  <option [ngValue]="2">2</option>
+               </select>
+            </div>
+            <!--===================== ERRORES DE PATERNO =====================-->
+            <div class="form-control-feedback" *ngIf="calendarForm.controls['semester'].hasError('required') && (calendarForm.controls['semester'].dirty || calendarForm.controls['semester'].touched)">
+               Este campo es requerido.
+            </div>
+            <!-- FIN ERRORES DE PATERNO -->
+         </div>
+
+      </div>
+
+      <!--
+      <cw-year-datepicker [date]="calendarForm.value" formControlName="year"></cw-year-datepicker>
+      INVALID: {{calendarForm.invalid}}
+      PRISTINE: {{calendarForm.pristine}}-->
+   </div>
+   <div class="modal-footer">
+      <button type="button" class="btn btn-info" (click)="activeModal.close()">Cerrar</button>
+      <button type="submit" class="btn btn-info" [disabled]="calendarForm.invalid">Crear</button>
+   </div>
+</form>

@@ -1,0 +1,474 @@
+<div style="margin-bottom: 30px;">
+
+   <button (click)="initSubject()" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
+      <span>
+         <span>Abrir Asignatura</span>
+      </span>
+   </button>
+
+
+   <button (click)="openCreateCourse()" style="color: #ffffff; margin-left: 15px" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
+      <span>
+         <span>Crear Curso</span>
+      </span>
+   </button>
+
+   <button (click)="openCreateAnswer()" style="color: #ffffff; margin-left: 15px" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
+      <span>
+         <span>Crear Pregunta</span>
+      </span>
+   </button>
+
+   <button (click)="openCreateCategory()" style="color: #ffffff; margin-left: 15px" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
+      <span>
+         <span>Crear Categoría</span>
+      </span>
+   </button>
+
+   <button (click)="openCreateSubcategory()" style="color: #ffffff; margin-left: 15px" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
+      <span>
+         <span>Crear Subcategoría</span>
+      </span>
+   </button>
+</div>
+<div class="m-portlet m-portlet--mobile">
+   <!-- CARD HEADER -->
+   <div class="m-portlet__head">
+      <!-- TITULO HEADER -->
+      <div class="m-portlet__head-caption">
+         <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+               Progreso de Cursos Activos
+            </h3>
+         </div>
+      </div>
+      <!-- FIN TITULO -->
+      <!-- ACCIONES HEADER -->
+
+      <!-- FIN ACCIONES HEADER -->
+   </div>
+   <!-- FIN CARD HEADER -->
+
+   <!-- CARD BODY -->
+   <div class="m-portlet__body m-portlet__body--no-padding">
+      <div class="row m-row--no-padding m-row--col-separator-xl">
+         <div class="col-xl-4">
+            <div class="m-widget14">
+               <div class="m-widget14__header" style="padding-top: 0">
+                  <h5 class="m-widget14__title" style="font-size: 1.1rem">Programación Básica</h5>
+                  <span class="m-widget14__desc">Semestre 2 - Grupo A</span>
+               </div>
+               <div style="height: 200px;" echarts [options]="options"></div>
+            </div>
+         </div>
+         <div class="col-xl-4" *ngIf="courses && courses.length > 0">
+            meta curso {{courses[0].course_goal}} <br>
+            meta estudiante {{courses[0].student_goal}}
+         </div>
+         <div class="col-xl-4">
+            <div class="m-widget14">
+               <div class="m-widget14__header" style="padding-top: 0">
+                  <h5 class="m-widget14__title" style="font-size: 1.1rem">Programación Básica</h5>
+                  <span class="m-widget14__desc">Semestre 2 - Grupo A</span>
+               </div>
+               <div *ngIf="courses" style="height: 200px;" echarts [options]="options2"></div>
+            </div>
+         </div>
+      </div>
+
+      <!--
+      <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+
+         <table class="cw-table">
+            <thead>
+               <tr>
+                  <th class="center">#</th>
+                  <th>Asignatura</th>
+                  <th>Categoría</th>
+                  <th>Subcategoría</th>
+                  <th>Pregunta</th>
+                  <th>Dificultad</th>
+                  <th>Compartida</th>
+                  <th>Creada</th>
+                  <th>Última Actualización</th>
+                  <th class="center">Acciones</th>
+               </tr>
+            </thead>
+
+            <tbody>
+               <tr *ngFor="let question of questions; let i=index">
+                  <td class="center">{{i+1}}</td>
+                  <td>{{question.subject}}</td>
+                  <td>{{question.category}}</td>
+                  <td class="nowrap">{{question.subcategory}}</td>
+                  <td>{{question.description}}</td>
+                  <td>{{question.difficulty}}</td>
+                  <td>{{question.shared}}</td>
+                  <td class="nowrap">{{question.created_at}}</td>
+                  <td class="nowrap">{{question.updated_at}}</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>-->
+   </div>
+
+   <div class="m-portlet__foot">
+      <div class="row align-items-center">
+         <div class="col-lg-12 m--align-right">
+            <button class="btn btn-primary">Crear Pregunta</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="m-portlet m-portlet--mobile">
+   <!-- CARD HEADER -->
+   <div class="m-portlet__head">
+      <!-- TITULO HEADER -->
+      <div class="m-portlet__head-caption">
+         <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+               Últimas Preguntas Añadidas
+            </h3>
+         </div>
+      </div>
+      <!-- FIN TITULO -->
+      <!-- ACCIONES HEADER -->
+
+      <!-- FIN ACCIONES HEADER -->
+   </div>
+   <!-- FIN CARD HEADER -->
+
+   <!-- CARD BODY -->
+   <div class="m-portlet__body">
+
+      <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+
+         <table class="cw-table">
+            <thead>
+               <tr>
+                  <th class="center">#</th>
+                  <th>Asignatura</th>
+                  <th>Categoría</th>
+                  <th>Subcategoría</th>
+                  <th>Pregunta</th>
+                  <th>Dificultad</th>
+                  <th>Compartida</th>
+                  <th class="center">Creada</th>
+                  <th class="center">Última Actualización</th>
+                  <th class="center">Acciones</th>
+               </tr>
+            </thead>
+
+            <tbody>
+               <tr *ngFor="let question of questions; let i=index">
+                  <td class="center">{{i+1}}</td>
+                  <td>{{question.subject}}</td>
+                  <td>{{question.category}}</td>
+                  <td class="nowrap">{{question.subcategory}}</td>
+                  <td>{{question.description}}</td>
+                  <td>
+                     <!-- {{question.difficulty}} -->
+                     <span style="font-size:0.8rem; margin-top: 3px; color: #ffffff" class="center m-badge m-badge--wide"
+                        [ngClass]="(question.difficulty == 1) ? 'm-badge--success' : (question.difficulty == 2 ? 'm-badge--warning' : 'm-badge--danger')">
+                        {{question.difficulty == 1 ? 'Fácil' : question.difficulty == 2 ? 'Medio' : 'Díficil'}}
+                     </span>
+                  </td>
+                  <td>
+                     <span class="m-badge m-badge--dot" [ngClass]="(question.shared)?'m-badge--success':'m-badge--danger'"></span>
+                     &nbsp;
+
+                     <span class="m--font-bold" [ngClass]="(question.shared)?'m--font-success':'m--font-danger'">
+                        {{question.shared ? 'Si' : 'No'}}
+                     </span>
+                  </td>
+                  <td class="nowrap center">{{question.created_at | timeAgo}}</td>
+                  <td class="nowrap center">{{question.updated_at | timeAgo}}</td>
+                  <td>
+                     <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
+                        <a (click)="updateQuestion(question)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
+                           <i class="la la-edit"></i>
+                        </a>
+                        <a [swal]="deleteSwal" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                           <i class="la la-trash"></i>
+                        </a>
+                        <swal #deleteSwal (confirm)="deleteQuestion(question.id_question)" [options]="SWAL_DELETE_QUESTION"></swal>
+                     </span>
+                  </td>
+               </tr>
+            </tbody>
+            <swal #successSwal [options]="SWAL_SUCCESS_DELETE_QUESTION"></swal>
+         </table>
+      </div>
+   </div>
+
+   <div class="m-portlet__foot">
+      <div class="row align-items-center">
+         <div class="col-lg-12 m--align-right">
+            <button (click)="openCreateAnswer()" class="btn btn-primary">Crear Pregunta</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="m-portlet m-portlet--mobile">
+   <!-- CARD HEADER -->
+   <div class="m-portlet__head">
+      <!-- TITULO HEADER -->
+      <div class="m-portlet__head-caption">
+         <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+               Últimas Actualizaciones en Cursos
+            </h3>
+         </div>
+      </div>
+      <!-- FIN TITULO -->
+      <!-- ACCIONES HEADER -->
+
+      <!-- FIN ACCIONES HEADER -->
+   </div>
+   <!-- FIN CARD HEADER -->
+
+   <!-- CARD BODY -->
+   <div class="m-portlet__body">
+
+      <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+
+         <table class="cw-table">
+            <thead>
+               <tr>
+                  <th class="center">#</th>
+                  <th>Asignatura</th>
+                  <th>Curso</th>
+                  <th class="center">Código</th>
+                  <th class="center">Meta por Curso</th>
+                  <th class="center">Meta por Estudiante</th>
+                  <th class="center">Año</th>
+                  <th class="center">Semestre</th>
+                  <th>Estado</th>
+                  <th class="center">Creado</th>
+                  <th class="center">Última Actualización</th>
+                  <th class="center">Acciones</th>
+               </tr>
+            </thead>
+
+            <tbody>
+               <tr *ngFor="let course of courses; let i=index">
+                  <td class="center">{{i+1}}</td>
+                  <td class="nowrap">{{course.subject}}</td>
+                  <td>{{course.name}}</td>
+                  <td class="center">{{course.code | uppercase}}</td>
+                  <td class="center">{{course.course_goal}}</td>
+                  <td class="center">{{course.student_goal}}</td>
+                  <td class="center">{{course.year}}</td>
+                  <td class="center">{{course.semester}}</td>
+                  <td class="nowrap">
+                     <span style="width: 100%">
+                        <span class="m-badge m-badge--dot" [ngClass]="course.active ? 'm-badge--success' : 'm-badge--danger'"></span>
+                        &nbsp;
+                        <span class="m--font-bold" [ngClass]="course.active ? 'm--font-success' : 'm--font-danger'">
+                           {{course.active ? 'Activo': 'Inactivo'}}</span>
+                     </span>
+                  </td>
+                  <td class="nowrap center">{{course.created_at | timeAgo}}</td>
+                  <td class="nowrap center">{{course.updated_at | timeAgo}}</td>
+                  <td>
+                     <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
+                        <a (click)="updateCourse(course)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
+                           <i class="la la-edit"></i>
+                        </a>
+                        <a [swal]="deleteSwal2" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                           <i class="la la-trash"></i>
+                        </a>
+                        <swal #deleteSwal2 (confirm)="deleteCourse(course.id_course)" [options]="SWAL_DELETE_COURSE"></swal>
+                     </span>
+                  </td>
+               </tr>
+            </tbody>
+            <swal #successSwal2 [options]="SWAL_SUCCESS_DELETE_COURSE"></swal>
+         </table>
+      </div>
+   </div>
+
+   <div class="m-portlet__foot">
+      <div class="row align-items-center">
+         <div class="col-lg-12 m--align-right">
+            <button (click)="openCreateCourse()" class="btn btn-primary">Crear Curso</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="m-portlet m-portlet--mobile">
+   <!-- CARD HEADER -->
+   <div class="m-portlet__head">
+      <!-- TITULO HEADER -->
+      <div class="m-portlet__head-caption">
+         <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+               Últimas Categorías Añadidas
+            </h3>
+         </div>
+      </div>
+      <!-- FIN TITULO -->
+      <!-- ACCIONES HEADER -->
+
+      <!-- FIN ACCIONES HEADER -->
+   </div>
+   <!-- FIN CARD HEADER -->
+
+   <!-- CARD BODY -->
+   <div class="m-portlet__body">
+
+      <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+
+         <table class="cw-table">
+            <thead>
+               <tr>
+                  <th class="center">#</th>
+                  <th>Asignatura</th>
+                  <th>Categoría</th>
+                  <th class="center">Creado</th>
+                  <th class="center">Última Actualización</th>
+                  <th class="center">Acciones</th>
+               </tr>
+            </thead>
+
+            <tbody>
+               <tr *ngFor="let category of categories; let i=index">
+                  <td class="center">{{i+1}}</td>
+                  <td class="nowrap">{{category.subject}}</td>
+                  <td class="nowrap">{{category.name | titlecase }}</td>
+                  <td class="nowrap center">{{category.created_at | timeAgo}}</td>
+                  <td class="nowrap center">{{category.updated_at | timeAgo}}</td>
+                  <td>
+                     <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
+                        <a (click)="updateCategory(category)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
+                           <i class="la la-edit"></i>
+                        </a>
+                        <a [swal]="deleteSwal3" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                           <i class="la la-trash"></i>
+                        </a>
+                        <swal #deleteSwal3 (confirm)="deleteCategory(category.id_category)" [options]="SWAL_DELETE_CATEGORY"></swal>
+                     </span>
+                  </td>
+               </tr>
+            </tbody>
+            <swal #successSwal3 [options]="SWAL_SUCCESS_DELETE_CATEGORY"></swal>
+         </table>
+      </div>
+   </div>
+   <div class="m-portlet__foot">
+      <div class="row align-items-center">
+         <div class="col-lg-12 m--align-right">
+            <button (click)="openCreateCategory()" class="btn btn-primary">Crear Categoría</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+
+<div class="m-portlet m-portlet--mobile">
+   <!-- CARD HEADER -->
+   <div class="m-portlet__head">
+      <!-- TITULO HEADER -->
+      <div class="m-portlet__head-caption">
+         <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+               Últimas Subcategorías Añadidas
+            </h3>
+         </div>
+      </div>
+      <!-- FIN TITULO -->
+      <!-- ACCIONES HEADER -->
+
+      <!-- FIN ACCIONES HEADER -->
+   </div>
+   <!-- FIN CARD HEADER -->
+
+   <!-- CARD BODY -->
+   <div class="m-portlet__body">
+
+      <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+
+         <table class="cw-table">
+            <thead>
+               <tr>
+                  <th class="center">#</th>
+                  <th>Asignatura</th>
+                  <th>Categoría</th>
+                  <th>Subcategoría</th>
+                  <th class="center">Creado</th>
+                  <th class="center">Última Actualización</th>
+                  <th class="center">Acciones</th>
+               </tr>
+            </thead>
+
+            <tbody>
+               <tr *ngFor="let subcategory of subcategories; let i=index">
+                  <td class="center">{{i+1}}</td>
+                  <td class="nowrap">{{subcategory.subject}}</td>
+                  <td class="nowrap">{{subcategory.category}}</td>
+                  <td class="nowrap">{{subcategory.name}}</td>
+                  <td class="nowrap center">{{subcategory.created_at | timeAgo}}</td>
+                  <td class="nowrap center">{{subcategory.updated_at | timeAgo}}</td>
+                  <td>
+                     <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
+                        <a (click)="updateSubcategory(subcategory)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
+                           <i class="la la-edit"></i>
+                        </a>
+                        <a [swal]="deleteSwal4" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                           <i class="la la-trash"></i>
+                        </a>
+                        <swal #deleteSwal4 (confirm)="deleteSubcategory(subcategory.id_subcategory)" [options]="SWAL_DELETE_SUBCATEGORY"></swal>
+                     </span>
+                  </td>
+               </tr>
+            </tbody>
+            <swal #successSwal4 [options]="SWAL_SUCCESS_DELETE_SUBCATEGORY"></swal>
+         </table>
+      </div>
+   </div>
+
+   <div class="m-portlet__foot">
+      <div class="row align-items-center">
+         <div class="col-lg-12 m--align-right">
+            <button (click)="openCreateSubcategory()" class="btn btn-primary">Crear Subcategoría</button>
+         </div>
+      </div>
+   </div>
+</div>

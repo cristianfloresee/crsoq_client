@@ -1,0 +1,28 @@
+<div class="modal-header">
+   <h4 class="modal-title">Actualizar Modulo</h4>
+   <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
+      <span aria-hidden="true">&times;</span>
+   </button>
+</div>
+
+<form [formGroup]="moduleForm" (ngSubmit)="updateModule(moduleForm.value)" class="m-form m-form--state m-form--label-align-right">
+   <div class="modal-body">
+      <div class="m-portlet__body">
+
+         <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : moduleForm.controls.name.invalid && moduleForm.controls.name.touched }">
+            <label class="form-control-label">Nombre del Modulo:</label>
+            <input type="text" class="form-control m-input" formControlName="name" maxLength="15" autocomplete="nope">
+            <!--===================== ERRORES DE NOMBRE =====================-->
+            <div class="form-control-feedback" *ngIf="moduleForm.controls['name'].hasError('required') && (moduleForm.controls['name'].dirty || moduleForm.controls['name'].touched)">
+               Este campo es requerido.
+            </div>
+            <!-- FIN ERRORES DE NOMBRE -->
+         </div>
+      </div>
+
+   </div>
+   <div class="modal-footer">
+      <button type="button" class="btn btn-info" (click)="activeModal.close()">Cerrar</button>
+      <button type="submit" class="btn btn-info" [disabled]="moduleForm.pristine || moduleForm.invalid">Actualizar</button>
+   </div>
+</form>

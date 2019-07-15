@@ -1,0 +1,71 @@
+//ANGULAR
+import { Directive, AfterViewInit, OnDestroy, ElementRef } from '@angular/core';
+
+//OBJECT-PATH
+import * as objectPath from 'object-path';
+//RXJS
+import { mergeMap } from 'rxjs/operators';
+
+@Directive({
+	selector: '[mMenuAside]'
+})
+export class MenuAsideDirective implements AfterViewInit, OnDestroy {
+	menu: any;
+	config: any;
+	layout: any;
+
+	constructor(
+		private el: ElementRef
+	) {
+      this.initMenu();
+	}
+
+	initMenu(): any {
+
+
+		let scroll;
+		if (mUtil.attr(this.el.nativeElement, 'm-menu-scrollable') === '1') {
+			//const headerHeight = parseInt(window.getComputedStyle(objectPath.get(this.layout, 'header'))['height'], null);
+			scroll = {
+				height: function () {
+					return mUtil.getViewPort().height - 70;
+				}
+			};
+		}
+
+		const options = {
+			// vertical scroll
+			scroll: scroll,
+			// submenu setup
+			submenu: {
+				desktop: {
+					// by default the menu mode set to accordion in desktop mode
+					default: 'accordion',
+					// whenever body has this class switch the menu mode to dropdown
+					state: {
+						body: 'm-aside-left--minimize',
+						mode: 'dropdown'
+					}
+				},
+				tablet: 'accordion', // menu set to accordion in tablet mode
+				mobile: 'accordion' // menu set to accordion in mobile mode
+			},
+			// accordion setup
+			accordion: {
+				autoScroll: false,
+				expandAll: false
+			}
+		};
+
+		// init the mMenu plugin
+		if (this.menu instanceof mMenu) {
+			this.menu.update(options);
+		} else {
+			this.menu = new mMenu(this.el.nativeElement, options);
+		}
+	}
+
+	ngAfterViewInit(): void { }
+
+	ngOnDestroy(): void { }
+}

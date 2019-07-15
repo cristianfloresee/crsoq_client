@@ -1,0 +1,39 @@
+<div class="m-stack m-stack--ver m-stack--general">
+   <!--===================== LOGO METRONIC =====================-->
+   <div class="m-stack__item m-stack__item--middle m-brand__logo">
+      <a routerLink="/" class="m-brand__logo-wrapper">
+         <img alt="" src="./assets/images/logo/logo_default_dark.png" />
+      </a>
+   </div>
+   <!-- FIN LOGO METRONIC-->
+
+   <!--===================== BOTONES DEL MENÚ =====================-->
+   <div class="m-stack__item m-stack__item--middle m-brand__tools">
+
+      <!-- BOTON TOGGLE PARA MINIMIZAR EL MENÚ -->
+      <a href="javascript:;" class="{ 'm-brand__toggler--active': true }" mMenuAsideToggle id="m_aside_left_minimize_toggle" class="m-brand__icon m-brand__toggler m-brand__toggler--left m--visible-desktop-inline-block">
+         <span></span>
+      </a>
+      <!-- END -->
+
+      <!--===================== BOTON TOGGLE PARA ABRIR MENÚ EN MÓVIL =====================-->
+      <a href="javascript:;" id="m_aside_left_offcanvas_toggle" class="m-brand__icon m-brand__toggler m-brand__toggler--left m--visible-tablet-and-mobile-inline-block">
+         <span></span>
+      </a>
+      <!-- END -->
+
+      <!--===================== BOTON TOGGLE QUE ABRE LAS ACCIONES DEL MENÚ COMO MENU DERECHO EN EL MÓVIL =====================-->
+      <a id="m_aside_header_menu_mobile_toggle" href="javascript:;" class="m-brand__icon m-brand__toggler m--visible-tablet-and-mobile-inline-block">
+         <span></span>
+      </a>
+      <!-- END -->
+
+      <!--===================== BOTON 3 PUNTOS QUE MUESTRA EL TOPBAR (BÚSQUEDA, NOTIFICACIONES, PERFIL, ETC) =====================-->
+      <a id="m_aside_header_topbar_mobile_toggle" (click)="clickTopbarToggle($event)" href="javascript:;" class="m-brand__icon m--visible-tablet-and-mobile-inline-block">
+         <i class="flaticon-more"></i>
+      </a>
+      <!-- BEGIN: Topbar Toggler -->
+   </div>
+   <!-- FIN BOTONES DEL MENÚ -->
+
+</div>

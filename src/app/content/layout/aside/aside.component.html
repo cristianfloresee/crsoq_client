@@ -1,0 +1,350 @@
+<!-- Usar ngSwitch en vez de ngIf -->
+
+<div mMenuAside id="m_ver_menu" class="m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark"
+   m-menu-vertical="1" m-menu-scrollable="1" m-menu-dropdown-timeout="500" style="position: relative;">
+
+   <ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
+
+      <!-- [ngClass]="{ 'm-menu__item--active': isItemActive(current_role.url)}" -->
+      <li class="m-menu__item" aria-haspopup="true" [ngClass]="{ 'm-menu__item--active': isItemActive()}">
+         <a [routerLinkActive]="['active']" [routerLink]="['/',current_role.url]" class="m-menu__link">
+            <i class="m-menu__link-icon flaticon-line-graph"></i>
+            <span class="m-menu__link-title">
+               <span class="m-menu__link-wrap">
+                  <span class="m-menu__link-text">Inicio</span>
+               </span>
+            </span>
+         </a>
+      </li>
+
+
+
+      <ng-container *ngIf="current_role.role == 1">
+         <!-- SEPARADOR -->
+         <li class="m-menu__section ">
+            <h4 class="m-menu__section-text">SECCIONES</h4>
+            <i class="m-menu__section-icon flaticon-more-v2"></i>
+         </li>
+         <!-- FIN SEPARADOR-->
+         <li *ngFor="let item of my_menu" class="m-menu__item" aria-haspopup="true" [ngClass]="{ 'm-menu__item--active': isItemActive(item)}">
+            <a [routerLinkActive]="['active']" [routerLink]="[item.url]" class="m-menu__link m-menu__toggle">
+               <!---->
+               <span class="m-menu__link-text">{{item.title}}</span>
+            </a>
+         </li>
+      </ng-container>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <!-- MENÚ DE PROFESOR -->
+      <ng-container *ngIf="current_role.role == 2">
+
+         <li class="m-menu__section ">
+            <h4 class="m-menu__section-text">MIS CURSOS</h4>
+            <i class="m-menu__section-icon flaticon-more-v2"></i>
+         </li>
+
+
+         <!-- ASIGNATURAS -->
+         <li *ngIf="my_menu && my_menu.length == 0" class="m-menu__item m-menu__item--submenu" aria-haspopup="true"
+            m-menu-submenu-toggle="hover">
+
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+               <span class="m-menu__link-text">(Crear Curso)</span>
+               <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+
+         </li>
+
+
+         <li *ngFor="let subject of my_menu" class="m-menu__item m-menu__item--submenu" aria-haspopup="true"
+            m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+               <span class="m-menu__link-text">{{subject.subject}}</span>
+               <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+
+            <!-- SUBMENU ASIGNATURA -->
+            <div class="m-menu__submenu">
+               <span class="m-menu__arrow"></span>
+               <ul class="m-menu__subnav">
+
+                  <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                     <span class="m-menu__link">
+                        <span class="m-menu__link-text">{{subject.subject}}</span>
+                     </span>
+                  </li>
+
+                  <li class="m-menu__item " aria-haspopup="true">
+                     <a [routerLink]="['subject', subject.id_subject, 'library']" class="m-menu__link">
+                        <i class="m-menu__link-bullet m-menu__link-bullet--line">
+                           <span></span>
+                        </i>
+                        <span class="m-menu__link-text">Biblioteca</span>
+                     </a>
+                  </li>
+
+                  <li class="m-menu__item " aria-haspopup="true">
+                     <a [routerLink]="['subject', subject.id_subject, 'config']" class="m-menu__link">
+                        <i class="m-menu__link-bullet m-menu__link-bullet--line">
+                           <span></span>
+                        </i>
+                        <span class="m-menu__link-text">Configuración</span>
+                     </a>
+                  </li>
+
+                  <li *ngFor="let year of subject.years" class="m-menu__item m-menu__item--submenu" aria-haspopup="true"
+                     m-menu-submenu-toggle="hover">
+
+                     <a [href]="" class="m-menu__link m-menu__toggle">
+                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                           <span></span>
+                        </i>
+                        <span class="m-menu__link-text b500">{{year.year}}</span>
+                        <i class="m-menu__ver-arrow la la-angle-right"></i>
+                     </a>
+
+                     <div class="m-menu__submenu">
+                        <span class="m-menu__arrow"></span>
+                        <ul class="m-menu__subnav">
+
+                           <li *ngFor="let semester of year.semesters" class="m-menu__item  m-menu__item--submenu"
+                              aria-haspopup="true" m-menu-submenu-toggle="hover">
+
+                              <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                                 <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                    <span></span>
+                                 </i>
+                                 <span class="m-menu__link-text b500">Semestre {{semester.semester}}</span>
+                                 <i class="m-menu__ver-arrow la la-angle-right"></i>
+                              </a>
+
+                              <div *ngFor="let group of semester.courses" class="m-menu__submenu">
+                                 <span class="m-menu__arrow"></span>
+                                 <ul class="m-menu__subnav">
+
+                                    <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"
+                                       m-menu-submenu-toggle="hover">
+                                       <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                                          <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                             <span></span>
+                                          </i>
+                                          <span class="m-menu__link-text">{{group.name}}</span>
+                                          <i class="m-menu__ver-arrow la la-angle-right"></i>
+                                       </a>
+                                       <div class="m-menu__submenu ">
+                                          <span class="m-menu__arrow"></span>
+                                          <ul class="m-menu__subnav">
+                                             <li class="m-menu__item " aria-haspopup="true">
+                                                <a [routerLink]="['subject', group.id_subject, 'course', group.id_course, 'lesson']"
+                                                   class="m-menu__link">
+                                                   <i class="m-menu__link-bullet m-menu__link-bullet--line">
+                                                      <span></span>
+                                                   </i>
+                                                   <span class="m-menu__link-text">Clases</span>
+                                                </a>
+                                             </li>
+                                             <li class="m-menu__item " aria-haspopup="true">
+                                                <a [routerLink]="['subject', group.id_subject, 'course', group.id_course, 'activities']"
+                                                   class="m-menu__link">
+                                                   <i class="m-menu__link-bullet m-menu__link-bullet--line">
+                                                      <span></span>
+                                                   </i>
+                                                   <span class="m-menu__link-text">Actividades</span>
+                                                </a>
+                                             </li>
+
+                                             <li class="m-menu__item " aria-haspopup="true">
+                                                <a [routerLink]="['subject', group.id_subject, 'course', group.id_course, 'questions']"
+                                                   class="m-menu__link">
+                                                   <i class="m-menu__link-bullet m-menu__link-bullet--line">
+                                                      <span></span>
+                                                   </i>
+                                                   <!-- {{subject | json}} subject no tiene el id!!!!!!!!!! -->
+                                                   <span class="m-menu__link-text">Preguntas</span>
+                                                </a>
+                                             </li>
+
+                                             <li class="m-menu__item " aria-haspopup="true">
+                                                <a [routerLink]="['subject', group.id_subject, 'course', group.id_course, 'statistics']"
+                                                   class="m-menu__link">
+                                                   <i class="m-menu__link-bullet m-menu__link-bullet--line">
+                                                      <span></span>
+                                                   </i>
+                                                   <span class="m-menu__link-text">Estadísticas</span>
+                                                </a>
+                                             </li>
+                                             <li class="m-menu__item " aria-haspopup="true">
+                                                <a [routerLink]="['subject', group.id_subject, 'course', group.id_course, 'config']"
+                                                   class="m-menu__link">
+                                                   <i class="m-menu__link-bullet m-menu__link-bullet--line">
+                                                      <span></span>
+                                                   </i>
+                                                   <span class="m-menu__link-text">Configuración</span>
+                                                </a>
+                                             </li>
+                                          </ul>
+                                       </div>
+                                    </li>
+                                 </ul>
+                              </div>
+
+
+                           </li>
+                        </ul>
+                     </div>
+                  </li>
+               </ul>
+            </div>
+         </li>
+
+      </ng-container>
+
+
+
+
+
+
+
+
+      <ng-container *ngIf="current_role.role == 3">
+
+         <li class="m-menu__section ">
+            <h4 class="m-menu__section-text">MIS CURSOS</h4>
+            <i class="m-menu__section-icon flaticon-more-v2"></i>
+         </li>
+
+
+         <!-- ASIGNATURAS -->
+         <li *ngIf="my_menu && my_menu.length == 0" class="m-menu__item m-menu__item--submenu" aria-haspopup="true"
+            m-menu-submenu-toggle="hover">
+
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+               <span class="m-menu__link-text">Ningún Curso</span>
+            </a>
+
+         </li>
+
+
+         <li *ngFor="let year of my_menu" class="m-menu__item m-menu__item--submenu" aria-haspopup="true"
+            m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+               <span class="m-menu__link-text">{{year.year}}</span>
+               <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+
+
+            <div class="m-menu__submenu">
+               <span class="m-menu__arrow"></span>
+               <ul class="m-menu__subnav">
+
+                  <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                     <span class="m-menu__link">
+                        <span class="m-menu__link-text">{{year.year}}</span>
+                     </span>
+                  </li>
+
+                  <li *ngFor="let semester of year.semesters" class="m-menu__item m-menu__item--submenu" aria-haspopup="true"
+                     m-menu-submenu-toggle="hover">
+
+                     <a [href]="" class="m-menu__link m-menu__toggle">
+                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                           <span></span>
+                        </i>
+                        <span class="m-menu__link-text b500">Semestre {{semester.semester}}</span>
+                        <i class="m-menu__ver-arrow la la-angle-right"></i>
+                     </a>
+
+                     <div *ngFor="let course of semester.courses" class="m-menu__submenu">
+                        <span class="m-menu__arrow"></span>
+                        <ul class="m-menu__subnav">
+
+                           <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                              <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                                 <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                    <span></span>
+                                 </i>
+                                 <span class="m-menu__link-text">{{course.subject}}</span>
+                                 <i class="m-menu__ver-arrow la la-angle-right"></i>
+                              </a>
+                              <!--  -->
+                              <div class="m-menu__submenu ">
+                                 <span class="m-menu__arrow"></span>
+                                 <ul class="m-menu__subnav">
+                                    <li class="m-menu__item " aria-haspopup="true">
+                                       <a [routerLink]="['course', course.id_course, 'classes']" class="m-menu__link">
+                                          <i class="m-menu__link-bullet m-menu__link-bullet--line">
+                                             <span></span>
+                                          </i>
+                                          <span class="m-menu__link-text">Clases</span>
+                                       </a>
+                                    </li>
+                                    <li class="m-menu__item " aria-haspopup="true">
+                                       <a [routerLink]="['course', course.id_course, 'activities']" class="m-menu__link">
+                                          <i class="m-menu__link-bullet m-menu__link-bullet--line">
+                                             <span></span>
+                                          </i>
+                                          <span class="m-menu__link-text">Actividades</span>
+                                       </a>
+                                    </li>
+
+                                    <li class="m-menu__item " aria-haspopup="true">
+                                       <a [routerLink]="['course', course.id_course, 'questions']" class="m-menu__link">
+                                          <i class="m-menu__link-bullet m-menu__link-bullet--line">
+                                             <span></span>
+                                          </i>
+
+                                          <span class="m-menu__link-text">Preguntas</span>
+                                       </a>
+                                    </li>
+
+
+                                 </ul>
+                              </div>
+
+
+                           </li>
+                        </ul>
+                     </div>
+
+
+                  </li>
+               </ul>
+            </div>
+         </li>
+
+      </ng-container>
+
+
+      <li (click)="logout()" style="margin-top: 50px" class="m-menu__item  m-menu__item" aria-haspopup="true">
+         <a routerLink="/" class="m-menu__link">
+            <i class="m-menu__link-icon flaticon-line-graph"></i>
+            <span class="m-menu__link-title">
+               <span class="m-menu__link-wrap">
+                  <span class="m-menu__link-text">Cerrar Sesión</span>
+               </span>
+            </span>
+         </a>
+      </li>
+   </ul>
+</div>

@@ -1,0 +1,79 @@
+<div class="form-group m-form__group m--margin-top-10">
+   <div class="alert m-alert m-alert--default" role="alert">
+      En esta sección encontrarás los estudiantes inscritos al curso.
+   </div>
+</div>
+
+
+<div class="m-portlet__body">
+
+   <!-- SECCIÓN DE FILTRO Y BUSQUEDA -->
+   <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+      <div class="row align-items-center">
+         <div class="col-xl-12 order-1 order-xl-2 m--align-right">
+
+            <button (click)="addStudent()" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
+               <span>
+                  <span>Añadir Estudiante</span>
+               </span>
+            </button>
+            <div class="m-separator m-separator--dashed d-xl-none"></div>
+         </div>
+      </div>
+   </div>
+   <!-- FIN FILTRO/BUSQUEDA -->
+
+   <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+
+      <table class="cw-table">
+         <thead>
+            <tr>
+               <th class="center">#</th>
+               <th>Usuario</th>
+               <th>Documento</th>
+               <th>Nombres</th>
+               <th>Apellido Paterno</th>
+               <th>Apellido Materno</th>
+               <th>Correo Electrónico</th>
+               <th>Estado</th>
+               <th class="center">Fecha de Inscripción</th>
+               <th class="center">Acciones</th>
+            </tr>
+         </thead>
+
+         <tbody>
+            <tr *ngFor="let student of students; let i=index">
+               <td>{{i+1}}</td>
+               <td class="nowrap">{{student.username}}</td>
+               <td>{{student.document}}</td>
+               <td>{{student.name}}</td>
+               <td>{{student.last_name}}</td>
+               <td>{{student.middle_name}}</td>
+               <td>{{student.email}}</td>
+               <td class="nowrap">
+
+                  <span style="width: 100%">
+                        <span class="m-badge m-badge--dot" [ngClass]="(student.active)?'m-badge--success':'m-badge--danger'"></span>
+                        &nbsp;
+                        <span class="m--font-bold" [ngClass]="(student.active)?'m--font-success':'m--font-danger'">
+                           {{student.active ? 'Activo': 'Inactivo'}}</span>
+                     </span>
+               </td>
+               <td class="nowrap center">{{student.enrolled_at | timeAgo}}</td>
+               <td>
+                  <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
+                     <a (click)="changeStatus(student)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
+                        <i class="la la-edit"></i>
+                     </a>
+                     <a [swal]="deleteSwal" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                        <i class="la la-trash"></i>
+                     </a>
+                     <swal #deleteSwal (confirm)="deleteStudent(student.id_user)" [options]="SWAL_DELETE_STUDENT"></swal>
+                  </span>
+               </td>
+            </tr>
+         </tbody>
+         <swal #successSwal [options]="SWAL_SUCCESS_DELETE_STUDENT"></swal>
+      </table>
+   </div>
+</div>

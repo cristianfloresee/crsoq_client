@@ -1,0 +1,96 @@
+<div class="modal-header">
+   <h4 class="modal-title">Ganadores</h4>
+   <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
+      <span aria-hidden="true">&times;</span>
+   </button>
+</div>
+
+<div class="modal-body">
+
+
+   <div class="m-portlet__body">
+
+      <!-- LEYENDA -->
+      <div class="form-group m-form__group m--margin-top-10">
+         <div class="alert m-alert m-alert--default" role="alert">
+            <ul>
+               <li><b>Estudiantes Ganadores:</b> {{total_winners}}</li>
+            </ul>
+            <!-- Estudiantes ganadores de la {{activity ? 'actividad' : 'pregunta'}}: {{total_winners}} -->
+         </div>
+      </div>
+
+      <div class="m-portlet__body">
+         <div class="form-group m-form__group row">
+
+
+            <!-- BODY 1 -->
+            <div class="col-lg-6">
+               <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+
+                  <table class="cw-table">
+                     <thead>
+                        <tr>
+                           <th class="center">#</th>
+                           <th class="center">Cédula</th>
+                           <th>Estudiante</th>
+                           <th>Ganador</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+
+                        <tr *ngFor="let student of data_students; let i=index">
+                           <td>{{i+1}}</td>
+                           <td class="center">{{student.document}}</td>
+                           <td class="nowrap">{{student.name}} {{student.last_name}} {{student.middle_name}}</td>
+
+                           <td class="center">
+                              <div *ngIf="activity; else question" style="width: 50%; cursor: pointer;" (click)="changeWinnerStatus(student)">
+
+                                 <!-- En una actividad existen 2 estados para el estudiante -->
+
+                                    <img *ngIf="student.status == 2; else blank" src="assets/images/checked.svg" alt="">
+                                    <ng-template #blank>
+                                       <img src="assets/images/blank.svg" alt="">
+                                    </ng-template>
+
+                              </div>
+                              <ng-template #question>
+                                 <div>
+                                    <!-- En una pregunta existen 4 estados para el estudiante -->
+                                    <!-- Debeería ser un selector para cambiar los estados?? -->
+                                    {{(student.status == 1) ? 'no participa':
+                                    (student.status == 2) ? 'no seleccionado':
+                                    (student.status == 3) ? 'perdedor':
+                                    (student.status == 4) ? 'ganador' :
+                                    'desconocido'}}
+                                 </div>
+                              </ng-template>
+                           </td>
+                        </tr>
+
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+
+
+            <!-- BODY 2 -->
+            <div class="col-lg-6">
+
+            </div>
+
+
+         </div>
+      </div>
+
+   </div>
+
+
+
+</div>
+
+<div class="modal-footer">
+   <button type="button" class="btn btn-info" (click)="activeModal.close()">Cerrar</button>
+   <button *ngIf="activity" type="submit" (click)="updateWinners()" class="btn btn-info" [disabled]="winner_status_request.length == 0">Actualizar</button>
+</div>

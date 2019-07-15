@@ -1,0 +1,81 @@
+<div class="modal-header">
+   <h4 class="modal-title">Nueva Inscripción</h4>
+   <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
+      <span aria-hidden="true">&times;</span>
+   </button>
+</div>
+
+<form [formGroup]="searchForm" (ngSubmit)="searchCourse(searchForm.value.code)" class="m-form m-form--state m-form--label-align-right">
+   <div class="modal-body">
+      <div class="m-portlet__body">
+
+         <div class="form-group m-form__group m--margin-top-10">
+            <div class="alert m-alert m-alert--default" role="alert">
+               Ingrese el <b>Código de Curso</b> para inscribirse en el curso deseado.
+               Si aún no tiene el código de curso pongase en contacto con su profesor.
+            </div>
+         </div>
+
+
+         <div class="m-portlet__body">
+            <div class="form-group m-form__group row">
+               <div class="col-lg-12">
+
+                  <div  style="margin-top: 20px;">
+                     <label class="form-control-label">Código de Curso:</label>
+                     <input type="text" class="form-control m-input" formControlName="code" maxLength="15"
+                        autocomplete="nope">
+
+                     <ul class="filter-select" style="padding: 0; position: inherit; width: 100%">
+                        <li *ngFor="let result of search_results" class="filter-select-list">
+                           <img src="https://orig00.deviantart.net/0022/f/2012/168/4/7/untitled_drawing_by_silverwillows4-d53u9pt.png"
+                              alt="" width="50" height="50">
+                           <p class="artist-name">
+                              {{result.subject}}</p>
+
+
+                           <span class="tags" style="top: 5px;" [ngClass]="(result.enrolled) ? 'm--font-success':'m--font-danger'">{{
+                              result.enrolled ? 'Inscrito' : 'No Inscrito'}}</span>
+
+                           <ng-container *ngIf="!result.enrolled; else delete">
+                              <a class="btn btn-success m-btn m-btn--icon m-btn--icon-only" style="position: absolute; right: 20px; color: #fff;"
+                                 (click)="createEnrollment(result)">
+                                 <i class="la la-plus"></i>
+                              </a>
+                           </ng-container>
+
+                           <ng-template #delete>
+                              <a [swal]="deleteSwal" class="btn btn-danger m-btn m-btn--icon m-btn--icon-only" style="position: absolute; right: 20px; color: #fff;">
+                                 <i class="la la-times"></i>
+                              </a>
+
+                              <swal #deleteSwal (confirm)="deleteEnrollment(result)" [options]="SWAL_DELETE_ENROLLMENT"></swal>
+                              <swal #successSwal [options]="SWAL_SUCCESS_DELETE_ENROLLMENT"></swal>
+                           </ng-template>
+
+                        </li>
+                     </ul>
+
+
+                     <div class="form-control-feedback" *ngIf="searchForm.controls['code'].hasError('required') && (searchForm.controls['code'].dirty || searchForm.controls['code'].touched)">
+                        Este campo es requerido.
+                     </div>
+                     <button type="submit" style="margin-top: 10px;" class="btn btn-info" [disabled]="searchForm.invalid">Buscar</button>
+
+                  </div>
+               </div>
+
+            </div>
+         </div>
+
+
+
+
+      </div>
+
+   </div>
+   <div class="modal-footer">
+      <button type="button" class="btn btn-info" (click)="activeModal.close(data_updated)">Cerrar</button>
+
+   </div>
+</form>

@@ -1,0 +1,202 @@
+<div class="modal-header">
+      <h4 class="modal-title">{{action}} Pregunta</h4>
+      <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
+         <span aria-hidden="true">&times;</span>
+      </button>
+   </div>
+
+   <div class="modal-body">
+
+
+      <div class="m-portlet__body">
+
+
+         <div class="form-group m-form__group m--margin-top-10">
+            <div class="alert m-alert m-alert--default" role="alert">
+               Esta pregunta se almacenará en la <b>biblioteca</b> y posteriormente podrás vincularla a
+               tus cursos.
+            </div>
+         </div>
+
+
+         <!--
+         <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+            <form [formGroup]="filterForm" (ngSubmit)="filterItems(filterForm.value)">
+
+               <div class="row align-items-center">
+
+                  <div class="col-xl-12">
+                     <div class="col-xl-12 order-1 order-xl-2 m--align-right">
+                        <button type="submit" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill"
+                           [disabled]="filterForm.value.id_category === lock_id_category && filterForm.value.id_subcategory === lock_id_subcategory && filterForm.value.difficulty === lock_difficulty">
+                           <span>
+                              <span>Filtrar</span>
+                           </span>
+                        </button>
+                        <button type="button" (click)="createQuestion()" style="color: #ffffff; margin-left: 10px;" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
+                           <span>
+                              <span>Crear Pregunta</span>
+                           </span>
+                        </button>
+                        <div class="m-separator m-separator--dashed d-xl-none"></div>
+                     </div>
+                     <br>
+                  </div>
+
+                  <div class="col-xl-12">
+
+                     <div class="form-group m-form__group row align-items-center">
+                        <div class="col-md-4">
+                           <div class="m-form__group m-form__group--inline">
+                              <div class="m-form__label">
+                                 <label>Categoría:</label>
+                              </div>
+                              <div class="m-form__control">
+                                 <select formControlName="id_category" class="form-control m-bootstrap-select">
+                                    <option value="">Todos</option>
+                                    <option *ngFor="let category of options_category" [value]="category.id_category">{{category.name}}</option>
+                                 </select>
+                              </div>
+                           </div>
+                           <div class="d-md-none m--margin-bottom-10"></div>
+                        </div>
+
+                        <div class="col-md-4">
+                           <div class="m-form__group m-form__group--inline">
+                              <div class="m-form__label">
+                                 <label class="m-label m-label--single">Subcategoría:</label>
+                              </div>
+                              <div class="m-form__control">
+                                 <select formControlName="id_subcategory" class="form-control m-bootstrap-select" id="m_form_type">
+                                    <option value="">Todos</option>
+                                    <option *ngFor="let subcategory of options_subcategory" [value]="subcategory.id_subcategory">{{subcategory.name}}</option>
+                                 </select>
+                              </div>
+                           </div>
+                           <div class="d-md-none m--margin-bottom-10"></div>
+                        </div>
+
+                        <div class="col-md-4">
+                           <div class="m-form__group m-form__group--inline">
+                              <div class="m-form__label">
+                                 <label class="m-label m-label--single">Dificultad:</label>
+                              </div>
+                              <div class="m-form__control">
+                                 <select formControlName="difficulty" class="form-control m-bootstrap-select" id="m_form_type">
+                                    <option value="">Todos</option>
+                                    <option *ngFor="let difficulty of options_difficulty" [value]="difficulty.difficulty">{{difficulty.name}}</option>
+                                 </select>
+                              </div>
+                           </div>
+                           <div class="d-md-none m--margin-bottom-10"></div>
+                        </div>
+
+                     </div>
+                  </div>
+               </div>
+            </form>
+         </div>
+
+
+         <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+
+            <table class="cw-table">
+               <thead>
+                  <tr>
+                     <th class="center">#</th>
+
+                     <th>Pregunta</th>
+                     <th>Categoría</th>
+                     <th>Subcategoría</th>
+                     <th>Dificultad</th>
+                     <th class="center">Fecha de Actualización</th>
+
+                     <th class="center">Añadir</th>
+                  </tr>
+               </thead>
+
+
+               <tbody>
+                  <tr *ngFor="let question of data_questions; let i=index">
+                     <td>{{i+1}}</td>
+                     <td class="nowrap">{{question.description}}</td>
+                     <td>{{question.category}}</td>
+                     <td>{{question.subcategory}}</td>
+                     <td>
+                        <span style="font-size:0.8rem; margin-top: 3px; color: #ffffff" class="center m-badge m-badge--wide"
+                           [ngClass]="(question.difficulty == 1) ? 'm-badge--success' : (question.difficulty == 2 ? 'm-badge--warning' : 'm-badge--danger')">
+                           {{question.difficulty == 1 ? 'Fácil' : question.difficulty == 2 ? 'Medio' : 'Díficil'}}
+                        </span>
+                     </td>
+                     <td class="center">{{question.updated_at | timeAgo}}</td>
+                     <td>
+                        <div style="width: 50%; cursor: pointer;" (click)="changeAvailabiltyLessonQuestion(question)">
+                           <img *ngIf="question.added; else blank" src="assets/images/checked.svg" alt="">
+                           <ng-template #blank>
+                              <img src="assets/images/blank.svg" alt="">
+                           </ng-template>
+                        </div>
+                     </td>
+
+                  </tr>
+                  <swal #successSwal [options]="SWAL_SUCCESS_DELETE_QUESTION"></swal>
+               </tbody>
+            </table>
+
+
+
+
+            <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
+               <ul class="m-datatable__pager-nav">
+
+                  <li (click)="getUsersPage(1)">
+                     <a title="Primera" class="m-datatable__pager-link m-datatable__pager-link--first" [ngClass]="{'m-datatable__pager-link--disabled': (from < page_size)}">
+                        <i class="la la-angle-double-left"></i>
+                     </a>
+                  </li>
+
+                  <li (click)="getUsersPage(page-1)">
+                     <a title="Anterior" class="m-datatable__pager-link m-datatable__pager-link--prev" [ngClass]="{'m-datatable__pager-link--disabled': (from < page_size)}">
+                        <i class="la la-angle-left"></i>
+                     </a>
+                  </li>
+
+                  <li *ngFor="let _page of total_pages | fillArray" (click)="getUsersPage(_page)">
+                     <a class="m-datatable__pager-link m-datatable__pager-link-number" [ngClass]="{'m-datatable__pager-link--active': _page == page}">{{_page}}</a>
+                  </li>
+
+                  <li (click)="getUsersPage(page+1)">
+                     <a class="m-datatable__pager-link m-datatable__pager-link--next" [ngClass]="{'m-datatable__pager-link--disabled': ((from/page_size)+1)==total_pages}">
+                        <i class="la la-angle-right"></i>
+                     </a>
+                  </li>
+
+                  <li (click)="getUsersPage(total_pages)">
+                     <a class="m-datatable__pager-link m-datatable__pager-link--next" [ngClass]="{'m-datatable__pager-link--disabled': ((from/page_size)+1)==total_pages}">
+                        <i class="la la-angle-double-right"></i>
+                     </a>
+                  </li>
+               </ul>
+
+
+               <div class="m-datatable__pager-info">
+                  <form [formGroup]="filterForm" style="display:inline;">
+                     <select formControlName="page_size" class="m-datatable__pager-size" style="width:160px" (change)="changePage(filterForm.value)">
+                        <option *ngFor="let page of page_sizes" [ngValue]="page">{{page}}</option>
+                     </select>
+                  </form>
+                  <span class="m-datatable__pager-detail">Mostrando {{total_items ? ((page-1)*page_size + 1) : 0}} -
+                     {{(page_size*page > total_items) ? total_items : (page_size*page)}} de {{total_items}}
+                     preguntas</span>
+               </div>
+            </div>
+         </div>
+      -->
+
+      </div>
+   </div>
+
+   <div class="modal-footer">
+      <button type="button" class="btn btn-info" (click)="activeModal.close()">Cerrar</button>
+      <!-- <button type="submit" (click)="updateLessonQuestions()" class="btn btn-info" [disabled]="add_questions.length == 0 && delete_questions.length == 0">{{action}}</button> -->
+   </div>

@@ -1,0 +1,182 @@
+<div class="modal-header">
+   <h4 class="modal-title">Inscripción de Estudiantes</h4>
+   <button type="button" class="close" aria-label="Close" (click)="activeModal.close(data_updated)">
+      <span aria-hidden="true">&times;</span>
+   </button>
+</div>
+
+<form [formGroup]="studentForm" (ngSubmit)="searchStudent(studentForm.value)" class="m-form m-form--state m-form--label-align-right">
+   <div class="modal-body">
+      <div class="m-portlet__body">
+
+         <div class="form-group m-form__group m--margin-top-10">
+            <div class="alert m-alert m-alert--default" role="alert">
+               Indique a sus estudiantes que se inscriban con el <b>código del curso</b> o inscribalos usted mediante
+               el <b>número de cédula</b>.
+               Recuere que sus estudiantes deben estar registrados en la plataforma para poder inscribirlos.
+            </div>
+         </div>
+
+         <div class="m-portlet__body">
+            <div class="form-group m-form__group row">
+               <div class="col-lg-5">
+
+                  <div>
+                     <label class="form-control-label">Código de Curso:</label>
+                     <input type="text" style="font-size: 4rem; padding: 3rem 2rem; font-weight: 700;" class="form-control m-input"
+                        [value]="course.code" autocomplete="nope" [attr.disabled]="true">
+                     <!--===================== ERRORES DE PATERNO =====================-->
+                     <button type="button" style="margin-top: 10px;" class="btn btn-info">Ampliar</button>
+                     <!-- FIN ERRORES DE PATERNO -->
+                  </div>
+
+                  <!-- <h3>CÓDIGO DE CURSO: {{course.code}}</h3> -->
+
+                  <div  style="margin-top: 20px;">
+                     <label class="form-control-label">Número de Cédula del Estudiante:</label>
+                     <input type="text" class="form-control m-input" formControlName="document" maxLength="15"
+                        autocomplete="nope">
+
+                     <ul class="filter-select" style="padding: 0; position: inherit; width: 100%">
+                        <li *ngFor="let result of results" class="filter-select-list">
+                           <img src="https://orig00.deviantart.net/0022/f/2012/168/4/7/untitled_drawing_by_silverwillows4-d53u9pt.png"
+                              alt="" width="50" height="50">
+                           <p class="artist-name">
+                              {{result.name}} {{result.last_name}} {{result.middle_name}}</p>
+
+                           <span class="tags" style="top: 5px;" [ngClass]="(result.enrolled) ? 'm--font-success':'m--font-danger'">{{
+                              result.enrolled ? 'Inscrito' : 'No Inscrito'}}</span>
+                           <!-- <span class="m--font-bold" [ngClass]="(result.enrolled) ? 'm--font-success':'m--font-danger'">
+                              {{ result.enrolled ? 'Inscrito' : 'No Inscrito'}}
+                           </span> -->
+
+
+                           <!-- <span style="font-size:0.8rem; margin-top: 3px; color: #ffffff"
+                              class="center m-badge m-badge--wide" [ngClass]="(result.enrolled) ? 'm-badge--success' : 'm-badge--danger'">
+                              {{ result.enrolled ? 'Inscrito' : 'No Inscrito'}}
+                           </span> -->
+
+                           <!-- 	flaticon-cancel, flaticon-plus, 	la-plus, la-plus-circle, la-user-plus,	la-times la-user-times, 	la-remove, 	la-times-circle -->
+                           <ng-container *ngIf="!result.enrolled; else delete">
+                              <!-- <button type="button" class="btn btn-success m-btn m-btn--icon m-btn--icon-only" style="position: absolute; right: 20px; border-radius: 3rem; font-size: 1rem; padding: 5px 10px;"
+                                 (click)="createEnrollment(result)">Inscribir
+                              </button> -->
+                              <a class="btn btn-success m-btn m-btn--icon m-btn--icon-only" style="position: absolute; right: 20px; color: #fff;"
+                                 (click)="createEnrollment(result)">
+                                 <i class="la la-plus"></i>
+                              </a>
+                           </ng-container>
+
+                           <ng-template #delete>
+                              <!-- <button type="button" class="btn btn-danger" style="position: absolute; right: 20px; border-radius: 3rem; font-size: 1rem; padding: 5px 10px;"
+                                 (click)="deleteEnrollment(result)">Quitar
+                              </button> -->
+                              <a [swal]="deleteSwal" class="btn btn-danger m-btn m-btn--icon m-btn--icon-only" style="position: absolute; right: 20px; color: #fff;">
+                                 <i class="la la-times"></i>
+                              </a>
+
+                              <swal #deleteSwal (confirm)="deleteEnrollment(result)" [options]="SWAL_DELETE_STUDENT"></swal>
+                              <swal #successSwal [options]="SWAL_SUCCESS_DELETE_STUDENT"></swal>
+                           </ng-template>
+
+                        </li>
+                     </ul>
+                     <!--===================== ERRORES DE PATERNO =====================-->
+                     <div class="form-control-feedback" *ngIf="studentForm.controls['document'].hasError('required') && (studentForm.controls['document'].dirty || studentForm.controls['document'].touched)">
+                        Este campo es requerido.
+                     </div>
+                     <button type="submit" style="margin-top: 10px;" class="btn btn-info" [disabled]="studentForm.invalid">Buscar</button>
+                     <!-- FIN ERRORES DE PATERNO -->
+                  </div>
+               </div>
+
+               <div class="col-xl-7">
+
+
+
+                  <label class="form-control-label">Estudiantes:</label>
+
+
+                  <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+
+                     <table class="cw-table">
+                        <thead>
+                           <tr>
+                              <th class="center">#</th>
+                              <th>Estudiante</th>
+                              <th>Inscrito</th>
+                              <!-- <th class="center">Acciones</th> -->
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr *ngFor="let student of students; let i=index">
+                              <td>{{i+1}}</td>
+                              <!-- <td class="nowrap">{{student.username}}</td> -->
+                              <td class="nowrap">
+                                    <div class="m-widget4__item">
+
+                                          <div class="m-widget4__info">
+                                             <span class="m-widget4__title">
+                                                   {{student.name}} {{student.last_name}} {{student.middle_name}}
+                                             </span><br>
+                                             <span class="m-widget4__sub" style="font-size: .8rem;">
+                                             {{student.email}}
+                                             </span>
+                                          </div>
+
+                                       </div>
+                              </td>
+                              <td>{{student.enrollment_date}}</td>
+                              <!-- <td>{{student.email}}</td>
+                                 <td>{{student.active}}</td>
+                                 <td class="nowrap">{{student.enrollment_date }}</td>
+                                 <td>
+                                    <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
+                                       <a (click)="changeStatus(student)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
+                                          <i class="la la-edit"></i>
+                                       </a>
+                                       <a (click)="deleteStudent(student.id_user)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                                          <i class="la la-trash"></i>
+                                       </a>
+                                    </span>
+                                 </td> -->
+                           </tr>
+                        </tbody>
+                     </table>
+                     <p>Total de Estudiantes: {{students.length}}</p>
+                  </div>
+                  <!-- <section class="filter-wrapper">
+                     <div class="keyword-wrapper">
+                        <input formControlName="query_field" type="text" id="keyword" placeholder="search for artists..."
+                           autofocus />
+                     </div>
+                     <ul class="filter-select" style="padding: 0">
+                        <li *ngFor="let result of results" class="filter-select-list">
+                           <img src="https://orig00.deviantart.net/0022/f/2012/168/4/7/untitled_drawing_by_silverwillows4-d53u9pt.png"
+                              alt="" width="50" height="50">
+                           <p class="artist-name">
+                              {{result.name}}</p>
+
+                           <span class="tags">{{result.enrolled}}</span>
+                     </ul>
+                  </section> -->
+
+
+
+               </div>
+
+
+            </div>
+         </div>
+
+
+
+
+      </div>
+
+   </div>
+   <div class="modal-footer">
+      <button type="button" class="btn btn-info" (click)="activeModal.close(data_updated)">Cerrar</button>
+
+   </div>
+</form>

@@ -1,0 +1,46 @@
+<!-- <a href="#" class="m-nav__link m-dropdown__toggle">
+   <span class="m-nav__link-text">
+      <img class="m-topbar__language-selected-img" src="./assets/images/flags/020-flag.svg">
+   </span>
+</a> -->
+<ng-container *ngLet="roleSrv.role$ | async as index_role">
+   <a href="#" class="m-portlet__nav-link m-dropdown__toggle dropdown-toggle btn btn--sm m-btn--pill btn-secondary m-btn m-btn--label-brand">
+      {{index_role?.name}}
+   </a>
+   <div class="m-dropdown__wrapper">
+      <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+
+      <div class="m-dropdown__inner">
+
+         <!-- DROPDOWN HEADER -->
+         <div class="m-dropdown__header m--align-center" style="background: url(./assets/images/misc/quick_actions_bg.jpg); background-size: cover;">
+            <span class="m-dropdown__header-subtitle">Selecciona un rol</span>
+         </div>
+         <!-- FIN DROPDOWN HEADER -->
+
+         <!-- DROPDOWN BODY -->
+         <div class="m-dropdown__body">
+            <div class="m-dropdown__content">
+               <ul class="m-nav m-nav--skin-light">
+
+
+                  <!-- ##SOLUCIONAR: HACER QUE EL DROPDOWN NO SE CIERRE TAN BRUSCAMENTE -->
+                  <ng-container *ngFor="let role of roles; let i=index">
+                     <li class="m-nav__item m-dropdown__toggle" [ngClass]="{ 'm-nav__item--active': index_role.index == i }"
+                        (click)="changeRole(i)">
+                        <a class="m-nav__link pointer">
+                           <span class="m-nav__link-icon"></span>
+                           <span class="m-nav__link-title m-topbar__language-text m-nav__link-text">{{role?.name}}</span>
+                        </a>
+                     </li>
+                  </ng-container>
+
+               </ul>
+            </div>
+         </div>
+         <!-- FIN DROPDOWN BODY -->
+
+      </div>
+   </div>
+
+</ng-container>

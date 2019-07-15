@@ -1,0 +1,65 @@
+<div class="form-group m-form__group m--margin-top-10">
+   <div class="alert m-alert m-alert--default" role="alert">
+         En esta sección se encuentran las subcategorías para organizar las preguntas.
+   </div>
+</div>
+
+
+<div class="m-portlet__body">
+
+   <!-- SECCIÓN DE FILTRO Y BUSQUEDA -->
+   <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+      <div class="row align-items-center">
+         <div class="col-xl-12 order-1 order-xl-2 m--align-right">
+
+            <button (click)="createSubcategory()" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
+               <span>
+                  <span>Crear Subcategoría</span>
+               </span>
+            </button>
+            <div class="m-separator m-separator--dashed d-xl-none"></div>
+         </div>
+      </div>
+   </div>
+   <!-- FIN FILTRO/BUSQUEDA -->
+
+   <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+
+      <table class="cw-table">
+         <thead>
+            <tr>
+               <th class="center">#</th>
+               <th>Categoría</th>
+               <th>Subcategoría</th>
+               <th class="center">Fecha de Creación</th>
+               <th class="center">Fecha de Actualización</th>
+               <th class="center">Acciones</th>
+            </tr>
+         </thead>
+
+         <tbody>
+
+            <tr *ngFor="let subcategory of data_subcategories; let i=index">
+               <td>{{i+1}}</td>
+               <td class="nowrap">{{subcategory.category}}</td>
+               <td class="nowrap">{{subcategory.name}}</td>
+               <td class="nowrap center">{{subcategory.created_at | timeAgo}}</td>
+               <td class="nowrap center">{{subcategory.updated_at | timeAgo}}</td>
+               <td>
+                  <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
+                     <a (click)="updateSubcategory(subcategory)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
+                        <i class="la la-edit"></i>
+                     </a>
+                     <a [swal]="deleteSwal" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                        <i class="la la-trash"></i>
+                     </a>
+                     <swal #deleteSwal (confirm)="deleteSubcategory(subcategory.id_subcategory)" [options]="SWAL_DELETE_SUBCATEGORY"></swal>
+                  </span>
+               </td>
+            </tr>
+
+         </tbody>
+         <swal #successSwal [options]="SWAL_SUCCESS_DELETE_SUBCATEGORY"></swal>
+      </table>
+   </div>
+</div>
