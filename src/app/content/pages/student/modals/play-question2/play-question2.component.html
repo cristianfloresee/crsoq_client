@@ -1,3 +1,4 @@
+<!-- HEADER -->
 <div class="modal-header">
    <h4 class="modal-title">Área de Juego</h4>
    <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
@@ -5,13 +6,13 @@
    </button>
 </div>
 
+<!-- BODY -->
 <div class="modal-body">
    <div class="m-portlet__body">
 
+      <!-- HEADER DEL BODY -->
       <div class="form-group m-form__group m--margin-top-10">
-         <!-- <div class="alert m-alert m-alert--default" role="alert">
-               Puede que sea necesario que tu profesor inicie una pregunta. Por favor ten paciencia.
-            </div> -->
+       
          <div class="alert m-alert m-alert--default" role="alert">
             Es necesario que tu profesor inicie una pregunta. Por favor ten paciencia.
             <br><br>
@@ -24,26 +25,25 @@
                   {{
                   (!current_question) ? 'Esperando Pregunta.' :
                   (current_question && current_question.status == 2) ? 'Pregunta Iniciada. Esperando Participantes.' :
-                  (current_question && current_question.status == 3) ? 'Participación Detenida. Seleccionando
-                  Participante.':
+                  (current_question && current_question.status == 3) ? 'Participación Detenida. Seleccionando Participante.':
                   (current_question && current_question.status == 4) ? 'Estudiante seleccionado para responder.':
                   'Participación Finalizada'
                   }} </li>
-               <!-- Esperando pregunta, esperando participantes, participación detenida, estudiante seleccionado, participación finalizada -->
             </ul>
 
          </div>
       </div>
 
+      <!-- CONTENT DEL BODY -->
       <div class="m-portlet__body">
          <div class="form-group m-form__group row">
 
-
+            <!-- PREGUNTA EN JUEGO Y BOTONES -->
             <div class="col-lg-8">
-               current_participation_status: {{current_participation_status}} -
+               current_participation_status: {{current_participation_status}}
 
-               <!-- Esperando pregunta -->
-               <div *ngIf="!current_question; else question" class="container" style="width: 100%; background-color: turquoise; height: 350px; border-radius: 10px;">
+               <!-- ESPERANDO PREGUNTA (LOADER) -->
+               <div *ngIf="!current_question" class="container" style="width: 100%; background-color: turquoise; height: 350px; border-radius: 10px;">
                   <p style="margin-top: -210px; color: #ffffff; font-size: 20px; text-align: center; font-weight: 900px">
                      Porfavor espera mientrás se realiza la pregunta.
                   </p>
@@ -52,31 +52,38 @@
                   <div class="inner-circle"></div>
                </div>
 
-               <!-- Pregunta iniciada -->
-               <div *ngIf="current_question && current_question.status == 2" class="container" style="width: 100%; background-color: #FFD935; height: 350px; border-radius: 10px;">
+               <!-- PREGUNTA INICIADA -->
+               <div *ngIf="current_question && current_question.status == 2" class="container" style="display: grid; width: 100%; background-color: #ffb961; height: 350px; border-radius: 10px;">
                   <div>
                      <p style="margin: 0; color: #ffffff; font-size: 20px; text-align: center; font-weight: 900px">
                         {{current_question?.description}}
                      </p>
+                     <div (click)="imageZoom()" *ngIf="current_question.image">
+                        <img style="height: 200px; cursor: pointer" [src]="'http://localhost:3000/'+current_question?.image">
+                        <!-- {{'http://localhost:3000/' + current_question?.image}} -->
+                     </div>
+                     
                   </div>
+                  
 
-                  <!-- <div *ngIf="!participant_status; else participant"> -->
+                  <!-- BOTÓN DE PARTICIPAR -->
                   <div *ngIf="current_participation_status == 1">
                      <button (click)="participateOnQuestion(current_question)" type="button" class="btn m-btn--pill m-btn--air btn-primary">
                         Participar!
                      </button>
                   </div>
-                  <!-- <ng-template #participant> -->
+                  
+                  <!-- BOTÓN DE CANCELAR LA PARTICIPACIÓN -->
                   <div *ngIf="current_participation_status == 2">
                      <button (click)="cancelParticipateOnQuestion()" type="button" class="btn m-btn--pill m-btn--air btn-primary">
                         Cancelar Participación
                      </button>
                   </div>
-                  <!-- </ng-template> -->
+                  
                </div>
 
                <!-- Participación detenida -->
-               <div *ngIf="current_question && current_question.status == 3" class="container" style="width: 100%; background-color: red; height: 350px; border-radius: 10px;">
+               <div *ngIf="current_question && current_question.status == 3" class="container" style="width: 100%; background-color: #c05c7e; height: 350px; border-radius: 10px;">
                   <!-- <div class="container" style="width: 100%; background-color: red; height: 350px; border-radius: 10px;"> -->
                   <p style="margin: 0; color: #ffffff; font-size: 20px; text-align: center; font-weight: 900px">
                      {{current_question?.description}}
@@ -90,12 +97,8 @@
                         </button> -->
                </div>
 
-               <!-- Arreglar -->
-               <!-- Como saber que el participante actual fue seleccionado para responder? -->
-               <!-- Seleccionado para responder -->
-               <div *ngIf="current_participation_status"></div>
-
-               <div *ngIf="current_question && current_question.status == 4" class="container" style="width: 100%; background-color: red; height: 350px; border-radius: 10px;">
+               <!--  -->
+               <div *ngIf="current_question && current_question.status == 4" class="container" style="width: 100%; background-color: #f3826f; height: 350px; border-radius: 10px;">
 
                   <p *ngIf="current_participation_status == 3; else other">Has sido seleccionado</p>
                   <ng-template #other>
@@ -111,9 +114,8 @@
                </div>
 
             </div>
-
-            <!-- {{current_question | json}} -->
-            <!-- BODY 2 -->
+         
+             <!-- LISTADO DE ESTUDIANTES EN LA SALA -->
             <div class="col-lg-4">
                <label class="form-control-label">Estudiantes: {{total_attendes}}</label>
 
@@ -129,34 +131,6 @@
                      </thead>
                      <tbody>
 
-                        <!-- <tr *ngFor="let student of data_students; let i=index">
-                              <td>{{i+1}}</td>
-
-                              <td class="nowrap">
-                                 <div class="m-widget4__item">
-
-                                    <div class="m-widget4__info">
-                                       <span class="m-widget4__title">
-                                          {{student.name}} {{student.last_name}} {{student.middle_name}}
-                                       </span><br>
-                                       <span class="m-widget4__sub" style="font-size: .8rem;">
-                                          {{student.document}}
-                                       </span>
-                                    </div>
-
-                                 </div>
-                              </td>
-
-                              <td>
-                                 <div style="width: 50%; cursor: pointer;" (click)="changeWinnerStatus(student)">
-                                    <img *ngIf="student.status == 2;else blank" src="assets/images/checked.svg" alt="">
-                                    <ng-template #blank>
-                                       <img src="assets/images/blank.svg" alt="">
-                                    </ng-template>
-                                 </div>
-                              </td>
-
-                           </tr> -->
                         <tr *ngFor="let student of data_attendes; let i=index">
                            <td class="center">{{i+1}}</td>
 
@@ -166,11 +140,10 @@
                                  <div class="m-widget4__info">
                                     <span class="m-widget4__title">
                                        {{student.name}} {{student.last_name}} {{student.middle_name}}
-
                                     </span><br>
+
                                     <span class="m-widget4__sub" style="font-size: .8rem;">
                                        {{student.document}}
-
                                     </span>
                                  </div>
 
@@ -178,12 +151,6 @@
                            </td>
 
                            <td class="center">
-                              <!-- <div style="width: 50%; cursor: pointer; text-align: center; margin:auto">
-                                 <img *ngIf="true; else blank" src="assets/images/checked.svg" alt="">
-                                 <ng-template #blank>
-                                    <img src="assets/images/blank.svg" alt="">
-                                 </ng-template>
-                              </div> -->
                               {{(student.participation_status == 1) ? 'en espera' :
                               (student.participation_status == 2) ? 'desea responder' :
                               (student.participation_status == 3) ? 'seleccionado para responder':
@@ -193,21 +160,22 @@
                            </td>
 
                         </tr>
+
                      </tbody>
                   </table>
-                  <!-- <p style="margin-top: 1rem">Total de Participantes: {{total_participants}}</p> -->
+                  <!-- <p style="margin-top: 1rem">Total de Participantes: --</p> -->
                </div>
 
             </div>
+
          </div>
       </div>
-
-
-
 
    </div>
 
 </div>
+
+<!-- FOOTER -->
 <div class="modal-footer">
    <button type="button" class="btn btn-info" (click)="activeModal.close()">Cerrar</button>
 

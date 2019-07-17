@@ -23,7 +23,7 @@ export class PlayQuestion2Component implements OnInit {
    @HostListener('window:beforeunload', ['$event'])
    beforeUnloadHander(event) {
       this.exitToClassSectionRoomAsStudent();
-      this.exitToParticipantsToPlayQuestionSectionRoomAsStudent();
+      this.exitToParticipantsToPlayQuestionSectionRoomAsStudent(); // ?
    }
 
    @Input() class;
@@ -75,7 +75,9 @@ export class PlayQuestion2Component implements OnInit {
                // Actualiza el estado de la participación en clase
                this.current_question.status = data.update_question_status;
                // Actualiza el estado de participación del estudiante (necesario)
-               this.current_participation_status = data.update_student_status;
+               if (this.current_user.id_user == data.id_user) {
+                  this.current_participation_status = data.update_student_status;
+               }
 
             }
             else if (type == 3) {
@@ -91,8 +93,12 @@ export class PlayQuestion2Component implements OnInit {
                // Busca al estudiante que salió de la sala entre los asistentes
                let index_student = this.data_attendes
                   .findIndex((student: any) => student.id_user == data.id_user);
-               // Quita al estudiante de entre los asistentes (si lo encuentra)
-               if (index_student >= 0) this.data_attendes.splice(index_student, 1);
+               // Elimina al estudiante de entre los asistentes (si lo encuentra)
+               if (index_student >= 0) {
+                  this.data_attendes.splice(index_student, 1);
+                  this.total_attendes--; // Actualiza el número de asistentes
+               }
+               
 
             }
             else {
@@ -104,7 +110,10 @@ export class PlayQuestion2Component implements OnInit {
                // Busca al estudiante actual entre los asistentes
                let current_student = this.data_attendes.find(student => student.id_user == this.current_user.id_user);
                // Establece el estado actual del estudiante (si lo encuentra)
-               if (current_student) this.current_participation_status = current_student.participation_status;
+               if (current_student) {
+                  this.current_participation_status = current_student.participation_status;
+                  current_student.middle_name += ' (Yo)';
+               }
 
                /*
                if(current_student){
@@ -177,6 +186,10 @@ export class PlayQuestion2Component implements OnInit {
             });
          }
       }, 1000);
+   }
+
+   imageZoom(){
+      console.log("tu vieja..");
    }
 
    // Estudiante decide participar en una pregunta

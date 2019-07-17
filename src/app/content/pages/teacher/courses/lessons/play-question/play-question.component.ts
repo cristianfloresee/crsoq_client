@@ -166,7 +166,8 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
    selectStudentToAnswer(user) {
       this._classQuestionSrv.selectStudentToParticipate({
          id_user: user.id_user,
-         id_class: this.id_lesson
+         id_class: this.id_lesson,
+         id_question: this.question.id_question
       });
       this.question.status = 4; // Actualiza el estado de la pregunta a 'respondiendo'
       this.student_selected = user; // Indica estudiante que fue seleccionado para responder
@@ -176,7 +177,8 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
    cancelStudentSelected() {
       this._classQuestionSrv.cancelSelectedStudent({
          id_user: this.student_selected.id_user,
-         id_class: this.id_lesson
+         id_class: this.id_lesson,
+         id_question: this.question.id_question
       });
       this.question.status = 3; // Actualiza el estado de la pregunta a 'detenida'
       this.student_selected = null; // Quita al estudiante seleccionado
