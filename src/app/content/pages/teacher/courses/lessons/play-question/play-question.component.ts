@@ -229,23 +229,29 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
 
    incorrectAnswer() {
 
+      // Busca al partipante seleccionado entre la lista de participantes
       let index_winner = this.data_participants.findIndex(participant => participant.id_user == this.student_selected.id_user);
+      // Indica que el participante seleccionado perdió (si lo encuentra)
       if (index_winner >= 0) {
          this.data_participants[index_winner].winner = false;
       }
-
+      this.question.status = 3; // Actualiza el estado de la pregunta a 'detenida'
       this.student_selected.status_winner = false;
+
+
       this._classQuestionSrv.setLoserStudent(this.student_selected, this.id_lesson, this.question.id_question)
          .subscribe(
             (result: any) => {
 
                console.log("RESULT: ", result);
-
                console.log("winner student: ", this.winner_student);
+
             },
             error => {
                console.log("error:", error);
             });
+
+      this.student_selected = null;
 
 
    }

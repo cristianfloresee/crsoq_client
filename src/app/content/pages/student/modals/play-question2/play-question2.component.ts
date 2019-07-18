@@ -6,6 +6,8 @@ import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 // ngx-toastr
 import { ToastrService } from 'ngx-toastr';
+// ngx-lightbox
+import { Lightbox } from 'ngx-lightbox';
 // rxjs
 import { Subscription } from 'rxjs';
 // Services
@@ -40,7 +42,8 @@ export class PlayQuestion2Component implements OnInit {
       public activeModal: NgbActiveModal,
       private toastr: ToastrService,
       private _classQuestionSrv: LessonQuestionService,
-      private _sessionSrv: SessionService
+      private _sessionSrv: SessionService,
+      private _lightbox: Lightbox
    ) { }
 
    ngOnInit() {
@@ -188,9 +191,16 @@ export class PlayQuestion2Component implements OnInit {
       }, 1000);
    }
 
-   imageZoom(){
-      console.log("tu vieja..");
+   imageZoom(question){
+      const src = 'http://localhost:3000/' + question.image;
+      const caption = question.description;
+      const thumb = question.image;
+      const album = { src, caption, thumb}
+
+      const albums = [album];
+      this._lightbox.open(albums, 0);
    }
+
 
    // Estudiante decide participar en una pregunta
    participateOnQuestion(params) {

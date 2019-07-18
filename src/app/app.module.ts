@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-// Angular Router
+// Angular router
 import { AppRoutingModule } from './app-routing.module';
 // Components
 import { AppComponent } from './app.component';
@@ -41,6 +41,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import { ToastrModule } from 'ngx-toastr';
 // ngx-sweetalert2
 import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
+import { LightboxModule } from 'ngx-lightbox';
 // Guards
 import { IsLoggedInGuard } from './core/services/guards/is-logged-in.guard';
 import { LoginGuard } from './core/services/guards/login.guard';
@@ -146,7 +147,7 @@ const config: SocketIoConfig = { url: environment.apiUrl, options: {} };
       PlayQuestion2Component
    ],
    imports: [
-      //ANGULAR
+      // Angular
       BrowserModule,
       AppRoutingModule,
       HttpClientModule,
@@ -170,6 +171,7 @@ const config: SocketIoConfig = { url: environment.apiUrl, options: {} };
          buttonsStyling: false,
       }),
       NgxEchartsModule,
+      LightboxModule,
       //ANGULAR MATERIAL
       MatProgressSpinnerModule,
       //MODULOS

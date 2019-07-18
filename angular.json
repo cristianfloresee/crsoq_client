@@ -27,6 +27,7 @@
                      "src/assets"
                   ],
                   "styles": [
+                     "./node_modules/ngx-lightbox/lightbox.css",
                      "src/theme/styles.scss",
                      "src/assets/css/bootstrap.min.css",
                      "src/assets/css/toastr.custom.css"
