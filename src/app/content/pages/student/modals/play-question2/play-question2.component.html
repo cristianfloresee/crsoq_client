@@ -12,7 +12,7 @@
 
       <!-- HEADER DEL BODY -->
       <div class="form-group m-form__group m--margin-top-10">
-       
+
          <div class="alert m-alert m-alert--default" role="alert">
             Es necesario que tu profesor inicie una pregunta. Por favor ten paciencia.
             <br><br>
@@ -47,51 +47,80 @@
                   <p *ngSwitchCase="4">😭 perdedor</p>
                   <p *ngSwitchCase="5">🥳 ganador</p>
                </div>
-           
 
-               <!-- ESPERANDO PREGUNTA (LOADER) -->
-               <div *ngIf="!current_question" class="container" style="width: 100%; background-color: turquoise; height: 350px; border-radius: 10px;">
-                  <p style="margin-top: -210px; color: #ffffff; font-size: 20px; text-align: center; font-weight: 900px">
-                     Porfavor espera mientrás se realiza la pregunta.
-                  </p>
-                  <div class="outer-circle">
-                  </div>
-                  <div class="inner-circle"></div>
-               </div>
-              
-               <!-- PREGUNTA INICIADA -->
-               <div *ngIf="current_question?.status == 2 || current_question?.status == 3 || current_question?.status == 4" class="container" style="display: grid; width: 100%; height: 350px; border-radius: 10px;" 
-               [style.background-color]="current_question.status == 2 ? '#ffb961' : current_question.status == 3 ? '#f3826f' : (current_question.status == 4 && current_participation_status == 3) ? '#614ad3': '#2d3561'">
-                  <!-- background-color: #ffb961 -->
-                  <div>
-                     <p style="margin: 0; color: #ffffff; font-size: 20px; text-align: center; font-weight: 900px">
-                        {{current_question?.description}}
+
+               <ng-container *ngIf="!overview; else overviewx">
+                  <!-- ESPERANDO PREGUNTA (LOADER) -->
+                  <div *ngIf="!current_question" class="container"
+                     style="width: 100%; background-color: turquoise; height: 350px; border-radius: 10px;">
+                     <p
+                        style="margin-top: -210px; color: #ffffff; font-size: 20px; text-align: center; font-weight: 900px">
+                        Porfavor espera mientrás se realiza la pregunta.
                      </p>
-                     <div (click)="imageZoom(current_question)" *ngIf="current_question.image">
-                        <img style="height: 200px; cursor: pointer" [src]="'http://localhost:3000/'+current_question?.image">
-                        
+                     <div class="outer-circle">
                      </div>
-                  
-                     
+                     <div class="inner-circle"></div>
                   </div>
-                  
-                  <div *ngIf="current_question?.status == 2">
-                  <!-- BOTÓN DE PARTICIPAR -->
-                  <div *ngIf="current_participation_status == 1">
-                     <button (click)="participateOnQuestion(current_question)" type="button" class="btn m-btn--pill m-btn--air btn-primary">
-                        Participar!
-                     </button>
+
+                  <!-- PREGUNTA INICIADA -->
+                  <div
+                     *ngIf="current_question?.status == 2 || current_question?.status == 3 || current_question?.status == 4"
+                     class="container" style="display: grid; width: 100%; height: 350px; border-radius: 10px;"
+                     [style.background-color]="current_question.status == 2 ? '#ffb961' : current_question.status == 3 ? '#f3826f' : (current_question.status == 4 && current_participation_status == 3) ? '#614ad3': '#2d3561'">
+
+                     <div>
+                        <p style="margin: 0; color: #ffffff; font-size: 20px; text-align: center; font-weight: 900px">
+                           {{current_question?.description}}
+                        </p>
+                        <div (click)="imageZoom(current_question)" *ngIf="current_question.image">
+                           <img style="height: 200px; cursor: pointer"
+                              [src]="'http://localhost:3000/'+current_question?.image">
+                        </div>
+                     </div>
+
+                     <div *ngIf="current_question?.status == 2">
+                        <!-- BOTÓN DE PARTICIPAR -->
+                        <div *ngIf="current_participation_status == 1">
+                           <button (click)="participateOnQuestion(current_question)" type="button"
+                              class="btn m-btn--pill m-btn--air btn-primary">
+                              Participar!
+                           </button>
+                        </div>
+
+                        <!-- BOTÓN DE CANCELAR LA PARTICIPACIÓN -->
+                        <div *ngIf="current_participation_status == 2">
+                           <button (click)="cancelParticipateOnQuestion()" type="button"
+                              class="btn m-btn--pill m-btn--air btn-primary">
+                              Cancelar Participación
+                           </button>
+                        </div>
+                     </div>
+
                   </div>
-                  
-                  <!-- BOTÓN DE CANCELAR LA PARTICIPACIÓN -->
-                  <div *ngIf="current_participation_status == 2">
-                     <button (click)="cancelParticipateOnQuestion()" type="button" class="btn m-btn--pill m-btn--air btn-primary">
-                        Cancelar Participación
-                     </button>
+               </ng-container>
+
+               <ng-template #overviewx>
+                  <div class="container"
+                     style="width: 100%; background-color: turquoise; height: 350px; border-radius: 10px;">
+                     Pregunta Finalizada
+                     {{counter_ended_question}}
+                     <br>
+                     <p>
+                        Total Participantes: {{overview.total}}
+                        No Seleccionados: {{overview.no_selected}}
+                        Perdedores: {{overview.losers}}
+                        Ganador: {{overview.winner_name}}
+                     </p>
+
+                     <div>
+                        <button (click)="closeOverview()" type="button" class="btn m-btn--pill m-btn--air btn-primary">
+                           Cerrar Resumen
+                        </button>
+                     </div>
                   </div>
-                  </div>
-                  
-               </div>
+               </ng-template>
+
+
 
                <!-- PARTICIPACIÓN DETENIDA -->
                <!--<div *ngIf="current_question && current_question.status == 3" class="container" style="width: 100%; background-color: #c05c7e; height: 350px; border-radius: 10px;">
@@ -101,11 +130,11 @@
                   </p>
 
                </div>-->
-             
+
 
             </div>
-         
-             <!-- LISTADO DE ESTUDIANTES EN LA SALA -->
+
+            <!-- LISTADO DE ESTUDIANTES EN LA SALA -->
             <div class="col-lg-4">
                <label class="form-control-label">Estudiantes: {{total_attendes}}</label>
 

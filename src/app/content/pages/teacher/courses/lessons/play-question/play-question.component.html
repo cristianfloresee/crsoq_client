@@ -23,9 +23,6 @@
                   (question.status == 4)? 'respondiendo':
                   'Terminada'
                   }}
-
-                  <!-- - Otro estado como: Estudiante Seleccionado para responder. -->
-                  <!-- Esperando pregunta, esperando participantes, participación detenida, estudiante seleccionado, participación finalizada -->
             </ul>
          </div>
       </div>
@@ -37,43 +34,10 @@
             <div class="col-xl-12">
                <div class="col-xl-12 order-1 order-xl-2 m--align-right">
 
-                  <!-- <ng-container [ngSwitch]="question.status">
-                     <p *ngSwitchCase="1">Estado: No iniciada</p>
-                     <p *ngSwitchCase="2">Estado: Iniciada</p>
-                     <p *ngSwitchCase="3">Estado: Detenida</p>
-                     <p *ngSwitchCase="4">Estado: Terminada</p>
-                  </ng-container> -->
-
-                  <!-- <ng-container *ngIf="question" [ngSwitch]="question.status">
-                        <button *ngSwitchCase="'1'" type="button" (click)="updateClassQuestionStatus(2)" style="color: #ffffff; margin-left: 10px;"
-                           class="btn btn-success m-btn m-btn--custom m-btn--air m-btn--pill">
-                           <span>
-                              <span>Iniciar Clase</span>
-                           </span>
-                        </button>
-
-                        <button *ngSwitchCase="'3'" type="button" (click)="updateClassQuestionStatus(1)" style="color: #ffffff; margin-left: 10px;"
-                           class="btn btn-warning m-btn m-btn--custom m-btn--air m-btn--pill">
-                           <span>
-                              <span>Reiniciar Clase</span>
-                           </span>
-                        </button>
-
-                        <button *ngSwitchCase="'2'" type="button" (click)="updateClassQuestionStatus(3)" style="color: #ffffff; margin-left: 10px;"
-                           class="btn btn-danger m-btn m-btn--custom m-btn--air m-btn--pill">
-                           <span>
-                              <span>Finalizar Clase</span>
-
-                           </span>
-                        </button>
-                     </ng-container>
- -->
-
-
-
                   <ng-container *ngIf="question && !student_selected;" [ngSwitch]="question.status">
 
-                     <button *ngSwitchDefault type="button" (click)="updateClassQuestionStatus(2)" style="color: #ffffff; margin-left: 10px;"
+                     <button *ngSwitchDefault type="button" (click)="updateClassQuestionStatus(2)"
+                        style="color: #ffffff; margin-left: 10px;"
                         class="btn btn-success m-btn m-btn--custom m-btn--air m-btn--pill">
                         <span>
                            <span>Iniciar Participación</span>
@@ -87,38 +51,40 @@
                         </span>
                      </button> -->
 
-                     <button *ngSwitchCase="'2'" type="button" (click)="updateClassQuestionStatus(3)" style="color: #ffffff; margin-left: 10px;"
+                     <button *ngSwitchCase="'2'" type="button" (click)="updateClassQuestionStatus(3)"
+                        style="color: #ffffff; margin-left: 10px;"
                         class="btn btn-danger m-btn m-btn--custom m-btn--air m-btn--pill">
                         <span>
                            <span>Detener Participación</span>
                         </span>
                      </button>
 
-                     <button *ngSwitchCase="'3'" type="button" (click)="updateClassQuestionStatus(2)" style="color: #ffffff; margin-left: 10px;"
+                     <button *ngSwitchCase="'3'" type="button" (click)="updateClassQuestionStatus(2)"
+                        style="color: #ffffff; margin-left: 10px;"
                         class="btn btn-success m-btn m-btn--custom m-btn--air m-btn--pill">
                         <span>
                            <span>Reanudar Participación</span>
                         </span>
                      </button>
 
-                     <button *ngSwitchCase="'5'" type="button" [swal]="deleteSwal" style="color: #ffffff; margin-left: 10px;"
+                     <button *ngSwitchCase="'5'" type="button" [swal]="deleteSwal"
+                        style="color: #ffffff; margin-left: 10px;"
                         class="btn btn-warning m-btn m-btn--custom m-btn--air m-btn--pill">
                         <span>
                            <span>Reiniciar Participación</span>
                         </span>
                      </button>
 
-                     <swal #deleteSwal (confirm)="updateClassQuestionStatus(1)" [options]="SWAL_DELETE_PARTICIPATION"></swal>
+                     <swal #deleteSwal (confirm)="updateClassQuestionStatus(1)" [options]="SWAL_DELETE_PARTICIPATION">
+                     </swal>
 
                   </ng-container>
 
 
                   <swal #successSwal [options]="SWAL_SUCCESS_DELETE_PARTICIPATION"></swal>
 
-
-
-
-                  <button *ngIf="question.status == 3 || question.status == 4" type="button" (click)="updateClassQuestionStatus(5)" style="color: #ffffff; margin-left: 10px;"
+                  <button *ngIf="question.status == 3 || question.status == 4" type="button"
+                     (click)="updateClassQuestionStatus(5)" style="color: #ffffff; margin-left: 10px;"
                      class="btn btn-danger m-btn m-btn--custom m-btn--air m-btn--pill">
                      <span>
                         <span>Finalizar Pregunta</span>
@@ -143,49 +109,120 @@
 
       </div>
 
+      <ng-container *ngIf="question.status != 5; else overview">
 
-      <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
 
-         <table class="cw-table">
-            <thead>
-               <tr>
-                  <th></th>
-                  <th></th>
-                  <th>Total Preguntas</th>
-                  <th>Participa</th>
-                  <th>No Participa</th>
-                  <th>Correctas</th>
-                  <th>Incorrectas</th>
-                  <th>No Seleccionado</th>
-                  <th class="center">Estado</th>
-                  <!-- <th class="center" *ngIf="question.status != 4">Acciones</th> -->
-                  <th class="center">Acciones</th>
-               </tr>
-            </thead>
-            <tbody>
+         <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
 
-               <ng-container *ngIf="!student_selected; else studentSelected">
-                  <ng-container *ngFor="let student of data_participants; let i=index">
+            <table class="cw-table">
+               <thead>
+                  <tr>
+                     <th></th>
+                     <th></th>
+                     <th>Total Preguntas</th>
+                     <th>Participa</th>
+                     <th>No Participa</th>
+                     <th>Correctas</th>
+                     <th>Incorrectas</th>
+                     <th>No Seleccionado</th>
+                     <th class="center">Estado</th>
+                     <th class="center">Acciones</th>
+                  </tr>
+               </thead>
+               <tbody>
 
-                     <!--  *ngIf=((student_selected && student.selected) || !) -->
+
+                  <!-- NINGÚN ESTUDIANTE SELECCIONADO -->
+                  <ng-container *ngIf="!student_selected; else studentSelected">
+                     <ng-container *ngFor="let student of participants_filtered; let i=index">
+
+                        <tr class="student">
+                           <td>{{i+1}}</td>
+                           <td class="nowrap">{{student.name}} {{student.last_name}} {{student.middle_name}}</td>
+                           <td colspan="6"></td>
+                           <td class="center" [ngSwitch]="student.status">
+                              <p *ngSwitchCase="2">no seleccionado</p>
+                              <p *ngSwitchCase="3">selecionado</p>
+                              <p *ngSwitchCase="4">perdedor</p>
+                              <p *ngSwitchCase="5">ganador</p>
+                           </td>
+
+                           <td *ngIf="question.status != 5">
+                              <!-- Si la pregunta no ha finalizado (status 5) -->
+                              <span
+                                 style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
+                                 <!-- Se habilita el botón solo si la participación/pregunta se ha detenido (status 3) -->
+                                 <button (click)="selectStudentToAnswer(student)"
+                                    [ngClass]="{'btn-success': question.status == 3}"
+                                    class="btn m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill"
+                                    [disabled]="question.status != 3">
+                                    <i class="la la-play"></i>
+                                 </button>
+                              </span>
+                           </td>
+
+                        </tr>
+
+                        <tr>
+                           <td></td>
+                           <td>Semestre</td>
+                           <td class="center">2</td>
+                           <td class="center">2</td>
+                           <td class="center">3</td>
+                           <td class="center">5</td>
+                           <td class="center">8</td>
+                           <td class="center">9</td>
+                           <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                           <td></td>
+                           <td>Clase</td>
+                           <td class="center">2</td>
+                           <td class="center">2</td>
+                           <td class="center">3</td>
+                           <td class="center">5</td>
+                           <td class="center">8</td>
+                           <td class="center">9</td>
+                           <td colspan="2"></td>
+                        </tr>
+                     </ng-container>
+                  </ng-container>
+
+
+                  <!-- ESTUDIANTE SELECCIONADO -->
+                  <ng-template #studentSelected>
                      <tr class="student">
-                        <td>{{i+1}}</td>
-                        <td class="nowrap">{{student.name}} {{student.last_name}} {{student.middle_name}}</td>
+                        <td> 1 </td>
+                        <td class="nowrap"> {{student_selected.name}} {{student_selected.last_name}}</td>
                         <td colspan="6"></td>
-                        <td class="center"> -- </td>
+                        <td class="center" [ngSwitch]="student_selected.status">
+                           <p *ngSwitchCase="2">no seleccionado</p>
+                           <p *ngSwitchCase="3">selecionado</p>
+                           <p *ngSwitchCase="4">perdedor</p>
+                           <p *ngSwitchCase="5">ganador</p>
+                        </td>
+                        <td>
 
-                        <td *ngIf="question.status != 5"> <!-- Si la pregunta no ha finalizado (status 5) -->
-                           <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
-                              <!-- Se habilita el botón solo si la participación/pregunta se ha detenido (status 3) -->
-                              <button (click)="selectStudentToAnswer(student)" [ngClass]="{'btn-success': question.status == 3}"
+                           <span *ngIf="!student_selected.status != 5; else winner"
+                              style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
+                              <!-- <button (click)="selectStudentToAnswer(student)" [ngClass]="{'btn-success': question.status == 3}"
                                  class="btn m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill" [disabled]="question.status != 3">
                                  <i class="la la-play"></i>
-                              </button>
+                              </button> -->
+                              <button (click)="successAnswer()">Correcto</button>
+                              <button (click)="incorrectAnswer()">Incorrecto</button>
+                              <button (click)="cancelStudentSelected()">Cancelar</button>
                            </span>
+
+                           <ng-template #winner>
+                              Finalizando pregunta en: {{counter_ended_question}}
+                              <button (click)="cancelWinnerStudent()">Cancelar</button>
+
+                           </ng-template>
+
+
                         </td>
-
                      </tr>
-
                      <tr>
                         <td></td>
                         <td>Semestre</td>
@@ -208,61 +245,15 @@
                         <td class="center">9</td>
                         <td colspan="2"></td>
                      </tr>
-                  </ng-container>
-               </ng-container>
+                  </ng-template>
 
 
-               <!-- Objeto student o data_participants[] -->
-               <ng-template #studentSelected>
-                  <tr class="student">
-                     <td> 1 </td>
-                     <td class="nowrap"> {{student_selected.name}} {{student_selected.last_name}}</td>
-                     <td colspan="6"></td>
-                     <td class="center">{{winner_student ? 'Ganador' : 'Seleccionado para responder'}} </td>
-                     <td>
-                        <span *ngIf="!winner_student; else winner" style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
-                           <!-- <button (click)="selectStudentToAnswer(student)" [ngClass]="{'btn-success': question.status == 3}"
-                              class="btn m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill" [disabled]="question.status != 3">
-                              <i class="la la-play"></i>
-                           </button> -->
-                           <button (click)="successAnswer()">Correcto</button>
-                           <button (click)="incorrectAnswer()">Incorrecto</button>
-                           <button (click)="cancelStudentSelected()">Cancelar</button>
-                        </span>
 
-                        <ng-template #winner>
-                           Finalizando pregunta en: {{counter_ended_question}}
-                           <button (click)="cancelWinnerStudent()">Cancelar</button>
 
-                        </ng-template>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td></td>
-                     <td>Semestre</td>
-                     <td class="center">2</td>
-                     <td class="center">2</td>
-                     <td class="center">3</td>
-                     <td class="center">5</td>
-                     <td class="center">8</td>
-                     <td class="center">9</td>
-                     <td colspan="2"></td>
-                  </tr>
-                  <tr>
-                     <td></td>
-                     <td>Clase</td>
-                     <td class="center">2</td>
-                     <td class="center">2</td>
-                     <td class="center">3</td>
-                     <td class="center">5</td>
-                     <td class="center">8</td>
-                     <td class="center">9</td>
-                     <td colspan="2"></td>
-                  </tr>
-               </ng-template>
-            </tbody>
 
-            <!--
+               </tbody>
+
+               <!--
             <tbody>
                <tr *ngFor="let question of data_questions; let i=index">
                   <td>{{i+1}}</td>
@@ -286,10 +277,14 @@
                <swal #successSwal [options]="SWAL_SUCCESS_DELETE_QUESTION"></swal>
             </tbody>
          -->
-         </table>
+            </table>
 
-      </div>
+         </div>
 
+      </ng-container>
+      <ng-template #overview>
+         Resumen
+      </ng-template>
 
    </div>
 </div>

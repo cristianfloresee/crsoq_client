@@ -145,7 +145,7 @@ Para el **profesor**:
 ## 1.3. Estudiantes que participan por responder
 
 + Variable orientada al **profesor**.
-+ La propiedad `selected` indica si el estudiante fue seleccionado para responder.
++ La propiedad `status` indica el estado de participación del estudiante (2: no seleccionado, 3: seleccionado, 4: perdedor, 5: ganador).
 
 Estructura de la variable `student_participants_of_a_question`.
 ```js
@@ -153,11 +153,11 @@ Estructura de la variable `student_participants_of_a_question`.
   "<id_class>": [
      {
         id_user: 1,
-        selected: true
+        status: 2
      },
      {
         id_user: 1,
-        selected: false
+        status: 5
      },
      ...
   ],

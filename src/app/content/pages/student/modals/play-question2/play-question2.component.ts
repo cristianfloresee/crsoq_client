@@ -1,4 +1,4 @@
-// + Creo que algunos listeners se pueden reutlizar poniendo un param 'type' que indique a que se refiere
+// + Algunos listeners se pueden reutlizar poniendo un param 'type' que indique a que se refiere
 
 // Angular
 import { Component, OnInit, Input, HostListener } from '@angular/core';
@@ -33,6 +33,7 @@ export class PlayQuestion2Component implements OnInit {
 
    total_attendes: number = 0;
    data_attendes: Array<any> = [];
+   overview;
    current_user: any; // Estudiante actual
    current_question: any; // Pregunta actual que se está jugando // { difficulty... }
    current_participation_status: number; // Estado de participación actual del estudiante
@@ -58,7 +59,8 @@ export class PlayQuestion2Component implements OnInit {
       //       { type: 1, detail: UPDATE_STUDENT_ATTENDEES, }
       //   [2] actualiza el estado de un estudiante
       //       { type: 2, detail: UPDATE_STUDENT_STATUS, id_user, update_student_status, update_question_status }
-      //   x[3] actualiza el estado de la pregunta actual
+      //   [3] actualiza el estado de la pregunta actual
+      //       { type: 3, detail: UPDATE_QUESTION_STATUS, question: { id_question, difficulty, description, status } }
       //   x[4] indica cuando un estudiante fue seleccionado para responder
       //   [5] indica cuando un estudiante deja la clase
       //       { type: 5, detail: STUDENT_LEFT_CLASS, id_user }
@@ -86,9 +88,11 @@ export class PlayQuestion2Component implements OnInit {
             else if (type == 3) {
 
                this.current_question = data.question; // Actualiza la pregunta actual
-
-               // Si la pregunta finaliza (status 5)
-               if (this.current_question && this.current_question.status == 5) this.finishCurrestQuestion();
+               // Si la pregunta finaliza inicia el contador (status 5)
+               if (this.current_question && this.current_question.status == 5) {
+                  this.finishCurrestQuestion();
+                  this.overview = data.participants_overview;
+               }
 
             }
             else if (type == 5) {
@@ -105,7 +109,6 @@ export class PlayQuestion2Component implements OnInit {
 
             }
             else {
-
                // + Cuando un estudiante entra a la sala recibe todos los estudiantes que ya están en la sala (incluyendose)
                this.data_attendes = data;
                this.total_attendes = data.length;
@@ -118,13 +121,6 @@ export class PlayQuestion2Component implements OnInit {
                   current_student.middle_name += ' (Yo)';
                }
 
-               /*
-               if(current_student){
-                  if(current_student.participation_status == 2) {
-                     this.participant_status = true;
-                     this.current_participation_status = 2;
-                  }
-               }*/
             }
 
          },
@@ -132,21 +128,6 @@ export class PlayQuestion2Component implements OnInit {
                console.log("error: ", error);
                this.toastr.error(`El estado del estudiante ya se ha registrado.`, `Ha ocurrido un error!`);
             })
-      );
-
-      // Listener: indica cuando inicia/detiene/finaliza una pregunta
-      this.subscriptions$.add(this._classQuestionSrv.listenPlayingTheClassQuestion()
-         .subscribe((data: any) => { // { question: { id_question, difficulty, description, status } }
-
-            console.log("JOMBA: ", data);
-            this.current_question = data.question;
-
-            // Si la pregunta finaliza (status 5)
-            if (this.current_question && this.current_question.status == 5) {
-               this.finishCurrestQuestion();
-            }
-
-         })
       );
 
       // Listener: indica que un estudiante fue seleccionado para responder (question.status 4)
@@ -182,6 +163,7 @@ export class PlayQuestion2Component implements OnInit {
          if (this.counter_ended_question == 0) {
             clearInterval(interval); // Finaliza el interval
             this.current_question = null; // Elimina la pregunta
+            this.current_participation_status = 1;
             this.counter_ended_question = 5; // Reestablece el contador
             // Establece el estado de los estudiantes a 'en espera'
             this.data_attendes.forEach(student => {
@@ -189,6 +171,11 @@ export class PlayQuestion2Component implements OnInit {
             });
          }
       }, 1000);
+
+   }
+
+   closeOverview(){
+      this.overview = null;
    }
 
    imageZoom(question){
