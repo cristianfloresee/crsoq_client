@@ -109,14 +109,21 @@ export class LessonQuestionService {
       return this.socketSrv.emit('exitToParticipantsToPlayQuestionSectionRoomAsStudent', params);
    }
 
-   // + params: { id_user, id_class }
+   // OJETE AQUÍ: TODOS MODIFICAN EL ESTADO DE UN PARTICIPANTE
+   // NECESITAN: {id_user, id_class, id_question(para asegurar), status}
+
+   // + params: { id_user, id_class, id_question }
    selectStudentToParticipate(params){
       return this.socketSrv.emit('selectStudentToParticipate', params);
    }
 
-     // + params: { user, id_class }
+     // + params: { id_user, id_class, id_question }
    cancelSelectedStudent(params){
       return this.socketSrv.emit('cancelSelectedStudentAsTeacher', params)
+   }
+
+   updateStudentStatus(id_user, id_class, id_question, status){
+      return this.http.post(`${API.USER_QUESTION_CLASS}/`, { id_user, id_class, id_question, status } )
    }
 
    // + params: { participant_student }
@@ -124,13 +131,9 @@ export class LessonQuestionService {
       return this.http.post(`${API.USER_QUESTION_CLASS}/winner_student`, { winner_student, id_class, id_question } )
    }
 
-   setLoserStudent(loser_student, id_class, id_question ){
-      return this.http.post(`${API.USER_QUESTION_CLASS}/loser_student`, { loser_student, id_class, id_question } )
+   setLoserStudent(student, id_class, id_question, status){
+      return this.http.post(`${API.USER_QUESTION_CLASS}/loser_student`, { student, id_class, id_question, status } )
    }
-   /*
-   // Elimina una pregunta (eliminaría todas las participaciones de esa actividad)
-   deleteQuestion(id_question) {
-      return this.http.delete(`${API.QUESTIONS}/${id_question}`);
-   }*/
+  
 
 }

@@ -194,15 +194,14 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
    }
 
 
-   // Emiter: indica que un estudiante respondió correctamente
+   // Indica que un estudiante respondió correctamente
    successAnswer() {
 
       // Busca al estudiante ganador entre los participantes
       let index_student = this.data_participants.findIndex(participant => participant.id_user == this.student_selected.id_user);
-      // Establece al estudiante ganador (si lo encuentra)
+      // Establece al estudiante ganador de forma local (si lo encuentra)
       if (index_student >= 0) this.data_participants[index_student].status = 5;
       //this.filterStudentsByStatus(2); // Filtrar solo estudiantes en estado 'no seleccionado'
-
 
       // ENVÍO ARRAY DE PARTICIPANTES: [ {id_user, winner, participant:}]
       this._classQuestionSrv.setStudentParticipationStatus(this.student_selected, this.id_lesson, this.question.id_question)
@@ -216,8 +215,7 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
                   this.counter_ended_question--;
                   if (this.counter_ended_question == 0) {
                      clearInterval(counter);
-
-                     
+                      
                      this.updateClassQuestionStatus(5); // Actualiza el estado de la pregunta
                      this.data_participants = null;
                      this.participants_filtered = null; 
@@ -236,7 +234,7 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
 
       // Busca al partipante 'perdedor' entre los participantes
       let index_student = this.data_participants.findIndex(participant => participant.id_user == this.student_selected.id_user);
-      // Indica que el participante seleccionado perdió (si lo encuentra)
+      // Establece al estudiante perdedor de forma local (si lo encuentra)
       if (index_student >= 0) this.data_participants[index_student].status = 4;
       this.filterStudentsByStatus(2); // Filtrar solo estudiantes en estado 'no seleccionado'
 
@@ -244,7 +242,7 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
       //this.student_selected.status_winner = false;
 
 
-      this._classQuestionSrv.setLoserStudent(this.student_selected, this.id_lesson, this.question.id_question)
+      this._classQuestionSrv.setLoserStudent(this.student_selected, this.id_lesson, this.question.id_question, 4)
          .subscribe(
             (result: any) => {
                // Actualiza el estado del estudiante perdedor (localmente)
