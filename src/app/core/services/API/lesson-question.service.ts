@@ -122,7 +122,7 @@ export class LessonQuestionService {
       return this.socketSrv.emit('cancelSelectedStudentAsTeacher', params)
    }
 
-   updateStudentStatus(id_user, id_class, id_question, status){
+   updateParticipantStatus(id_user, id_class, id_question, status){
       return this.http.post(`${API.USER_QUESTION_CLASS}/`, { id_user, id_class, id_question, status } )
    }
 

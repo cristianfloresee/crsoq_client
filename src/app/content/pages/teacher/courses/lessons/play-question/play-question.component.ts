@@ -141,12 +141,12 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
                }
                else {
                   this.question.status = status;
-                  
-                  if(status == 1) { // Si la pregunta se reinicia (status 'no iniciada')
+
+                  if (status == 1) { // Si la pregunta se reinicia (status 'no iniciada')
                      this.data_participants = [];
                      this.participants_filtered = [];
                   }
-                  
+
                   this.toastr.success('El estado de la clase ha sido actualizado correctamente.', 'Acción realizada!');
                }
             },
@@ -165,6 +165,28 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
    // Emiter: indica que el profesor salió de la sala
    exitToPlayQuestionSectionRoomAsTeacher() {
       this._classQuestionSrv.exitToPlayQuestionSectionRoomAsTeacher({ id_class: this.id_lesson });
+   }
+
+   updateParticipantStatus(participant, new_status) {
+      this._classQuestionSrv.updateParticipantStatus(
+         participant.id_user,
+         this.id_lesson,
+         this.question.id_question,
+         new_status
+      );
+   
+      // Actualiza el estado del participante
+      participant.status = new_status; 
+      // Actualiza el estado de la pregunta
+      switch (new_status) {
+         case 2:
+            this.question.status = 3;
+            break;
+         case 3:
+            this.question.status = 4;
+            break;
+      }
+
    }
 
    // Emiter: selecciona un estudiante para responder
@@ -187,6 +209,7 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
          id_question: this.question.id_question
       });
       this.question.status = 3; // Actualiza el estado de la pregunta a 'detenida'
+      // Busca al estudiante entre los participantes
       const student = this.data_participants.find(student => student.id_user == this.student_selected.id_user);
       student.status = 2;
       this.student_selected = null; // Quita al estudiante seleccionado
@@ -215,10 +238,10 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
                   this.counter_ended_question--;
                   if (this.counter_ended_question == 0) {
                      clearInterval(counter);
-                      
+
                      this.updateClassQuestionStatus(5); // Actualiza el estado de la pregunta
                      this.data_participants = null;
-                     this.participants_filtered = null; 
+                     this.participants_filtered = null;
                      this.student_selected = null;
                      this.activeModal.close(); // Cierra el modal
                   }
