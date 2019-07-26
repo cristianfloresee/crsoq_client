@@ -65,15 +65,24 @@ export class LessonQuestionService {
       return this.socketSrv.listen('studentHasEnteredToTheClassroom');
    }
 
+   //>
+   l_UpdateParticipantStatus(){
+      return this.socketSrv.listen('updateParticipantStatus');
+   }
+
+   e_UpdateParticipantStatus(params){
+      return this.socketSrv.emit('updateParticipantStatus', params)
+   }
+
    // Cuando el estudiante presiona el botón participar emite este evento
    listenAStudentHasEnteredToParticipate(){
       return this.socketSrv.listen('aStudentHasEntered');
    }
 
    // Indica que un estudiante fue seleccionado para responder
-   listenStudentSelectedToAnswer(){
+   /*listenStudentSelectedToAnswer(){
       return this.socketSrv.listen('studentSelectedToParticipate');
-   }
+   }*/
 
 
    // Necesito el id_class
@@ -113,18 +122,19 @@ export class LessonQuestionService {
    // NECESITAN: {id_user, id_class, id_question(para asegurar), status}
 
    // + params: { id_user, id_class, id_question }
-   selectStudentToParticipate(params){
+   /*selectStudentToParticipate(params){
       return this.socketSrv.emit('selectStudentToParticipate', params);
-   }
+   }*/
 
      // + params: { id_user, id_class, id_question }
-   cancelSelectedStudent(params){
+   /*cancelSelectedStudent(params){
       return this.socketSrv.emit('cancelSelectedStudentAsTeacher', params)
-   }
+   }*/
 
+   /*
    updateParticipantStatus(id_user, id_class, id_question, status){
       return this.http.post(`${API.USER_QUESTION_CLASS}/`, { id_user, id_class, id_question, status } )
-   }
+   }*/
 
    // + params: { participant_student }
    setStudentParticipationStatus(winner_student, id_class, id_question ){

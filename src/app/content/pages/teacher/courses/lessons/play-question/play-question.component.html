@@ -152,7 +152,13 @@
                               <span
                                  style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
                                  <!-- Se habilita el botón solo si la participación/pregunta se ha detenido (status 3) -->
-                                 <button (click)="selectStudentToAnswer(student)"
+                                 <!--<button (click)="selectStudentToAnswer(student)"
+                                    [ngClass]="{'btn-success': question.status == 3}"
+                                    class="btn m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill"
+                                    [disabled]="question.status != 3">
+                                    <i class="la la-play"></i>
+                                 </button>-->
+                                 <button (click)="updateParticipantStatus(student, 3)"
                                     [ngClass]="{'btn-success': question.status == 3}"
                                     class="btn m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill"
                                     [disabled]="question.status != 3">
@@ -211,7 +217,8 @@
                               </button> -->
                               <button (click)="successAnswer()">Correcto</button>
                               <button (click)="incorrectAnswer()">Incorrecto</button>
-                              <button (click)="cancelStudentSelected()">Cancelar</button>
+                              <!--<button (click)="cancelStudentSelected()">Cancelar</button>-->
+                              <button (click)="updateParticipantStatus(student_selected,2)">Cancelar</button>
                            </span>
 
                            <ng-template #winner>

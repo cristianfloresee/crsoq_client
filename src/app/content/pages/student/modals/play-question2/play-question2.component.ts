@@ -68,20 +68,21 @@ export class PlayQuestion2Component implements OnInit {
          .subscribe((data: any) => {
 
             console.log("data type: ", data);
-            const { type } = data;
+            const { type, id_user } = data;
 
             if (type == 2) {
 
                // Busca al estudiante a actualizar entre los asistentes
                let index_student = this.data_attendes
-                  .findIndex((student: any) => student.id_user == data.id_user);
+                  .findIndex((student: any) => student.id_user == id_user);
                // Actualiza el estado del estudiante (si lo encuentra)
                if (index_student >= 0) this.data_attendes[index_student]['participation_status'] = data.update_student_status;
                // Actualiza el estado de la participación en clase
                this.current_question.status = data.update_question_status;
                // Actualiza el estado de participación del estudiante (necesario)
-               if (this.current_user.id_user == data.id_user) {
+               if (this.current_user.id_user == id_user) {
                   this.current_participation_status = data.update_student_status;
+                  this.toastr.success(`Has sido escogido para responder la pregunta.`, 'Escogido para responder!');
                }
 
             }
@@ -105,7 +106,7 @@ export class PlayQuestion2Component implements OnInit {
                   this.data_attendes.splice(index_student, 1);
                   this.total_attendes--; // Actualiza el número de asistentes
                }
-               
+
 
             }
             else {
@@ -131,10 +132,10 @@ export class PlayQuestion2Component implements OnInit {
       );
 
       // Listener: indica que un estudiante fue seleccionado para responder (question.status 4)
+      //>
+      /*
       this.subscriptions$.add(this._classQuestionSrv.listenStudentSelectedToAnswer()
          .subscribe((data: any) => { // { id_user }
-
-            console.log("listenStudentSelectedToParticipate(): ", data);
 
             //* + Será la mejor forma de tratar esto?
             this.current_question.status = 4; // Actualiza el estado de la pregunta a ''
@@ -152,7 +153,7 @@ export class PlayQuestion2Component implements OnInit {
             }
 
          })
-      );
+      );*/
 
    }
 
@@ -174,15 +175,15 @@ export class PlayQuestion2Component implements OnInit {
 
    }
 
-   closeOverview(){
+   closeOverview() {
       this.overview = null;
    }
 
-   imageZoom(question){
+   imageZoom(question) {
       const src = 'http://localhost:3000/' + question.image;
       const caption = question.description;
       const thumb = question.image;
-      const album = { src, caption, thumb}
+      const album = { src, caption, thumb }
 
       const albums = [album];
       this._lightbox.open(albums, 0);

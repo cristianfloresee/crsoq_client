@@ -168,29 +168,33 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
    }
 
    updateParticipantStatus(participant, new_status) {
-      this._classQuestionSrv.updateParticipantStatus(
-         participant.id_user,
-         this.id_lesson,
-         this.question.id_question,
-         new_status
-      );
-   
+      
+      this._classQuestionSrv.e_UpdateParticipantStatus({
+         id_user: participant.id_user,
+         id_class: this.id_lesson,
+         id_question: this.question.id_question,
+         status: new_status
+      });
+      
       // Actualiza el estado del participante
       participant.status = new_status; 
-      // Actualiza el estado de la pregunta
+      // Actualiza el estado de la pregunta 
       switch (new_status) {
          case 2:
-            this.question.status = 3;
+            this.question.status = 3; // Actualiza el estado de la pregunta a 'detenida'
+            this.student_selected = null; // Elimina al estudiante seleccionado
+            this.filterStudentsByStatus(2); // Filtrar solo estudiantes en estado 'no seleccionado'
             break;
          case 3:
-            this.question.status = 4;
+            this.question.status = 4; // Actualiza el estado de la pregunta a 'respondiendo'
+            this.student_selected = participant; // Indica que participante fue seleccionado para responder
             break;
       }
 
    }
 
    // Emiter: selecciona un estudiante para responder
-   selectStudentToAnswer(user) {
+   /*selectStudentToAnswer(user) {
       this._classQuestionSrv.selectStudentToParticipate({
          id_user: user.id_user,
          id_class: this.id_lesson,
@@ -199,10 +203,10 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
       this.question.status = 4; // Actualiza el estado de la pregunta a 'respondiendo'
       user.status = 3; // Cambia el estado del estudiante de forma local a 'seleccionado'
       this.student_selected = user; // Indica estudiante que fue seleccionado para responder
-   }
+   }*/
 
    // Emiter: cancela a estudiante seleccionado para responder
-   cancelStudentSelected() {
+   /*cancelStudentSelected() {
       this._classQuestionSrv.cancelSelectedStudent({
          id_user: this.student_selected.id_user,
          id_class: this.id_lesson,
@@ -214,7 +218,7 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
       student.status = 2;
       this.student_selected = null; // Quita al estudiante seleccionado
       this.filterStudentsByStatus(2); // Filtrar solo estudiantes en estado 'no seleccionado'
-   }
+   }*/
 
 
    // Indica que un estudiante respondió correctamente
