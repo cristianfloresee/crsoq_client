@@ -114,27 +114,6 @@ export class LessonQuestionService {
       return this.socketSrv.emit('enterToParticipantsToPlayQuestionSectionRoomAsStudent', params)
    }
 
-   exitToParticipantsToPlayQuestionSectionRoomAsStudent(params){
-      return this.socketSrv.emit('exitToParticipantsToPlayQuestionSectionRoomAsStudent', params);
-   }
-
-   // OJETE AQUÍ: TODOS MODIFICAN EL ESTADO DE UN PARTICIPANTE
-   // NECESITAN: {id_user, id_class, id_question(para asegurar), status}
-
-   // + params: { id_user, id_class, id_question }
-   /*selectStudentToParticipate(params){
-      return this.socketSrv.emit('selectStudentToParticipate', params);
-   }*/
-
-     // + params: { id_user, id_class, id_question }
-   /*cancelSelectedStudent(params){
-      return this.socketSrv.emit('cancelSelectedStudentAsTeacher', params)
-   }*/
-
-   /*
-   updateParticipantStatus(id_user, id_class, id_question, status){
-      return this.http.post(`${API.USER_QUESTION_CLASS}/`, { id_user, id_class, id_question, status } )
-   }*/
 
    // + params: { participant_student }
    setStudentParticipationStatus(winner_student, id_class, id_question ){

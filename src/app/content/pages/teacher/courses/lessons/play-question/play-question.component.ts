@@ -167,19 +167,19 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
       this._classQuestionSrv.exitToPlayQuestionSectionRoomAsTeacher({ id_class: this.id_lesson });
    }
 
-   updateParticipantStatus(participant, new_status) {
+   updateParticipantStatus(participant, status) {
       
       this._classQuestionSrv.e_UpdateParticipantStatus({
          id_user: participant.id_user,
          id_class: this.id_lesson,
          id_question: this.question.id_question,
-         status: new_status
+         status: status
       });
       
       // Actualiza el estado del participante
-      participant.status = new_status; 
+      participant.status = status; 
       // Actualiza el estado de la pregunta 
-      switch (new_status) {
+      switch (status) {
          case 2:
             this.question.status = 3; // Actualiza el estado de la pregunta a 'detenida'
             this.student_selected = null; // Elimina al estudiante seleccionado

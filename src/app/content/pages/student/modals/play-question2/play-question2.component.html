@@ -89,10 +89,15 @@
 
                         <!-- BOTÓN DE CANCELAR LA PARTICIPACIÓN -->
                         <div *ngIf="current_participation_status == 2">
-                           <button (click)="cancelParticipateOnQuestion()" type="button"
+
+                           <button (click)="updateParticipantStatus(1)" type="button"
                               class="btn m-btn--pill m-btn--air btn-primary">
                               Cancelar Participación
                            </button>
+                           <!--<button (click)="cancelParticipateOnQuestion()" type="button"
+                              class="btn m-btn--pill m-btn--air btn-primary">
+                              Cancelar Participación
+                           </button>-->
                         </div>
                      </div>
 

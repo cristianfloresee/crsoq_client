@@ -25,7 +25,7 @@ export class PlayQuestion2Component implements OnInit {
    @HostListener('window:beforeunload', ['$event'])
    beforeUnloadHander(event) {
       this.exitToClassSectionRoomAsStudent();
-      this.exitToParticipantsToPlayQuestionSectionRoomAsStudent(); // ?
+      // this.exitToParticipantsToPlayQuestionSectionRoomAsStudent(); // ?
    }
 
    @Input() class;
@@ -61,7 +61,6 @@ export class PlayQuestion2Component implements OnInit {
       //       { type: 2, detail: UPDATE_STUDENT_STATUS, id_user, update_student_status, update_question_status }
       //   [3] actualiza el estado de la pregunta actual
       //       { type: 3, detail: UPDATE_QUESTION_STATUS, question: { id_question, difficulty, description, status } }
-      //   x[4] indica cuando un estudiante fue seleccionado para responder
       //   [5] indica cuando un estudiante deja la clase
       //       { type: 5, detail: STUDENT_LEFT_CLASS, id_user }
       this.subscriptions$.add(this._classQuestionSrv.listenStudentHasEnteredToClassroom()
@@ -70,19 +69,24 @@ export class PlayQuestion2Component implements OnInit {
             console.log("data type: ", data);
             const { type, id_user } = data;
 
-            if (type == 2) {
+            if (type == 'UPDATE_STUDENT_STATUS') {
 
+               const { student_status, question_status } = data;
                // Busca al estudiante a actualizar entre los asistentes
                let index_student = this.data_attendes
                   .findIndex((student: any) => student.id_user == id_user);
                // Actualiza el estado del estudiante (si lo encuentra)
-               if (index_student >= 0) this.data_attendes[index_student]['participation_status'] = data.update_student_status;
+               if (index_student >= 0) this.data_attendes[index_student]['participation_status'] = student_status;
                // Actualiza el estado de la participación en clase
-               this.current_question.status = data.update_question_status;
+               this.current_question.status = question_status;
                // Actualiza el estado de participación del estudiante (necesario)
                if (this.current_user.id_user == id_user) {
-                  this.current_participation_status = data.update_student_status;
-                  this.toastr.success(`Has sido escogido para responder la pregunta.`, 'Escogido para responder!');
+
+                  this.current_participation_status = student_status;
+                  if (student_status == 3) {
+                     this.toastr.success(`Has sido escogido para responder la pregunta.`, 'Escogido para responder!');
+                  }
+
                }
 
             }
@@ -195,13 +199,23 @@ export class PlayQuestion2Component implements OnInit {
       this.enterToParticipantsToPlayQuestionSectionRoomAsStudent();
    }
 
-   // Estudiante decide cancelar su participación
-   cancelParticipateOnQuestion() {
-      this.exitToParticipantsToPlayQuestionSectionRoomAsStudent();
+   updateParticipantStatus(status) {
+
+      this._classQuestionSrv.e_UpdateParticipantStatus({
+         id_user: this.current_user.id_user,
+         id_class: this.class.id_class,
+         id_question: this.current_question.id_question,
+         status: status
+      });
+
+      // Actualiza el estado del participante
+      this.current_participation_status = status;
+
    }
 
    // Emiter: indica que el estudiante actual decide participar por responder
    // + Se podría refactorizar este emiter con el de abajo en un updateStudentStatus(new_status: number)
+   //>
    enterToParticipantsToPlayQuestionSectionRoomAsStudent() {
       this._classQuestionSrv.enterToParticipantsToPlayQuestionSectionRoomAsStudent({
          id_class: this.class.id_class,
@@ -210,14 +224,6 @@ export class PlayQuestion2Component implements OnInit {
       this.current_participation_status = 2; // Actualiza el estado del estudiante a 'desea responder'
    }
 
-   // Emiter: indica que el estudiante actual cancela su participación por responder
-   exitToParticipantsToPlayQuestionSectionRoomAsStudent() {
-      this._classQuestionSrv.exitToParticipantsToPlayQuestionSectionRoomAsStudent({
-         id_class: this.class.id_class,
-         id_user: this.current_user.id_user
-      });
-      this.current_participation_status = 1; // Actualiza el estado del estudiante a 'en espera'
-   }
 
    // Emiter: indica que el estudiante actual ingresó de la sala
    enterToClassroomAsStudent() {
