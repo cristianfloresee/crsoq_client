@@ -135,30 +135,6 @@ export class PlayQuestion2Component implements OnInit {
             })
       );
 
-      // Listener: indica que un estudiante fue seleccionado para responder (question.status 4)
-      //>
-      /*
-      this.subscriptions$.add(this._classQuestionSrv.listenStudentSelectedToAnswer()
-         .subscribe((data: any) => { // { id_user }
-
-            //* + Será la mejor forma de tratar esto?
-            this.current_question.status = 4; // Actualiza el estado de la pregunta a ''
-
-            // Busca al estudiante seleccionado entre los asistentes
-            let index_student = this.data_attendes
-               .findIndex((student: any) => student.id_user == data.id_user);
-            // Actualiza el estado del estudiante 'seleccionado' (status = 3)
-            if (index_student >= 0) this.data_attendes[index_student]['participation_status'] = 3;
-
-            // Comprueba si el estudiante seleccionado corresponde al estudiante de la sesión
-            if (data.id_user == this.current_user.id_user) {
-               this.current_participation_status = 3; // Actualiza el estado del estudiante actual a 'seleccionado' (status = 3)
-               this.toastr.success(`Has sido escogido para responder la pregunta.`, 'Escogido para responder!');
-            }
-
-         })
-      );*/
-
    }
 
    // Finaliza la pregunta mediante un counter
@@ -193,35 +169,19 @@ export class PlayQuestion2Component implements OnInit {
       this._lightbox.open(albums, 0);
    }
 
-
-   // Estudiante decide participar en una pregunta
-   participateOnQuestion(params) {
-      this.enterToParticipantsToPlayQuestionSectionRoomAsStudent();
-   }
-
    updateParticipantStatus(status) {
 
       this._classQuestionSrv.e_UpdateParticipantStatus({
          id_user: this.current_user.id_user,
          id_class: this.class.id_class,
          id_question: this.current_question.id_question,
-         status: status
+         status: status,
+         user: this.current_user, // Puedo obtener el user en el servidor consultando la db también
+         sender: 'STUDENT'
       });
 
       // Actualiza el estado del participante
       this.current_participation_status = status;
-
-   }
-
-   // Emiter: indica que el estudiante actual decide participar por responder
-   // + Se podría refactorizar este emiter con el de abajo en un updateStudentStatus(new_status: number)
-   //>
-   enterToParticipantsToPlayQuestionSectionRoomAsStudent() {
-      this._classQuestionSrv.enterToParticipantsToPlayQuestionSectionRoomAsStudent({
-         id_class: this.class.id_class,
-         user: this.current_user
-      });
-      this.current_participation_status = 2; // Actualiza el estado del estudiante a 'desea responder'
    }
 
 

@@ -173,7 +173,8 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
          id_user: participant.id_user,
          id_class: this.id_lesson,
          id_question: this.question.id_question,
-         status: status
+         status: status,
+         sender: 'TEACHER'
       });
       
       // Actualiza el estado del participante

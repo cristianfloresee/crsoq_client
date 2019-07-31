@@ -65,7 +65,7 @@ export class LessonQuestionService {
       return this.socketSrv.listen('studentHasEnteredToTheClassroom');
    }
 
-   //>
+   
    l_UpdateParticipantStatus(){
       return this.socketSrv.listen('updateParticipantStatus');
    }
@@ -74,16 +74,25 @@ export class LessonQuestionService {
       return this.socketSrv.emit('updateParticipantStatus', params)
    }
 
+   //>
+    // + params: { participant_student }
+    setStudentParticipationStatus(winner_student, id_class, id_question ){
+      return this.http.post(`${API.USER_QUESTION_CLASS}/winner_student`, { winner_student, id_class, id_question } )
+   }
+
+   //>
+   setLoserStudent(student, id_class, id_question, status){
+      return this.http.post(`${API.USER_QUESTION_CLASS}/loser_student`, { student, id_class, id_question, status } )
+   }
+
+
+
+
+
    // Cuando el estudiante presiona el botón participar emite este evento
    listenAStudentHasEnteredToParticipate(){
       return this.socketSrv.listen('aStudentHasEntered');
    }
-
-   // Indica que un estudiante fue seleccionado para responder
-   /*listenStudentSelectedToAnswer(){
-      return this.socketSrv.listen('studentSelectedToParticipate');
-   }*/
-
 
    // Necesito el id_class
    // Ingresa a la sala de socket.io de los usuario que estan en la sección de juego de pregunta
@@ -109,20 +118,10 @@ export class LessonQuestionService {
       return this.socketSrv.emit('exitToPlayQuestionSectionRoomAsTeacher', params)
    }
 
-   enterToParticipantsToPlayQuestionSectionRoomAsStudent(params){
-      console.log("enterToParticipantsToPlayQuestionSectionRoomAsStudent: ", params);
-      return this.socketSrv.emit('enterToParticipantsToPlayQuestionSectionRoomAsStudent', params)
-   }
+  
 
 
-   // + params: { participant_student }
-   setStudentParticipationStatus(winner_student, id_class, id_question ){
-      return this.http.post(`${API.USER_QUESTION_CLASS}/winner_student`, { winner_student, id_class, id_question } )
-   }
-
-   setLoserStudent(student, id_class, id_question, status){
-      return this.http.post(`${API.USER_QUESTION_CLASS}/loser_student`, { student, id_class, id_question, status } )
-   }
+  
   
 
 }

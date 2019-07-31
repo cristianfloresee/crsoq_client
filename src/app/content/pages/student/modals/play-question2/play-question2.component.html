@@ -81,10 +81,11 @@
                      <div *ngIf="current_question?.status == 2">
                         <!-- BOTÓN DE PARTICIPAR -->
                         <div *ngIf="current_participation_status == 1">
-                           <button (click)="participateOnQuestion(current_question)" type="button"
+                              <button (click)="updateParticipantStatus(2)" type="button"
                               class="btn m-btn--pill m-btn--air btn-primary">
                               Participar!
                            </button>
+               
                         </div>
 
                         <!-- BOTÓN DE CANCELAR LA PARTICIPACIÓN -->
