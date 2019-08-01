@@ -41,7 +41,8 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
 
    student_selected = null; // Actual estudiante seleccionado para responder
    current_question_status: number; // Estado de la pregunta actual
-   counter_ended_question: number = 7; // Contador de finalización de pregunta
+   counter_ended_question: number = 5; // Contador de finalización de pregunta
+   interval_ended_question;
 
    constructor(
       public activeModal: NgbActiveModal,
@@ -155,8 +156,6 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
             });
    }
 
-
-
    // Emiter: indica que el profesor ingresó a la sala
    enterToPlayQuestionSectionRoomAsTeacher() {
       this._classQuestionSrv.enterToPlayQuestionSectionRoomAsTeacher({ id_class: this.id_lesson });
@@ -167,8 +166,26 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
       this._classQuestionSrv.exitToPlayQuestionSectionRoomAsTeacher({ id_class: this.id_lesson });
    }
 
+   cancelWinner(participant){
+      clearInterval(this.interval_ended_question); // Finaliza el interval
+      this.counter_ended_question = 5; // Reestablece el contador
+      participant.status = 3;
+   }
+
+   setWinnerParticipant(participant){
+      participant.status = 5;
+      this.interval_ended_question = setInterval(() => {
+         this.counter_ended_question--;
+         if (this.counter_ended_question == 0) {
+            clearInterval(this.interval_ended_question); // Finaliza el interval
+            this.updateParticipantStatus(participant, 5);
+            this.counter_ended_question = 5; // Reestablece el contador
+         }
+      }, 1000);
+   }
+
    updateParticipantStatus(participant, status) {
-      
+
       this._classQuestionSrv.e_UpdateParticipantStatus({
          id_user: participant.id_user,
          id_class: this.id_lesson,
@@ -176,9 +193,9 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
          status: status,
          sender: 'TEACHER'
       });
-      
+
       // Actualiza el estado del participante
-      participant.status = status; 
+      participant.status = status;
       // Actualiza el estado de la pregunta 
       switch (status) {
          case 2:
@@ -190,100 +207,41 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
             this.question.status = 4; // Actualiza el estado de la pregunta a 'respondiendo'
             this.student_selected = participant; // Indica que participante fue seleccionado para responder
             break;
+         case 4:
+            this.question.status = 3;
+            this.student_selected = null;
+            this.filterStudentsByStatus(2); // Filtrar estudiantes en estado 'no seleccionado'
+            break;
+         case 5:
+            this.question.status = 5;
+            this.data_participants = null;
+            this.participants_filtered = null;
+            this.student_selected = null;
+            this.updateClassQuestionStatus(5); // Actualiza el estado de la pregunta
+            break;
       }
 
    }
 
-   // Emiter: selecciona un estudiante para responder
-   /*selectStudentToAnswer(user) {
-      this._classQuestionSrv.selectStudentToParticipate({
-         id_user: user.id_user,
-         id_class: this.id_lesson,
-         id_question: this.question.id_question
-      });
-      this.question.status = 4; // Actualiza el estado de la pregunta a 'respondiendo'
-      user.status = 3; // Cambia el estado del estudiante de forma local a 'seleccionado'
-      this.student_selected = user; // Indica estudiante que fue seleccionado para responder
-   }*/
+   // Finaliza la pregunta mediante un counter
+   //> Como cancelar el counter??
+   // clearInterval(interval); // Finaliza el interval
+   // this.counter_ended_question = 5; // Reestablece el contador
 
-   // Emiter: cancela a estudiante seleccionado para responder
-   /*cancelStudentSelected() {
-      this._classQuestionSrv.cancelSelectedStudent({
-         id_user: this.student_selected.id_user,
-         id_class: this.id_lesson,
-         id_question: this.question.id_question
-      });
-      this.question.status = 3; // Actualiza el estado de la pregunta a 'detenida'
-      // Busca al estudiante entre los participantes
-      const student = this.data_participants.find(student => student.id_user == this.student_selected.id_user);
-      student.status = 2;
-      this.student_selected = null; // Quita al estudiante seleccionado
-      this.filterStudentsByStatus(2); // Filtrar solo estudiantes en estado 'no seleccionado'
-   }*/
-
-
-   // Indica que un estudiante respondió correctamente
-   successAnswer() {
-
-      // Busca al estudiante ganador entre los participantes
-      let index_student = this.data_participants.findIndex(participant => participant.id_user == this.student_selected.id_user);
-      // Establece al estudiante ganador de forma local (si lo encuentra)
-      if (index_student >= 0) this.data_participants[index_student].status = 5;
-      //this.filterStudentsByStatus(2); // Filtrar solo estudiantes en estado 'no seleccionado'
-
-      // ENVÍO ARRAY DE PARTICIPANTES: [ {id_user, winner, participant:}]
-      this._classQuestionSrv.setStudentParticipationStatus(this.student_selected, this.id_lesson, this.question.id_question)
-         .subscribe(
-            (result: any) => {
-
-
-               // HACER ALGO PARA PONER EL ESTADO EN GANADOR
-               console.log("RESULT: ", result);
-               let counter = setInterval(() => {
-                  this.counter_ended_question--;
-                  if (this.counter_ended_question == 0) {
-                     clearInterval(counter);
-
-                     this.updateClassQuestionStatus(5); // Actualiza el estado de la pregunta
-                     this.data_participants = null;
-                     this.participants_filtered = null;
-                     this.student_selected = null;
-                     this.activeModal.close(); // Cierra el modal
-                  }
-               }, 1000);
-               //this.counter_ended_question
-            },
-            (error) => {
-               console.log("error:", error);
-            });
-   }
-
-   incorrectAnswer() {
-
-      // Busca al partipante 'perdedor' entre los participantes
-      let index_student = this.data_participants.findIndex(participant => participant.id_user == this.student_selected.id_user);
-      // Establece al estudiante perdedor de forma local (si lo encuentra)
-      if (index_student >= 0) this.data_participants[index_student].status = 4;
-      this.filterStudentsByStatus(2); // Filtrar solo estudiantes en estado 'no seleccionado'
-
-      this.question.status = 3; // Actualiza el estado de la pregunta a 'detenida'
-      //this.student_selected.status_winner = false;
-
-
-      this._classQuestionSrv.setLoserStudent(this.student_selected, this.id_lesson, this.question.id_question, 4)
-         .subscribe(
-            (result: any) => {
-               // Actualiza el estado del estudiante perdedor (localmente)
-
-               console.log("RESULT: ", result);
-
-            },
-            error => {
-               console.log("error:", error);
-            });
-
-      this.student_selected = null;
-
+   finishCurrentQuestion() {
+      this.interval_ended_question = setInterval(() => {
+         this.counter_ended_question--;
+         if (this.counter_ended_question == 0) {
+            clearInterval(this.interval_ended_question); // Finaliza el interval
+            this.question.status = 5; // Actualiza el estado de la pregunta a 'finalizada'
+            this.updateClassQuestionStatus(5); // Actualiza el estado de la pregunta
+            this.data_participants = null;
+            this.participants_filtered = null;
+            this.student_selected = null;
+            this.counter_ended_question = 5; // Reestablece el contador
+            //this.activeModal.close(); // Cierra el modal
+         }
+      }, 1000);
 
    }
 

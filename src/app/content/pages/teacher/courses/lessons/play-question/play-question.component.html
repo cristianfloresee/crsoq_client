@@ -209,21 +209,22 @@
                         </td>
                         <td>
 
-                           <span *ngIf="!student_selected.status != 5; else winner"
+                          
+                           <span *ngIf="student_selected.status != 5; else winner"
                               style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
                               <!-- <button (click)="selectStudentToAnswer(student)" [ngClass]="{'btn-success': question.status == 3}"
                                  class="btn m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill" [disabled]="question.status != 3">
                                  <i class="la la-play"></i>
                               </button> -->
-                              <button (click)="successAnswer()">Correcto</button>
-                              <button (click)="incorrectAnswer()">Incorrecto</button>
-                              <!--<button (click)="cancelStudentSelected()">Cancelar</button>-->
+                              <!-- <button (click)="successAnswer()">Correcto</button> -->
+                              <button (click)="setWinnerParticipant(student_selected)">Correcto</button>
+                              <button (click)="updateParticipantStatus(student_selected, 4)">Incorrecto</button>
                               <button (click)="updateParticipantStatus(student_selected,2)">Cancelar</button>
                            </span>
 
                            <ng-template #winner>
                               Finalizando pregunta en: {{counter_ended_question}}
-                              <button (click)="cancelWinnerStudent()">Cancelar</button>
+                              <button (click)="cancelWinner(student_selected)">Cancelar</button>
 
                            </ng-template>
 

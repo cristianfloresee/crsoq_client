@@ -38,8 +38,8 @@ export class LessonQuestionService {
    }
 
    // Actualiza el estado de una pregunta
-   updateLessonQuestion(id_lesson, id_question, status) {
-      return this.http.post(`${API.LESSON_QUESTIONS}/${id_lesson}/${id_question}`, { status })
+   updateLessonQuestion(id_class, id_question, status) {
+      return this.http.post(`${API.LESSON_QUESTIONS}/${id_class}/${id_question}`, { status })
    }
 
    // Agrega o elimina múltiples preguntas a la clase
