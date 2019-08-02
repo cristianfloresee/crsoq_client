@@ -212,6 +212,7 @@ export class LessonDetailComponent implements OnInit, OnDestroy {
          .subscribe(
             (result: any) => {
                this.data_class_questions = result.items;
+               console.log("data_class_questions: ", this.data_class_questions);
                this.total_items = result.info.total_items;
                this.total_pages = result.info.total_pages;
                this.page = (this.from / this.page_size) + 1;

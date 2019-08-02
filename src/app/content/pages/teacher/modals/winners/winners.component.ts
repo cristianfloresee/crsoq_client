@@ -6,9 +6,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 // ngx-toaster
 import { ToastrService } from 'ngx-toastr';
-// Constantes
+// Constants
 import { TOAST_SUCCESS_UPDATE_WINNERS, TOAST_ERROR_UPDATE_WINNERS } from 'src/app/config/toastr_config';
-// Servicios
+// Services
 import { ActivityParticipationService } from 'src/app/core/services/API/activity_participation.service';
 import { UserQuestionClassService } from 'src/app/core/services/API/user_question_class.service';
 import { ActivityService } from 'src/app/core/services/API/activity.service';
@@ -41,8 +41,6 @@ export class WinnersComponent implements OnInit {
    ) { }
 
    ngOnInit() {
-      console.log("ID COURSE: ", this.id_course);
-      console.log("ACTIVITY: ", this.activity);
       this.getStudents();
    }
 
@@ -112,7 +110,7 @@ export class WinnersComponent implements OnInit {
 
       this.total_winners = 0;
       participants.forEach(item => {
-         if (item.status == 4) this.total_winners++;
+         if (item.status == 5) this.total_winners++;
       });
 
    }

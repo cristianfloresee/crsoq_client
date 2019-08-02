@@ -61,8 +61,9 @@
                                     <!-- Debeería ser un selector para cambiar los estados?? -->
                                     {{(student.status == 1) ? 'no participa':
                                     (student.status == 2) ? 'no seleccionado':
-                                    (student.status == 3) ? 'perdedor':
-                                    (student.status == 4) ? 'ganador' :
+                                    (student.status == 3) ? 'respondiendo':
+                                    (student.status == 4) ? 'perdedor':
+                                    (student.status == 5) ? 'ganador' :
                                     'desconocido'}}
                                  </div>
                               </ng-template>
