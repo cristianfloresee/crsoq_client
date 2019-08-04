@@ -172,10 +172,10 @@
                         <tr>
                            <td></td>
                            <td>Semestre</td>
-                           <td class="center">y</td>
-                           <td class="center">y</td>
-                           <td class="center">y</td>
-                           <td class="center">y</td>
+                           <td class="center">{{student?.student_overview?.total_course_questions}}</td>
+                           <td class="center">{{student?.student_overview?.total_course_student_participations}}</td>
+                           <td class="center">{{student?.student_overview?.total_course_student_no_participations}}</td>
+                           <td class="center">{{student?.student_overview?.total_course_student_winner}}</td>
                            <td class="center">y</td>
                            <td class="center">y</td>
                            <td colspan="2"></td>
@@ -183,12 +183,12 @@
                         <tr>
                            <td></td>
                            <td>Clase</td>
-                           <td class="center">y</td>
-                           <td class="center">y</td>
-                           <td class="center">y</td>
-                           <td class="center">y</td>
-                           <td class="center">y</td>
-                           <td class="center">y</td>
+                           <td class="center">{{student?.student_overview?.total_class_questions}}</td>
+                           <td class="center">{{student?.student_overview?.total_class_student_participations}}</td>
+                           <td class="center">{{student?.student_overview?.total_class_student_no_participations}}</td>
+                           <td class="center">{{student?.student_overview?.total_class_student_winner}}</td>
+                           <td class="center">{{student?.student_overview?.total_class_student_losser}}</td>
+                           <td class="center">{{student?.student_overview?.total_class_student_not_selected}}</td>
                            <td colspan="2"></td>
                         </tr>
                      </ng-container>

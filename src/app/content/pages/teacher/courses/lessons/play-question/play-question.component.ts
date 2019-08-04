@@ -217,7 +217,8 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
             this.data_participants = null;
             this.participants_filtered = null;
             this.student_selected = null;
-            this.updateClassQuestionStatus(5); // Actualiza el estado de la pregunta
+            //this.updateClassQuestionStatus(5); // Actualiza el estado de la pregunta
+            //> Llamar al update en el mismo server
             break;
       }
 
