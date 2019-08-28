@@ -1,3 +1,6 @@
+## Versión CRSoq v.2
+http://146.83.109.226:3000/
+
 ## Generación del Proyecto Angular
 
 Ver advaned porlets para tener cards con acciones mas bonitas

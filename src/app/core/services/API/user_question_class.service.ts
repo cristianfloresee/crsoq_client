@@ -15,8 +15,12 @@ export class UserQuestionClassService {
     * Obtiene los estudiantes que asistieron a la clase
     * @param params // params: { id_question, id_class }
     */
-   getStudentAssistants(params) {
+   getQuestionParticipation(params) {
       return this.http.get(API.USER_QUESTION_CLASS, { params });
+   }
+
+   updateStudentsParticipation(id_user, id_class, update_status_requests ){
+      return this.http.post(`${API.USER_QUESTION_CLASS}/${id_user}/${id_class}`, { update_status_requests });
    }
 
 }

@@ -1,9 +1,9 @@
-//ANGULAR
+// Angular
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-//CONSTANTES
+// Constants
 import { API } from '../../../config/constants';
-//SERVICIOS
+// Services
 import { SessionService } from './session.service';
 import { SocketService } from '../socket.service';
 
@@ -16,7 +16,7 @@ export class EnrollmentService {
       private socketSrv: SocketService
    ) { }
 
-   // Obtiene las matrículas por id_course
+   // Obtiene las inscripciones por 'id_course'
    getEnrollmentsByCourseId(id_course) {
       return this.http.get(`${API.ENROLLMENTS}/courses/${id_course}`);
    }

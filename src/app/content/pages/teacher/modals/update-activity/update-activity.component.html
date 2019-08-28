@@ -96,7 +96,7 @@
 
                <!-- BODY 2 -->
                <div class="col-lg-6">
-                  <label class="form-control-label">Participantes:</label>
+                  <label class="form-control-label">Estudiantes:</label>
 
                   <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
 
@@ -130,7 +130,7 @@
                               </td>
                               <!-- <td>{{student.status}}</td> -->
                               <td>
-                                 <div style="width: 50%; cursor: pointer;" (click)="changeWinnerStatus(student)">
+                                 <div style="width: 50%; cursor: pointer;" (click)="changeStudentStatus(student)">
                                     <img *ngIf="student.status == 2;else blank" src="assets/images/checked.svg" alt="">
                                     <ng-template #blank>
                                        <img src="assets/images/blank.svg" alt="">
@@ -157,6 +157,6 @@
    </div>
    <div class="modal-footer">
       <button type="button" class="btn btn-info" (click)="activeModal.close()">Cerrar</button>
-      <button type="submit" class="btn btn-info" [disabled]="(activityForm.pristine && winner_status_request.length == 0) || activityForm.invalid">Actualizar</button>
+      <button type="submit" class="btn btn-info" [disabled]="(activityForm.pristine && add_winners.length == 0 && delete_winners.length == 0) || activityForm.invalid">Actualizar</button>
    </div>
 </form>

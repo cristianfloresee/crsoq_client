@@ -34,14 +34,18 @@ export class ActivityParticipationService {
    }
 
    // Actualiza múltiples participaciones
-   updateActivityParticipations(id_activity, array_participation) {
+   /*updateActivityParticipations(id_activity, array_participation) {
       return this.http.post(`${API_URL}activity_participation/${id_activity}`, { array_participation });
-   }
+   }*/
    // // Elimina una Actividad (eliminaría todas las participaciones de esa actividad)
    // deleteActivity(id_activity) {
    //    return this.http.delete(`${API.ACTIVITIES}/${id_activity}`);
    // }
 
+   // Agrega o elimina múltiples preguntas a la clase
+   updateActivityParticipations(id_activity, add_winners, delete_winners) {
+      return this.http.post(`${API_URL}activity_participation/${id_activity}`, { add_winners, delete_winners });
+   }
 
 
 }

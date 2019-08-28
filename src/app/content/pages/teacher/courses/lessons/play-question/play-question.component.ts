@@ -14,6 +14,7 @@ import { SwalComponent } from '@toverux/ngx-sweetalert2';
 import { SWAL_SUCCESS_DELETE_PARTICIPATION, SWAL_DELETE_PARTICIPATION } from 'src/app/config/swal_config';
 // Services
 import { LessonQuestionService } from 'src/app/core/services/API/lesson-question.service';
+import { UserQuestionClassService } from 'src/app/core/services/API/user_question_class.service';
 
 @Component({
    selector: 'cw-play-question',
@@ -44,15 +45,24 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
    counter_ended_question: number = 5; // Contador de finalización de pregunta
    interval_ended_question;
 
+   // Variables para el resumen
+   data_students: Array<any>;
+   total_winners: number;
+
    constructor(
       public activeModal: NgbActiveModal,
       private toastr: ToastrService,
       private _classQuestionSrv: LessonQuestionService,
+      private _userQuestionClassSrv: UserQuestionClassService
    ) { }
 
    ngOnInit() {
       this.subscriptions$ = new Subscription();
       this.current_question_status = this.question.status; // Establece la pregunta actual
+
+      if(this.current_question_status == 5) {
+         this.getParticipationOverview();
+      }
 
       this.enterToPlayQuestionSectionRoomAsTeacher(); // Emiter: indica que el profesor ingresó a la sala
 
@@ -131,6 +141,27 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
 
    }
 
+   getParticipationOverview(){
+      const params = {
+         id_question: this.question.id_question,
+         id_class: this.id_lesson
+      };
+      
+      // Obtiene todos los estudiantes del curso
+      this._userQuestionClassSrv.getQuestionParticipation(params)
+      .subscribe(
+         (result: any) => {
+            console.log("students: ", result);
+
+            this.data_students = result;
+            //console.log("participacion formateada: ", this.data_students);
+            this.getTotalWinners(this.data_students);
+         },
+         (error) => {
+            console.log("error:", error);
+         });
+   }
+
    // Actualiza el estado de la pregunta actual
    updateClassQuestionStatus(status: number) {
 
@@ -146,6 +177,9 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
                   if (status == 1) { // Si la pregunta se reinicia (status 'no iniciada')
                      this.data_participants = [];
                      this.participants_filtered = [];
+                  }
+                  else if(status == 5){
+                     this.getParticipationOverview();
                   }
 
                   this.toastr.success('El estado de la clase ha sido actualizado correctamente.', 'Acción realizada!');
@@ -254,6 +288,17 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
    ngOnDestroy() {
       this.exitToPlayQuestionSectionRoomAsTeacher(); // Emiter: indica que el profesor salió de la sala
       this.subscriptions$.unsubscribe(); // Cancela todas las subcripciones
+   }
+
+   /**
+    * Obtiene el total de ganadores a partir del array de participantes
+    * @param participants
+    */
+   getTotalWinners(participants: Array<any>) {
+      this.total_winners = 0;
+      participants.forEach(participant => {
+         if (participant.status == 5) this.total_winners++;
+      });
    }
 
 }

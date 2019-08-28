@@ -113,7 +113,9 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
    }
 
    updateWinners(activity) {
-      const modalRef = this.ngModal.open(WinnersComponent);
+      const modalRef = this.ngModal.open(WinnersComponent, {
+         windowClass: 'xlModal'
+      });
       modalRef.componentInstance.id_course = this.id_course;
       modalRef.componentInstance.activity = activity;
       modalRef.result.then((result) => {

@@ -20,7 +20,7 @@ export class ActivityService {
    }
 
    getStudentsByActivityID(id_activity){
-      let params = { id_activity}
+      const params = { id_activity}
       return this.http.get(`${API.ACTIVITIES}/students`, { params });
    }
 
@@ -30,8 +30,8 @@ export class ActivityService {
    }
 
    // Actualiza una Actividad (arreglar)
-   updateActivity(id_activity, id_lesson, name, status, mode, array_participation) {
-      return this.http.put(`${API.ACTIVITIES}/${id_activity}`, { id_lesson, name, status, mode, array_participation });
+   updateActivity(id_activity, id_lesson, name, status, mode, add_winners, delete_winners) {
+      return this.http.put(`${API.ACTIVITIES}/${id_activity}`, { id_lesson, name, status, mode, add_winners, delete_winners });
    }
 
    // Elimina una Actividad (eliminaría todas las participaciones de esa actividad)

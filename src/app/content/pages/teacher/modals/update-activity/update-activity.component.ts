@@ -36,8 +36,8 @@ export class UpdateActivityComponent implements OnInit, OnDestroy {
 
    // Solicitud de Estado de Ganadores
    winner_status_request = []; // {id_user, status}
-   add_winners = [];
-   delete_winners = [];
+   add_winners = []; // [id_user1, id_user2...]
+   delete_winners = []; // [id_user1, id_user2...]
 
    total_winners;
    constructor(
@@ -139,7 +139,7 @@ export class UpdateActivityComponent implements OnInit, OnDestroy {
 
    }
 
-   // Actualiza la Actividad (Submit)
+   // Actualiza la Actividad (submit)
    updateActivity(activity) {
       console.log("activity: ", activity);
       //console.log(`students: ${typeof(this.winner_status_request)}`)
@@ -147,7 +147,7 @@ export class UpdateActivityComponent implements OnInit, OnDestroy {
 
       // Convierto el Array
       //let winner_status_array = JSON.stringify(this.winner_status_request);
-      this._activitySrv.updateActivity(this.activity.id_activity, activity.lesson, activity.name, activity.status, activity.mode, this.winner_status_request)
+      this._activitySrv.updateActivity(this.activity.id_activity, activity.lesson, activity.name, activity.status, activity.mode, this.add_winners, this.delete_winners)
          .subscribe(
             result => {
                this.activeModal.close(true);
@@ -178,6 +178,30 @@ export class UpdateActivityComponent implements OnInit, OnDestroy {
             });
    }
 
+   changeStudentStatus(student) {
+
+      // Cambia el estado del estudiante añadido/no añadido
+      if (student.status == 1) student.status = 2;
+      else student.status = 1;
+
+      //student.status == 1 ? student.status = 2 : student.status = 1;
+
+      // Si el nuevo estado 'added' (añadida/no añadida) es diferente al estado original 'original_added'
+      // Si es un nuevo estado entonces debo insertar una petición
+      if (student.status != student.original_status) {
+         // Si ya estaba añadido entonces corresponde a una eliminación
+         if (student.original_status == 2) this.delete_winners.push(student.id_user);
+         else this.add_winners.push(student.id_user);
+      } else {
+         //
+         if (student.status == 2) this.deleteFromArray(student.id_user, this.delete_winners);
+         else this.deleteFromArray(student.id_user, this.add_winners);
+         // Elimina el cambio de estado en el array de peticiones
+      }
+      // Obtener cantidad de ganadores
+      this.getTotalWinners(this.data_students);
+   }
+
    changeWinnerStatus(participation) {
       // Cambia el estado ganador/perdedor
       console.log("PARTICIPATION: ", participation);
@@ -206,7 +230,7 @@ export class UpdateActivityComponent implements OnInit, OnDestroy {
          // Elimina el cambio de estado en el array de peticiones
          this.deleteWinnerStatusRequest(participation.id_user)
       }
-      this.getTotalWinners(this.data_students)
+      this.getTotalWinners(this.data_students);
    }
 
    deleteFromArray(id, array) {

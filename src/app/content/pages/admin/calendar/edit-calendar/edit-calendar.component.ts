@@ -2,16 +2,16 @@
 //https://stackblitz.com/edit/angular-zs1rxp
 //VER SI SE PUEDE CONFIGURAR ESTO_ https://valor-software.com/ngx-bootstrap/#/datepicker
 
-//ANGULAR
+// Angular
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-//NG-BOOTSTRAP
+// ng-bootstrap
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-//SERVICIOS
+// Services
 import { CalendarService } from 'src/app/core/services/API/calendar.service';
-//NGX-TOASTR
+//import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+// ngx-toastr
 import { ToastrService } from 'ngx-toastr';
-import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
    selector: 'cw-edit-calendar',
@@ -19,21 +19,20 @@ import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
    styleUrls: ['./edit-calendar.component.scss']
 })
 export class EditCalendarComponent implements OnInit {
+
    @Input() calendar;
    calendarForm: FormGroup;
    calendarFormChanges$;
+
    constructor(
       public fb: FormBuilder,
       public activeModal: NgbActiveModal,
       private _calendarSrv: CalendarService,
       private toastr: ToastrService,
-   ) {
-
-   }
+   ) { }
 
 
    ngOnInit() {
-      console.log("CALENDARIO: ", this.calendar);
       this.initFormData();
       this.loadFormData();
       this.checkFormChanges();
@@ -50,7 +49,7 @@ export class EditCalendarComponent implements OnInit {
       this.calendarForm.setValue({
          year: this.calendar.year,
          semester: this.calendar.semester
-      })
+      });
    }
 
    editCalendar(calendar) {

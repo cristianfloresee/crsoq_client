@@ -245,14 +245,6 @@ export class QuestionSearchComponent implements OnInit, OnDestroy {
       //    else this.deleteFromArray(question.id_question, this.add_questions);
       //    // Elimina el cambio de estado en el array de peticiones
       // }
-
-
-
-      console.log("add_question: ", this.add_questions);
-      console.log("delete_question: ", this.delete_questions);
-
-
-
    }
 
    deleteFromArray(id_question, array) {
