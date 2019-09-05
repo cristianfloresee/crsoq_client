@@ -84,8 +84,6 @@ export class WinnersComponent implements OnInit {
       // Establece el estado ganador dependiendo si es 'pregunta' o 'actividad'
       this.winner_status = this.question ? 5 : 2;
       this.getStudentsParticipation();
-
-
    }
 
    changeStatus(student) {
@@ -104,7 +102,7 @@ export class WinnersComponent implements OnInit {
          // ELiminar el item
          if (item_index >= 0) this.update_status_requests.splice(item_index, 1);
       }
-      this.getTotalWinners(this.data_students);
+      this.getOverview(this.data_students);
       this.updateChartOptions();
    }
 
@@ -119,7 +117,7 @@ export class WinnersComponent implements OnInit {
                   console.log("students: ", result);
                   this.data_students = this.formatStudentArray(result);
                   console.log("participacion formateada: ", this.data_students);
-                  this.getTotalWinners(this.data_students);
+                  this.getOverview(this.data_students);
                },
                (error) => {
                   console.log("error:", error);
@@ -138,7 +136,7 @@ export class WinnersComponent implements OnInit {
             .subscribe(
                (result: any) => {
                   this.data_students = this.formatStudentArray(result);
-                  this.getTotalWinners(this.data_students);
+                  this.getOverview(this.data_students);
                   this.initializeChartOptions();
                },
                (error) => {
@@ -160,10 +158,10 @@ export class WinnersComponent implements OnInit {
    }
 
    /**
-    * Obtiene el total de ganadores a partir del array de participantes
+    * Obtiene el resumen de participación
     * @param participants
     */
-   getTotalWinners(participants: Array<any>) {
+   getOverview(participants: Array<any>) {
       // Naranja
       const red1 = {
          color: '#BC5631'
@@ -203,11 +201,8 @@ export class WinnersComponent implements OnInit {
          this.overview.values[item] = 0;
          this.overview.children[item] = [];
       }
-      setTimeout(() => {
-         console.log("overview: ", this.overview);
-      }, 1000)
 
-      // Obtiene los valores actuales
+      // Obtiene los nuevos valores para el overview
       participants.forEach(participant => {
 
          if (participant.status == 1) {
@@ -475,7 +470,7 @@ export class WinnersComponent implements OnInit {
          color: '#BC5631'
       };
 
-      
+
       // Azul
       var blue1 = {
          color: '#37628B'
@@ -505,24 +500,12 @@ export class WinnersComponent implements OnInit {
          series_data.push({
             name: item,
             value: this.overview.values[item],
-            
+
          });
          selected[item] = this.overview.values[item] > 0;
       }
 
-      console.log("overview: ", this.overview);
-      //console.log("legend_data: ", legend_data);
-      console.log("series_data: ", series_data);
-      console.log("selected: ", selected);
-
-      this.update_options = {
-         legend: {
-            selected: selected
-         },
-         series: [{
-            data: 
-            
-            {
+      const data = [{
          name: 'Estudiantes',
          children: [
             {
@@ -557,8 +540,19 @@ export class WinnersComponent implements OnInit {
                children: this.overview.children['no participan']
             }
          ]
-      }
-            
+      }];
+
+      console.log("overview: ", this.overview);
+      //console.log("legend_data: ", legend_data);
+      console.log("series_data: ", series_data);
+      console.log("selected: ", selected);
+
+      this.update_options = {
+         legend: {
+            selected: selected
+         },
+         series: [{
+            data: data
          }]
       }
    }
@@ -587,7 +581,7 @@ export class WinnersComponent implements OnInit {
       console.log("add_winners: ", this.add_winners);
       console.log("delete_winners: ", this.delete_winners);
       // Obtener cantidad de ganadores
-      this.getTotalWinners(this.data_students);
+      this.getOverview(this.data_students);
    }
 
    insertWinnerStatusRequest(id_user: number, status: number) {

@@ -1,31 +1,36 @@
 <div style="margin-bottom: 30px;">
 
-   <button (click)="initSubject()" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
+   <button (click)="initSubject()" style="color: #ffffff"
+      class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
       <span>
          <span>Abrir Asignatura</span>
       </span>
    </button>
 
 
-   <button (click)="openCreateCourse()" style="color: #ffffff; margin-left: 15px" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
+   <button (click)="openCreateCourse()" style="color: #ffffff; margin-left: 15px"
+      class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
       <span>
          <span>Crear Curso</span>
       </span>
    </button>
 
-   <button (click)="openCreateAnswer()" style="color: #ffffff; margin-left: 15px" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
+   <button (click)="openCreateAnswer()" style="color: #ffffff; margin-left: 15px"
+      class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
       <span>
          <span>Crear Pregunta</span>
       </span>
    </button>
 
-   <button (click)="openCreateCategory()" style="color: #ffffff; margin-left: 15px" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
+   <button (click)="openCreateCategory()" style="color: #ffffff; margin-left: 15px"
+      class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
       <span>
          <span>Crear Categoría</span>
       </span>
    </button>
 
-   <button (click)="openCreateSubcategory()" style="color: #ffffff; margin-left: 15px" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
+   <button (click)="openCreateSubcategory()" style="color: #ffffff; margin-left: 15px"
+      class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill">
       <span>
          <span>Crear Subcategoría</span>
       </span>
@@ -52,16 +57,25 @@
    <!-- CARD BODY -->
    <div class="m-portlet__body m-portlet__body--no-padding">
       <div class="row m-row--no-padding m-row--col-separator-xl">
-         <div class="col-xl-4">
-            <div class="m-widget14">
-               <div class="m-widget14__header" style="padding-top: 0">
-                  <h5 class="m-widget14__title" style="font-size: 1.1rem">Programación Básica</h5>
-                  <span class="m-widget14__desc">Semestre 2 - Grupo A</span>
-               </div>
-               <div style="height: 200px;" echarts [options]="options"></div>
-            </div>
+         <div style="height: 200px" *ngIf="courses?.length == 0">
+            No hay cursos con preguntas iniciadas
          </div>
-         <div class="col-xl-4" *ngIf="courses && courses.length > 0">
+
+         <ng-container *ngIf="courses?.length > 0">
+            <div class="col-xl-4" *ngFor="let course of courses">
+               <div class="m-widget14">
+                  <div class="m-widget14__header" style="padding-top: 0">
+                     <h5 class="m-widget14__title" style="font-size: 1.1rem">{{course.subject}}</h5>
+                     <span class="m-widget14__desc">Semestre {{course.semester}} ({{course.year}}) -
+                        {{course.name}}</span>
+                  </div>
+                  <!-- DYNAMIC -->
+                  <div style="height: 200px;" echarts [options]="course.options"></div>
+               </div>
+            </div>
+         </ng-container>
+
+         <!--<div class="col-xl-4" *ngIf="courses && courses.length > 0">
             meta curso {{courses[0].course_goal}} <br>
             meta estudiante {{courses[0].student_goal}}
          </div>
@@ -73,7 +87,7 @@
                </div>
                <div *ngIf="courses" style="height: 200px;" echarts [options]="options2"></div>
             </div>
-         </div>
+         </div>-->
       </div>
 
       <!--
@@ -112,6 +126,19 @@
       </div>-->
    </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
    <div class="m-portlet__foot">
       <div class="row align-items-center">
          <div class="col-lg-12 m--align-right">
@@ -120,12 +147,6 @@
       </div>
    </div>
 </div>
-
-
-
-
-
-
 
 
 
@@ -171,7 +192,7 @@
                   <th>Subcategoría</th>
                   <th>Pregunta</th>
                   <th>Dificultad</th>
-                  <th>Compartida</th>
+                  <!-- <th>Compartida</th> -->
                   <th class="center">Creada</th>
                   <th class="center">Última Actualización</th>
                   <th class="center">Acciones</th>
@@ -187,11 +208,13 @@
                   <td>{{question.description}}</td>
                   <td>
                      <!-- {{question.difficulty}} -->
-                     <span style="font-size:0.8rem; margin-top: 3px; color: #ffffff" class="center m-badge m-badge--wide"
+                     <span style="font-size:0.8rem; margin-top: 3px; color: #ffffff"
+                        class="center m-badge m-badge--wide"
                         [ngClass]="(question.difficulty == 1) ? 'm-badge--success' : (question.difficulty == 2 ? 'm-badge--warning' : 'm-badge--danger')">
                         {{question.difficulty == 1 ? 'Fácil' : question.difficulty == 2 ? 'Medio' : 'Díficil'}}
                      </span>
                   </td>
+                  <!--
                   <td>
                      <span class="m-badge m-badge--dot" [ngClass]="(question.shared)?'m-badge--success':'m-badge--danger'"></span>
                      &nbsp;
@@ -199,18 +222,21 @@
                      <span class="m--font-bold" [ngClass]="(question.shared)?'m--font-success':'m--font-danger'">
                         {{question.shared ? 'Si' : 'No'}}
                      </span>
-                  </td>
+                  </td>-->
                   <td class="nowrap center">{{question.created_at | timeAgo}}</td>
                   <td class="nowrap center">{{question.updated_at | timeAgo}}</td>
                   <td>
                      <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
-                        <a (click)="updateQuestion(question)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
+                        <a (click)="updateQuestion(question)"
+                           class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-edit"></i>
                         </a>
-                        <a [swal]="deleteSwal" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                        <a [swal]="deleteSwal"
+                           class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-trash"></i>
                         </a>
-                        <swal #deleteSwal (confirm)="deleteQuestion(question.id_question)" [options]="SWAL_DELETE_QUESTION"></swal>
+                        <swal #deleteSwal (confirm)="deleteQuestion(question.id_question)"
+                           [options]="SWAL_DELETE_QUESTION"></swal>
                      </span>
                   </td>
                </tr>
@@ -290,7 +316,8 @@
                   <td class="center">{{course.semester}}</td>
                   <td class="nowrap">
                      <span style="width: 100%">
-                        <span class="m-badge m-badge--dot" [ngClass]="course.active ? 'm-badge--success' : 'm-badge--danger'"></span>
+                        <span class="m-badge m-badge--dot"
+                           [ngClass]="course.active ? 'm-badge--success' : 'm-badge--danger'"></span>
                         &nbsp;
                         <span class="m--font-bold" [ngClass]="course.active ? 'm--font-success' : 'm--font-danger'">
                            {{course.active ? 'Activo': 'Inactivo'}}</span>
@@ -300,13 +327,16 @@
                   <td class="nowrap center">{{course.updated_at | timeAgo}}</td>
                   <td>
                      <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
-                        <a (click)="updateCourse(course)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
+                        <a (click)="updateCourse(course)"
+                           class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-edit"></i>
                         </a>
-                        <a [swal]="deleteSwal2" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                        <a [swal]="deleteSwal2"
+                           class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-trash"></i>
                         </a>
-                        <swal #deleteSwal2 (confirm)="deleteCourse(course.id_course)" [options]="SWAL_DELETE_COURSE"></swal>
+                        <swal #deleteSwal2 (confirm)="deleteCourse(course.id_course)" [options]="SWAL_DELETE_COURSE">
+                        </swal>
                      </span>
                   </td>
                </tr>
@@ -376,13 +406,16 @@
                   <td class="nowrap center">{{category.updated_at | timeAgo}}</td>
                   <td>
                      <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
-                        <a (click)="updateCategory(category)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
+                        <a (click)="updateCategory(category)"
+                           class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-edit"></i>
                         </a>
-                        <a [swal]="deleteSwal3" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                        <a [swal]="deleteSwal3"
+                           class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-trash"></i>
                         </a>
-                        <swal #deleteSwal3 (confirm)="deleteCategory(category.id_category)" [options]="SWAL_DELETE_CATEGORY"></swal>
+                        <swal #deleteSwal3 (confirm)="deleteCategory(category.id_category)"
+                           [options]="SWAL_DELETE_CATEGORY"></swal>
                      </span>
                   </td>
                </tr>
@@ -448,13 +481,16 @@
                   <td class="nowrap center">{{subcategory.updated_at | timeAgo}}</td>
                   <td>
                      <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
-                        <a (click)="updateSubcategory(subcategory)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
+                        <a (click)="updateSubcategory(subcategory)"
+                           class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-edit"></i>
                         </a>
-                        <a [swal]="deleteSwal4" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
+                        <a [swal]="deleteSwal4"
+                           class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
                            <i class="la la-trash"></i>
                         </a>
-                        <swal #deleteSwal4 (confirm)="deleteSubcategory(subcategory.id_subcategory)" [options]="SWAL_DELETE_SUBCATEGORY"></swal>
+                        <swal #deleteSwal4 (confirm)="deleteSubcategory(subcategory.id_subcategory)"
+                           [options]="SWAL_DELETE_SUBCATEGORY"></swal>
                      </span>
                   </td>
                </tr>

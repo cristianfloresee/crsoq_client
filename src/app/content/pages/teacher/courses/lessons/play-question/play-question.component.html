@@ -255,10 +255,6 @@
                      </tr>
                   </ng-template>
 
-
-
-
-
                </tbody>
 
                <!--
@@ -349,7 +345,7 @@
    
                <!-- BODY 2 -->
                <div class="col-lg-6">
-   
+                  <div *ngIf="option" echarts [options]="option" [merge]="update_options" class="demo-chart"></div>
                </div>
    
    

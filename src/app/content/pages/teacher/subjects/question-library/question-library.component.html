@@ -119,7 +119,7 @@
                   <th>Categoría</th>
                   <th>Subcategoría</th>
                   <th>Dificultad</th>
-                  <th>Compartida</th>
+                  <!-- <th>Compartida</th> -->
                   <th class="center">Fecha de Creación</th>
                   <th class="center">Fecha de Actualización</th>
                   <th class="center">Acciones</th>
@@ -139,6 +139,7 @@
                         {{question.difficulty == 1 ? 'Fácil' : question.difficulty == 2 ? 'Medio' : 'Díficil'}}
                      </span>
                   </td>
+                  <!--
                   <td class="nowrap">
                      <span style="width: 100%">
                         <span class="m-badge m-badge--dot" [ngClass]="(question.shared)?'m-badge--success':'m-badge--danger'"></span>
@@ -146,7 +147,7 @@
                         <span class="m--font-bold" [ngClass]="(question.shared)?'m--font-success':'m--font-danger'">
                            {{question.shared ? 'Si': 'No'}}</span>
                      </span>
-                  </td>
+                  </td>-->
 
                   <td class="center">{{question.created_at | timeAgo}}</td>
                   <td class="center">{{question.updated_at | timeAgo}}</td>

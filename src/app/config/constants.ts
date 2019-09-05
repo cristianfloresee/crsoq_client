@@ -44,6 +44,7 @@ export const API = {
    MODULES: `${API_URL}modules`,
    UPLOAD_IMAGE: `${API_URL}image/`,
    WORKSPACES: `${API_URL}workspaces`,
+   STATISTICS: `${API_URL}statistics`
 };
 
 // User roles

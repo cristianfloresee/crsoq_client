@@ -15,6 +15,7 @@ import { SWAL_SUCCESS_DELETE_PARTICIPATION, SWAL_DELETE_PARTICIPATION } from 'sr
 // Services
 import { LessonQuestionService } from 'src/app/core/services/API/lesson-question.service';
 import { UserQuestionClassService } from 'src/app/core/services/API/user_question_class.service';
+import { EChartOption } from 'echarts';
 
 @Component({
    selector: 'cw-play-question',
@@ -49,6 +50,31 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
    data_students: Array<any>;
    total_winners: number;
 
+   // Echart
+   option: any;
+   update_options: any;
+   data;
+
+   // Overview
+   overview = {
+      values: {
+         'participan': 0,
+         'no participan': 0,
+         'no seleccionados': 0,
+         'perdedores': 0,
+         'ganadores': 0,
+         'total': 0
+      },
+      children: {
+         'participan': [],
+         'no participan': [],
+         'no seleccionados': [],
+         'perdedores': [],
+         'ganadores': [],
+         'total': []
+      }
+   };
+
    constructor(
       public activeModal: NgbActiveModal,
       private toastr: ToastrService,
@@ -60,7 +86,7 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
       this.subscriptions$ = new Subscription();
       this.current_question_status = this.question.status; // Establece la pregunta actual
 
-      if(this.current_question_status == 5) {
+      if (this.current_question_status == 5) {
          this.getParticipationOverview();
       }
 
@@ -141,25 +167,162 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
 
    }
 
-   getParticipationOverview(){
+   initializeChartOptions() {
+
+      let legend_data = [];
+      let series_data = [];
+      let selected = {};
+
+      console.log("overview: ", this.overview);
+      for (let item in this.overview.values) {
+         legend_data.push(item);
+         series_data.push({
+            name: item,
+            value: this.overview.values[item]
+         });
+         selected[item] = this.overview.values[item] > 0;
+      }
+
+      
+      // Naranja
+      const red1 = {
+         color: '#BC5631'
+      };
+      // Azul
+      const blue1 = {
+         color: '#37628B'
+      };
+      const blue2 = {
+         color: '#49739E'
+      };
+      const blue3 = {
+         color: '#5987B1'
+      };
+      const blue4 = {
+         color: '#6D9BC2'
+      };
+
+
+      //> Set real data
+      const data = [{
+         name: 'Estudiantes',
+         children: [
+            {
+               name: 'participan',
+               value: this.overview.values['participan'],
+               itemStyle: blue1,
+               children: [
+                  {
+                     name: 'ganador',
+                     value: this.overview.values['ganadores'],
+                     itemStyle: blue2,
+                     children: this.overview.children['ganadores']
+                  },
+                  {
+                     name: 'perdedores',
+                     value: this.overview.values['perdedores'],
+                     itemStyle: blue3,
+                     children: this.overview.children['perdedores']
+                  },
+                  {
+                     name: 'no seleccionados',
+                     value: this.overview.values['no seleccionados'],
+                     itemStyle: blue4,
+                     children: this.overview.children['no seleccionados']
+                  }
+               ]
+            },
+            {
+               name: 'no participan',
+               value: this.overview.values['no participan'],
+               itemStyle: red1,
+               children: this.overview.children['no participan']
+            }
+         ]
+      }];
+
+      // Echart Options
+      this.option = {
+         title: {
+            text: this.question.description,
+            subtext: 'Gráfico de Participación',
+            textStyle: {
+               fontSize: 14,
+               align: 'center'
+            },
+            subtextStyle: {
+               align: 'center'
+            }
+         },
+         series: {
+            type: 'sunburst',
+            highlightPolicy: 'ancestor',
+            data: data,
+            radius: ['20%', '100%'],
+            label: {
+               rotate: 'radial', // number (90 a -90), 'radial', 'tange',
+               fontWeight: 600,
+               //minAngle: //Oculta label si es un pequeño el angulo (en grados)
+            },
+            downplay: {
+               itemStyle: {
+                  opacity: 0.3
+                  // Elementos que no pertenecen a la selección (hacer que se mantenga el color pero se aclare)
+               }
+            },
+            levels: [
+               {},
+               {
+                  label: {
+                     rotate: 'tangential'
+                  }
+               },
+               {
+                  label: {
+                     rotate: 'tangential'
+                  }
+               },
+               {
+                  label: {
+                     rotate: 'tangential'
+                  }
+               }
+            ],
+            itemStyle: {
+               color: '#ddd',
+               borderWidth: 3
+            }
+         },
+         tooltip: {
+            trigger: 'item',
+            axisPointer: {
+               type: 'shadow'
+            },
+            formatter: "{b}: {c}"
+         }
+      }
+   }
+
+   getParticipationOverview() {
       const params = {
          id_question: this.question.id_question,
          id_class: this.id_lesson
       };
-      
+
       // Obtiene todos los estudiantes del curso
       this._userQuestionClassSrv.getQuestionParticipation(params)
-      .subscribe(
-         (result: any) => {
-            console.log("students: ", result);
+         .subscribe(
+            (result: any) => {
+               console.log("students: ", result);
 
-            this.data_students = result;
-            //console.log("participacion formateada: ", this.data_students);
-            this.getTotalWinners(this.data_students);
-         },
-         (error) => {
-            console.log("error:", error);
-         });
+               this.data_students = result;
+               //console.log("participacion formateada: ", this.data_students);
+               this.getTotalWinners(this.data_students);
+               this.initializeChartOptions();
+            },
+            (error) => {
+               console.log("error:", error);
+            });
    }
 
    // Actualiza el estado de la pregunta actual
@@ -178,7 +341,7 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
                      this.data_participants = [];
                      this.participants_filtered = [];
                   }
-                  else if(status == 5){
+                  else if (status == 5) {
                      this.getParticipationOverview();
                   }
 
@@ -200,13 +363,13 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
       this._classQuestionSrv.exitToPlayQuestionSectionRoomAsTeacher({ id_class: this.id_lesson });
    }
 
-   cancelWinner(participant){
+   cancelWinner(participant) {
       clearInterval(this.interval_ended_question); // Finaliza el interval
       this.counter_ended_question = 5; // Reestablece el contador
       participant.status = 3;
    }
 
-   setWinnerParticipant(participant){
+   setWinnerParticipant(participant) {
       participant.status = 5;
       this.interval_ended_question = setInterval(() => {
          this.counter_ended_question--;
@@ -290,15 +453,122 @@ export class PlayQuestionComponent implements OnInit, OnDestroy {
       this.subscriptions$.unsubscribe(); // Cancela todas las subcripciones
    }
 
+
+
+
    /**
-    * Obtiene el total de ganadores a partir del array de participantes
+    * Obtiene el resumen de participación
     * @param participants
     */
    getTotalWinners(participants: Array<any>) {
-      this.total_winners = 0;
+
+      // Naranja
+      const red1 = {
+         color: '#BC5631'
+      };
+
+      const red2 = {
+         color: '#CD5F30'
+      };
+
+      // Azul
+      const blue1 = {
+         color: '#37628B'
+      };
+
+      const blue2 = {
+         color: '#49739E'
+      };
+      const blue3 = {
+         color: '#5987B1'
+      };
+      const blue4 = {
+         color: '#6D9BC2'
+      };
+      const blue5 = {
+         color: '#81AFD2'
+      };
+      const blue6 = {
+         color: '#99C4E1'
+      };
+
+      const blue7 = {
+         color: '#B4D4E9'
+      }
+
+      // Reinicia el 'overview'
+      for (let item in this.overview.values) {
+         this.overview.values[item] = 0;
+         this.overview.children[item] = [];
+      }
+
+      // Obtiene los nuevos valores para el overview
+      participants.forEach(participant => {
+
+         if (participant.status == 1) {
+            this.overview.values['no participan']++;
+            this.overview.children['no participan'].push({
+               name: `${participant.name} ${participant.last_name} ${participant.middle_name}`,
+               value: 1,
+               itemStyle: red2,
+               label: {
+                  show: false
+               },
+               tooltip: {
+                  formatter: "{b}"
+               }
+            });
+         }
+         else if (participant.status == 2) {
+            this.overview.values['no seleccionados']++;
+            this.overview.children['no seleccionados'].push({
+               name: `${participant.name} ${participant.last_name} ${participant.middle_name}`,
+               value: 1,
+               itemStyle: blue7,
+               label: {
+                  show: false
+               },
+               tooltip: {
+                  formatter: "{b}"
+               }
+            });
+         }
+         else if (participant.status == 4) {
+            this.overview.values['perdedores']++;
+            this.overview.children['perdedores'].push({
+               name: `${participant.name} ${participant.last_name} ${participant.middle_name}`,
+               value: 1,
+               itemStyle: blue6,
+               label: {
+                  show: false
+               },
+               tooltip: {
+                  formatter: "{b}"
+               }
+            });
+         }
+         else if (participant.status == 5) {
+            this.overview.values['ganadores']++;
+            this.overview.children['ganadores'].push({
+               name: `${participant.name} ${participant.last_name} ${participant.middle_name}`,
+               value: 1,
+               itemStyle: blue5,
+               label: {
+                  show: false
+               },
+               tooltip: {
+                  formatter: "{b}"
+               }
+            });
+         }
+      });
+      this.overview.values['participan'] = this.overview.values['no seleccionados'] + this.overview.values['perdedores'] + this.overview.values['ganadores'];
+      this.overview.values['total'] = participants.length;
+
+      /*this.total_winners = 0;
       participants.forEach(participant => {
          if (participant.status == 5) this.total_winners++;
-      });
+      });*/
    }
 
 }

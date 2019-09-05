@@ -22,6 +22,10 @@ export class CourseService {
       return this.http.get(API.COURSES, { params })
    }
 
+   getLatestUpdatedCourses(params){
+      return this.http.get(`${API.COURSES}/last_records`, { params })
+   }
+
    getCoursesByCode(id_user, code) {
       // + Necesito una interface:
       // + { id_user, id_course, page, page_size }
