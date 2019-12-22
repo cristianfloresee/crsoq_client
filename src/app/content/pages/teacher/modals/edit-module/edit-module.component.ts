@@ -20,7 +20,7 @@ export class EditModuleComponent implements OnInit, OnDestroy {
 
    constructor(
       private fb: FormBuilder,
-      private activeModal: NgbActiveModal,
+      public activeModal: NgbActiveModal,
       private _moduleSrv: ModuleService,
       private toastr: ToastrService
    ) {

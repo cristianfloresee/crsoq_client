@@ -518,6 +518,7 @@ export class TeacherComponent implements OnInit {
    }
 
    updateCourse(course) {
+      console.log("update course: ", course);
       const modalRef = this.ngModal.open(CreateCourseComponent);
       modalRef.componentInstance.course = course;
       modalRef.componentInstance.action = 'Actualizar';

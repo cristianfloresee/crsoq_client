@@ -25,6 +25,7 @@ export class RegisterComponent implements OnInit {
 
    model: any = { email: '' };
    registerForm: FormGroup;
+   loading: boolean;
 
    constructor(
       private toastr: ToastrService,
@@ -67,7 +68,7 @@ export class RegisterComponent implements OnInit {
       const { name, lastname, middlename, document, email, phone, username, password } = this.registerForm.value;
       let user = new User(name, lastname, middlename, document, email, phone, username, password);
 
-
+      console.log("user: ", user);
       if (this.registerForm.invalid) {
          console.log("formulario invalido...");
 
@@ -75,10 +76,11 @@ export class RegisterComponent implements OnInit {
       }
 
 
-
+      this.loading = true;
       return this.userSrv.createUser(user)
          .subscribe(result => {
-            console.log("result: ", result);
+            this.loading = false;
+            console.log("usuario creado: ", result);
             this.loginPage();
             this.toastr.success('Acción realizada', 'Usuario creado correctamente', {
                closeButton: true,

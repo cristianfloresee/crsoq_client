@@ -68,7 +68,9 @@ export class CreateCourseComponent implements OnInit, OnDestroy {
    loadFormData() {
       let _year = this.options_calendar.find(element => element.year == this.course.year);
       let _semester = _year.options.find(element => element.semester == this.course.semester);
-
+      
+      console.log("nepelio: ", this.course.id_subject);
+      
       this.courseForm.setValue({
          subject: this.course.id_subject,
          year: _year.options,
@@ -77,7 +79,7 @@ export class CreateCourseComponent implements OnInit, OnDestroy {
          active: this.course.active,
          goalsForm: {
             course_goal: this.course.course_goal.toString(),
-            student_goal: this.course.student_goal.toString()
+            student_goal: this.course.student_goal || '0'
          }
 
       });

@@ -66,23 +66,24 @@
 
          <ng-container formGroupName="goalsForm">
 
-            <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : courseForm.controls['goalsForm'].controls['course_goal'].invalid && courseForm.controls['goalsForm'].controls['course_goal'].touched }">
+            <!-- courseForm['controls'].goalsForm['controls'].course_goal. -->
+            <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : courseForm['controls'].goalsForm['controls'].course_goal.invalid && courseForm['controls'].goalsForm['controls'].course_goal.touched }">
                <label class="form-control-label">Meta por Curso:</label>
                <input type="text" class="form-control m-input" formControlName="course_goal" autocomplete="nope"
                   maxLength="4">
                <!--===================== ERRORES DE NOMBRE =====================-->
-               <div class="form-control-feedback" *ngIf="courseForm.controls['goalsForm'].controls['course_goal'].hasError('required') && (courseForm.controls['goalsForm'].controls['course_goal'].dirty || courseForm.controls['goalsForm'].controls['course_goal'].touched)">
+               <div class="form-control-feedback" *ngIf="courseForm['controls'].goalsForm['controls'].course_goal.hasError('required') && (courseForm['controls'].goalsForm['controls'].course_goal.dirty || courseForm['controls'].goalsForm['controls'].course_goal.touched)">
                   Este campo es requerido.
                </div>
                <!-- FIN ERRORES DE NOMBRE -->
             </div>
 
-            <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : courseForm.controls['goalsForm'].controls['student_goal'].invalid && courseForm.controls['goalsForm'].controls['student_goal'].touched }">
+            <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : courseForm['controls'].goalsForm['controls'].student_goal.invalid && courseForm['controls'].goalsForm['controls'].student_goal.touched }">
                <label class="form-control-label">Meta por Estudiante:</label>
                <input type="text" class="form-control m-input" formControlName="student_goal" autocomplete="nope"
                   maxLength="4">
                <!--===================== ERRORES DE NOMBRE =====================-->
-               <div class="form-control-feedback" *ngIf="courseForm.controls['goalsForm'].controls['student_goal'].hasError('required') && (courseForm.controls['goalsForm'].controls['student_goal'].dirty || courseForm.controls['goalsForm'].controls['student_goal'].touched)">
+               <div class="form-control-feedback" *ngIf="courseForm['controls'].goalsForm['controls'].student_goal.hasError('required') && (courseForm['controls'].goalsForm['controls'].student_goal.dirty || courseForm['controls'].goalsForm['controls'].student_goal.touched)">
                   Este campo es requerido.
                </div>
 

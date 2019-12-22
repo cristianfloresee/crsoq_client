@@ -6,6 +6,7 @@ export class MenuHeaderConfig {
 
       this.header_config = {
          admin: [
+            /*
             {
                title: 'Actions',
                root: true,
@@ -406,7 +407,7 @@ export class MenuHeaderConfig {
                      }
                   ]
                }
-            }
+            }*/
          ],
          student: [
 

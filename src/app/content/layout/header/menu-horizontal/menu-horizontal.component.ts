@@ -14,13 +14,14 @@ export class MenuHorizontalComponent implements OnInit, AfterViewInit {
    @HostBinding('attr.mMenuHorizontal') mMenuHorizontal: MenuHorizontalDirective; //PERMITE ABRIR LOS MENÚS
 
 
-   header_config;
+   //header_config;
    current_role;
 
    constructor(
       private el: ElementRef,
       private roleSrv: RoleService
    ) {
+      /*
       this.header_config = [
          {
             title: 'Acciones',
@@ -115,7 +116,7 @@ export class MenuHorizontalComponent implements OnInit, AfterViewInit {
                ]
             }
          }
-      ];
+      ];*/
 
    }
 

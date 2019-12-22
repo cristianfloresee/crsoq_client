@@ -19,7 +19,8 @@
    <!-- CARD BODY -->
    
    <div class="m-portlet__body m-portlet__body--no-padding">
-      id_course: {{id_course}}
+     
+      <div *ngIf="options" echarts [options]="options" [merge]="update_options" class="demo-chart"></div>
       <!--
       <div class="row m-row--no-padding m-row--col-separator-xl">
          <div style="height: 200px" *ngIf="courses?.length == 0">
@@ -48,7 +49,7 @@
    <div class="m-portlet__foot">
       <div class="row align-items-center">
          <div class="col-lg-12 m--align-right">
-            <button class="btn btn-primary">Crear Pregunta</button>
+            <button (click)="openStudentPointsModal()" class="btn btn-primary">Ver Datos</button>
          </div>
       </div>
    </div>

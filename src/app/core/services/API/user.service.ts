@@ -25,6 +25,10 @@ export class UserService {
       return this.http.post(API.USERS, { name, last_name, middle_name, document, email, phone, username, password, roles });
    }
 
+   registerUser(user){
+      const { name, last_name, middle_name, document, email, phone, username, password } = user;
+   }
+
    updateUser(user, id_user?) {
       const { name, last_name, middle_name, document, email, phone, username, active, add_roles, delete_roles } = user;
       console.log("USER: ", user);
@@ -74,5 +78,7 @@ export class UserService {
       const params = { document, id_course };
       return this.http.get(`${API.USERS}/students`, { params })
    }
+
+  
 
 }

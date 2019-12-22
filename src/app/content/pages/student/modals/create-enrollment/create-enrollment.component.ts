@@ -28,6 +28,7 @@ export class CreateEnrollmentComponent implements OnInit {
    search_results;
    // Form
    searchForm: FormGroup;
+   data_updated: boolean;
 
    constructor(
       public fb: FormBuilder,
@@ -69,7 +70,7 @@ export class CreateEnrollmentComponent implements OnInit {
 
                // Recibe toastr desde el socket también
                //this.toastr.success(`El estudiante ha sido inscrito correctamente.`, `Estudiante Inscrito!`);
-               //this.data_updated = true;
+               this.data_updated = true;
             },
             error => {
                console.log("error:", error);

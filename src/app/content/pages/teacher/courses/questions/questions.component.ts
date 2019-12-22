@@ -20,6 +20,7 @@ import { DIFFICULTIES, PAGE_SIZES } from 'src/app/config/constants';
 import { SWAL_DELETE_QUESTION, SWAL_SUCCESS_DELETE_QUESTION } from 'src/app/config/swal_config';
 import { QuestionSearchComponent } from '../../modals/question-search/question-search.component';
 import { QuestionSearch2Component } from './question-search2/question-search2.component';
+import { CreateQuestionComponent } from '../../modals/create-question/create-question.component';
 
 @Component({
    selector: 'cw-questions',

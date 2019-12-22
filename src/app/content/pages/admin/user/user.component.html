@@ -64,12 +64,12 @@
 
       <!-- SECCIÓN DE FILTRO Y BUSQUEDA -->
       <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
-         <form [formGroup]="filterForm" (ngSubmit)="filterItems(filterForm.value)">
+         <form [formGroup]="filterForm" (ngSubmit)="filter(filterForm.value)">
             <div class="row align-items-center">
 
                <div class="col-xl-12" style="margin-bottom: 20px;">
                   <div class="col-xl-12 order-1 order-xl-2 m--align-right">
-                     <button (click)="filter()" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill"
+                     <button (click)="filter(filterForm.value)" style="color: #ffffff" class="btn btn-primary m-btn m-btn--custom m-btn--air m-btn--pill"
                         [disabled]="filterForm.value.role == f_role && filterForm.value.status == f_status && filterForm.value.search == f_search">
                         <span>
                            <span>Filtrar</span>

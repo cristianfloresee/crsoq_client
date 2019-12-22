@@ -160,7 +160,7 @@ export class PlayQuestion2Component implements OnInit {
    }
 
    imageZoom(question) {
-      const src = 'http://localhost:3000/' + question.image;
+      const src = 'http://146.83.109.228:3300/' + question.image;
       const caption = question.description;
       const thumb = question.image;
       const album = { src, caption, thumb }

@@ -1,9 +1,9 @@
-//ANGULAR
+// Angular
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-//CONSTANTES
+// Constants
 import { API } from '../../../config/constants';
-//SERVICIOS
+// Services
 import { SessionService } from './session.service';
 import { SocketService } from '../socket.service';
 
@@ -13,10 +13,9 @@ export class CourseService {
 
    constructor(
       public http: HttpClient,
-      private _socketSrv: SocketService
    ) { }
 
-   getCourses(params) {
+   getCourses(params: any) {
       // + Necesito una interface:
       // + { id_user, id_subject, id_course, page, page_size }
       return this.http.get(API.COURSES, { params })

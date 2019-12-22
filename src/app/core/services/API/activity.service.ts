@@ -20,7 +20,7 @@ export class ActivityService {
    }
 
    getStudentsByActivityID(id_activity){
-      const params = { id_activity}
+      const params = { id_activity};
       return this.http.get(`${API.ACTIVITIES}/students`, { params });
    }
 

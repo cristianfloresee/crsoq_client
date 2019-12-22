@@ -73,7 +73,7 @@ export class WinnersComponent implements OnInit {
    // Demo efecto hover: https://echarts.apache.org/examples/en/editor.html?c=doc-example/sunburst-highlight-ancestor&theme=light
    constructor(
       private toastr: ToastrService,
-      private activeModal: NgbActiveModal,
+      public activeModal: NgbActiveModal,
       private _activitySrv: ActivityService,
       private _activityParticipationsSrv: ActivityParticipationService,
       private _userQuestionClassSrv: UserQuestionClassService,
@@ -287,41 +287,6 @@ export class WinnersComponent implements OnInit {
       console.log("legend_data: ", legend_data);
       console.log("series_data: ", series_data);
       console.log("selected: ", selected);
-      /*
-      this.option = {
-         title: {
-            text: 'Participación de Estudiantes',
-            subtext: `Estudiantes en el curso: ${this.data_students.length}`,
-            x: 'center'
-         },
-         tooltip: {
-            trigger: 'item',
-            formatter: "{b} : {c} <br/> ({d}%)"
-         },
-         legend: {
-            orient: 'vertical',
-            left: 'left',
-            data: legend_data,
-            selectedMode: false,
-            selected: selected
-         },
-         series: [
-            {
-               name: 'estado de participación',
-               type: 'pie',
-               radius: '55%',
-               center: ['50%', '60%'],
-               data: series_data,
-               itemStyle: {
-                  emphasis: {
-                     shadowBlur: 10,
-                     shadowOffsetX: 0,
-                     shadowColor: 'rgba(0, 0, 0, 0.5)'
-                  }
-               }
-            }
-         ]
-      };*/
 
       // Naranja
       var red1 = {

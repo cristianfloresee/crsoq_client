@@ -3,6 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 // RxJS
 import { Subscription } from 'rxjs';
+// ng-bootstrap
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+// API Services
+import { StatisticsService } from 'src/app/core/services/API/statistics.service';
+import { CourseService } from 'src/app/core/services/API/course.service';
+// Modals
+import { StudentPointsComponent } from '../../modals/student-points/student-points.component';
+
 
 @Component({
     selector: 'cw-statistics',
@@ -16,10 +24,16 @@ export class StatisticsComponent implements OnInit {
     id_subject;
     id_course;
 
+    course_details;
+
     options;
+    data_points;
 
     constructor(
         private route: ActivatedRoute,
+        private _statisticsSrv: StatisticsService,
+        private _courseSrv: CourseService,
+        private ngModal: NgbModal
     ) { }
 
     ngOnInit() {
@@ -28,9 +42,52 @@ export class StatisticsComponent implements OnInit {
             .subscribe(params => {
                 this.id_course = params.idCourse;
                 this.id_subject = params.idSubject;
+
+                this.getCourseDetails(this.id_course);
             });
 
+        this.getCourseStudentPoints(this.id_course);
+    }
+
+    getCourseDetails(id_course){
+        this._courseSrv.getCourseDetail(id_course)
+        .subscribe(
+            (result: any) => {
+                //this.data_points = result;
+                console.log("course_details: ", result);
+                this.course_details = result;
+            },
+            error => {
+                console.log("error code:", error);
+            }
+        );
+    }
+
+    getCourseStudentPoints(id_course) {
+        this._statisticsSrv.getCourseStudentPoints(id_course)
+            .subscribe(
+                (result: any) => {
+                    this.data_points = result;
+                    console.log("getCourseStudentPoints: ", result);
+
+                    this.initChart(this.data_points)
+
+                },
+                error => {
+                    console.log("error code:", error);
+                }
+            );
+    }
+
+    initChart(student_points: Array<any>) {
+
+
+        let students = student_points.map(student => `${student.name} ${student.last_name}`);
+        let question_points = student_points.map(student => student.question_points);
+        let activity_points = student_points.map(student => student.activity_points);
+
         this.options = {
+            barMaxWidth: 30,
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {
@@ -53,28 +110,54 @@ export class StatisticsComponent implements OnInit {
                     rotate: 80
 
                 },
-                data: ['Juan', 'Alexis', 'Matías', 'Pedro', 'Mike', 'Ana', 'Beto', 'Cris', 'Katy', 'Mario', 'Pepe', 'Luis', 'Arturo', 'Cristian']
+                data: students
 
             },
             yAxis: {
                 type: 'value',
-                name: 'Puntos'
+                name: 'Puntos',
+                minInterval: 1
+
             },
             series: [
                 {
                     name: 'Puntos por Preguntas',
                     type: 'bar',
                     stack: 'points',
-                    data: [320, 302, 301, 334, 390, 330, 320, 100, 210, 310, 210, 232, 320, 430]
+                    data: question_points
                 },
                 {
                     name: 'Puntos por Actividades',
                     type: 'bar',
                     stack: 'points',
-                    data: [120, 132, 101, 134, 90, 230, 210, 100, 210, 310]
+                    data: activity_points
                 }
             ]
         };
+
+        console.log("OPTIONS: ", this.options);
+    }
+
+    openStudentPointsModal() {
+        console.log("openStudentPointsModal...");
+        const modalRef = this.ngModal.open(StudentPointsComponent, {
+            windowClass: 'xlModal'
+        });
+        modalRef.componentInstance.student_points = this.data_points;
+        modalRef.componentInstance.course_details = this.course_details;
+
+        modalRef.result
+            .then((result) => {
+                // Pasar data
+                if (result) { }
+            })
+            .catch(reason => reason);
+    }
+
+    updateClass(_class) {
+        //const modalRef = this.ngModal.open(EditLessonComponent);
+        //modalRef.componentInstance.lesson = _class;
+        //modalRef.componentInstance.options_module = this.options_module;
     }
 
 }

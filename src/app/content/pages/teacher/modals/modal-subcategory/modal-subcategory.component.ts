@@ -23,6 +23,7 @@ import { TOAST_SUCCESS_CREATE_SUBCATEGORY, TOAST_ERROR_CREATE_SUBCATEGORY } from
    styleUrls: ['./modal-subcategory.component.scss']
 })
 export class ModalSubcategoryComponent implements OnInit, OnDestroy {
+   @Input() action;
    @Input() id_subject;
    @Input() subcategory;
    // Form

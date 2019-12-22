@@ -32,7 +32,7 @@ export class EditLessonComponent implements OnInit, OnDestroy {
 
    constructor(
       private fb: FormBuilder,
-      private activeModal: NgbActiveModal,
+      public activeModal: NgbActiveModal,
       private _moduleSrv: ModuleService,
       private _lessonSrv: LessonService,
       private toastr: ToastrService,

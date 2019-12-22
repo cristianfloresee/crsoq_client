@@ -18,7 +18,7 @@ export class CreateModuleComponent implements OnInit {
 
    constructor(
       private fb: FormBuilder,
-      private activeModal: NgbActiveModal,
+      public activeModal: NgbActiveModal,
       private _moduleSrv: ModuleService,
       private toastr: ToastrService
    ) { }

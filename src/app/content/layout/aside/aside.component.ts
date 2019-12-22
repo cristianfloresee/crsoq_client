@@ -24,9 +24,9 @@ export class AsideComponent implements OnInit {
 
    constructor(
       private router: Router,
-      private roleSrv: RoleService,
+      public roleSrv: RoleService,
       private _sidemenuSrv: SidemenuService,
-      private _sessionSrv: SessionService
+      public _sessionSrv: SessionService
    ) { }
 
    ngOnInit() {

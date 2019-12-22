@@ -43,6 +43,7 @@ export class QuestionSearchComponent implements OnInit, OnDestroy {
    @Input() subject;
    @Input() course;
    @Input() class;
+   @Input() action;
 
    // Opciones de los swal
    SWAL_DELETE_QUESTION = SWAL_DELETE_QUESTION;

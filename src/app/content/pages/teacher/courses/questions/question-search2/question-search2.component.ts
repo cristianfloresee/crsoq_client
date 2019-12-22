@@ -25,6 +25,7 @@ import { TOAST_SUCCESS_UPDATE_QUESTIONS, TOAST_ERROR_UPDATE_QUESTIONS } from 'sr
 })
 export class QuestionSearch2Component implements OnInit {
 
+   @Input() action;
    @Input() id_subject;
    @Input() id_course;
 
@@ -32,7 +33,9 @@ export class QuestionSearch2Component implements OnInit {
    SWAL_DELETE_QUESTION = SWAL_DELETE_QUESTION;
    SWAL_SUCCESS_DELETE_QUESTION = SWAL_SUCCESS_DELETE_QUESTION;
 
-   constructor() { }
+   constructor(
+      public activeModal: NgbActiveModal
+   ) { }
 
    ngOnInit() {
    }

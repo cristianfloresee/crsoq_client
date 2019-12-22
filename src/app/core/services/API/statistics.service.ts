@@ -10,15 +10,16 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 @Injectable()
-export class ActivityService {
+export class StatisticsService {
 
     constructor(
         public http: HttpClient,
     ) { }
 
-    get(params){
+    getCourseStudentPoints(id_course) {
         // + Necesito una interface:
         // + { year, page, page_size }
-        return this.http.get(API.CALENDARS, { params })
-     }
+        return this.http.get(`${API.STATISTICS}/course_student_points/${id_course}`);
+    }
+
 }

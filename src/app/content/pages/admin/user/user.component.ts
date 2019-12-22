@@ -80,13 +80,13 @@ export class UserComponent implements OnInit {
             });
    }
 
-   filter() {
-      this.f_role = this.filterForm.value.role;
-      this.f_status = this.filterForm.value.status;
-      this.f_search = this.filterForm.value.search;
+   filter(value) {
+      this.f_role = value.role;
+      this.f_status = value.status;
+      this.f_search = value.search;
       this.from = 0;
 
-      this._userSrv.getUsers(this.filterForm.value)
+      this._userSrv.getUsers(value)
          .subscribe(
             (result: any) => {
                this.users = result.items;

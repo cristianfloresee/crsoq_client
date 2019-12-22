@@ -120,7 +120,7 @@
 
       <div class="form-group has-feedback">
          <input class="form-control" type="text" placeholder="Nombre de Usuario" formControlName="username" maxlength="35"
-            autocomplete="nope" required />
+            autocomplete="off" required />
          <!--===================== ERRORES USUARIO =====================-->
          <span class="text-danger" *ngIf="registerForm.controls['username'].hasError('required') && (registerForm.controls['username'].dirty || registerForm.controls['username'].touched)">
             Este campo es requerido
@@ -130,7 +130,7 @@
 
       <div class="form-group has-feedback">
          <input class="form-control" type="password" placeholder="Contraseña" formControlName="password" maxlength="35"
-            autocomplete="nope" required />
+         autocomplete='new-password' required />
          <!--===================== ERRORES CONTRASEÑA =====================-->
          <span class="text-danger" *ngIf="registerForm.controls['password'].hasError('required') && (registerForm.controls['password'].dirty || registerForm.controls['password'].touched)">
             Este campo es requerido
@@ -140,7 +140,7 @@
 
       <div class="form-group has-feedback">
          <input class="form-control" type="password" placeholder="Repita Contraseña" formControlName="password2"
-            maxlength="35" autocomplete="nope" required />
+            maxlength="35" autocomplete='new-password' required />
          <!--===================== ERRORES CONTRASEÑA =====================-->
          <span class="text-danger" *ngIf="registerForm.controls['password2'].hasError('required') && (registerForm.controls['password2'].dirty || registerForm.controls['password2'].touched)">
             Este campo es requerido

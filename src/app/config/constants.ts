@@ -1,14 +1,16 @@
 // Environments
-export const API_URL_DEV = '//localhost:3000/';
+export const API_URL_DEV = 'http://146.83.109.228:3300/';
 export const API_URL_PROD = 'http://...';
 export const API_URL = API_URL_DEV;
 
 // Endpoints
 export const API = {
    LOGIN: `${API_URL}login`,
+   REGISTER: `${API_URL}register`,
    RENEW_TOKEN: `${API_URL}renew_token`,
    UPDATE_SESSION: `${API_URL}update_session`,
    LOGOUT: ``,
+   FILE: `${API_URL}files`,
    USERS: `${API_URL}users`,
    USER_COUNT: `${API_URL}users/count`,
    // User-Course (Enrollment)

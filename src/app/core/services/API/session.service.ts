@@ -261,4 +261,8 @@ export class SessionService {
       return this.userSubject.value.id_user;
    }
 
+   registerUser(){
+      
+   }
+
 }

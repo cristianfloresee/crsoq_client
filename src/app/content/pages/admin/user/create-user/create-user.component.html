@@ -80,8 +80,8 @@
 
          <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : userForm.controls.password.invalid && userForm.controls.password.touched }">
             <label class="form-control-label">Contraseña:</label>
-            <input class="form-control m-input" type="password" formControlName="password" maxlength="35" autocomplete="nope"
-               required />
+            <input class="form-control m-input" type="password" formControlName="password" malength="35"
+            autocomplete='new-password' required />
             <!--===================== ERRORES CONTRASEÑA =====================-->
             <span class="text-danger" *ngIf="userForm.controls['password'].hasError('required') && (userForm.controls['password'].dirty || userForm.controls['password'].touched)">
                Este campo es requerido
@@ -91,7 +91,7 @@
 
          <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : (userForm.errors?.areEquals || userForm.controls.password2.invalid) && userForm.controls.password2.touched }">
             <label class="form-control-label">Repita Contraseña:</label>
-            <input class="form-control" type="password" formControlName="password2" maxlength="35" autocomplete="nope"
+            <input class="form-control" type="password" formControlName="password2" maxlength="35" autocomplete='new-password'
                required />
             <!--===================== ERRORES CONTRASEÑA =====================-->
             <span class="text-danger" *ngIf="userForm.controls['password2'].hasError('required') && (userForm.controls['password2'].dirty || userForm.controls['password2'].touched)">

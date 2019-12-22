@@ -16,7 +16,7 @@ export class SubheaderComponent implements OnInit {
    //public breadcrumbs: BreadCrumb[];
 
    constructor(
-      private _subheaderSrv: SubheaderService,
+      public _subheaderSrv: SubheaderService,
       //private activatedRoute: ActivatedRoute,
       //private router: Router
    ) { }

@@ -10,7 +10,7 @@ import { User } from '../../../../../core/models/user.model';
 export class UserProfileComponent implements OnInit {
 
    constructor(
-      private _sessionSrv: SessionService,
+      public _sessionSrv: SessionService,
    ) {
 
    }
