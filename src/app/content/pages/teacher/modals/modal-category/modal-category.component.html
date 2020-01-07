@@ -26,7 +26,7 @@
 
          <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : categoryForm.controls.name.invalid && categoryForm.controls.name.touched }">
             <label class="form-control-label">Nombre de la Categoría:</label>
-            <input type="text" class="form-control m-input" formControlName="name" maxLength="15" autocomplete="nope">
+            <input type="text" class="form-control m-input" formControlName="name" maxLength="50">
             <!--===================== ERRORES DE NOMBRE =====================-->
             <div class="form-control-feedback" *ngIf="categoryForm.controls['name'].hasError('required') && (categoryForm.controls['name'].dirty || categoryForm.controls['name'].touched)">
                Este campo es requerido.

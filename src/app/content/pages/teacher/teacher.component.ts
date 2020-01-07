@@ -12,21 +12,21 @@ import { CourseService } from 'src/app/core/services/API/course.service';
 import { CategoryService } from 'src/app/core/services/API/category.service';
 import { SubcategoryService } from 'src/app/core/services/API/subcategory';
 import { QuestionService } from 'src/app/core/services/API/question.service';
-import { WorkspaceService } from 'src/app/core/services/API/workspace.service';
 import { SidemenuService } from 'src/app/core/services/sidemenu.service';
 import { SessionService } from 'src/app/core/services/API/session.service';
-// Constantes
+// Constants
 import { SWAL_DELETE_QUESTION, SWAL_SUCCESS_DELETE_QUESTION, SWAL_SUCCESS_DELETE_COURSE, SWAL_DELETE_COURSE, SWAL_DELETE_CATEGORY, SWAL_SUCCESS_DELETE_CATEGORY, SWAL_SUCCESS_DELETE_SUBCATEGORY, SWAL_DELETE_SUBCATEGORY } from 'src/app/config/swal_config';
 import { TOAST_ERROR_DELETE_QUESTIONS, TOAST_ERROR_DELETE_COURSES, TOAST_ERROR_DELETE_CATEGORIES, TOAST_ERROR_DELETE_SUBCATEGORIES } from 'src/app/config/toastr_config';
-// Componentes
+// Components
 import { CreateCourseComponent } from './modals/create-course/create-course.component';
-import { CreateCategoryComponent } from './modals/create-category/create-category.component';
-import { CreateSubcategoryComponent } from './modals/create-subcategory/create-subcategory.component';
+import { modalCategoryComponent } from './modals/modal-category/modal-category.component';
+
+//>
+import { ModalSubcategoryComponent } from './modals/modal-subcategory/modal-subcategory.component';
+
 import { CreateQuestionComponent } from './modals/create-question/create-question.component';
 import { SubjectInitComponent } from './modals/subject-init/subject-init.component';
 import { UpdateQuestionComponent } from './modals/update-question/update-question.component';
-import { UpdateCategoryComponent } from './modals/modal-category/update-category.component';
-import { ModalSubcategoryComponent } from './modals/modal-subcategory/modal-subcategory.component';
 
 @Component({
    selector: 'cw-teacher',
@@ -76,7 +76,6 @@ export class TeacherComponent implements OnInit {
       private _subcategorySrv: SubcategoryService,
       private _questionSrv: QuestionService,
       private toastr: ToastrService,
-      private _workspaceSrv: WorkspaceService,
       private _sidemenuSrv: SidemenuService
    ) { }
 
@@ -237,14 +236,9 @@ export class TeacherComponent implements OnInit {
       });
    }
 
-   openCreateCategory() {
-      const modalRef = this.ngModal.open(CreateCategoryComponent);
-   }
+   
 
-   // Arreglar este...
-   openCreateSubcategory() {
-      const modalRef = this.ngModal.open(CreateSubcategoryComponent);
-   }
+   
 
    updateSubcategory(subcategory) {
       console.log("SUBCATEGORY: ", subcategory);
@@ -529,12 +523,23 @@ export class TeacherComponent implements OnInit {
 
 
    updateCategory(category) {
-      const modalRef = this.ngModal.open(UpdateCategoryComponent);
+      const modalRef = this.ngModal.open(modalCategoryComponent);
       modalRef.componentInstance.action = 'Actualizar';
       modalRef.componentInstance.category = category;
-      modalRef.result
+      /*modalRef.result
          .then((result) => { if (result) this.getLastCategories() })
-         .catch(reason => reason);
+         .catch(reason => reason);*/
+   }
+
+   openCreateCategory() {
+      const modalRef = this.ngModal.open(modalCategoryComponent);
+      modalRef.componentInstance.action = 'Crear';
+   }
+
+   // Arreglar este...
+   openCreateSubcategory() {
+      const modalRef = this.ngModal.open(ModalSubcategoryComponent); 
+      modalRef.componentInstance.action = 'Crear';
    }
 
 }

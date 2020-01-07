@@ -18,7 +18,7 @@ import { SweetAlertOptions } from 'sweetalert2';
 // Constantes
 import { SWAL_DELETE_CATEGORY, SWAL_SUCCESS_DELETE_CATEGORY } from 'src/app/config/swal_config';
 // Modals
-import { UpdateCategoryComponent } from '../../../modals/modal-category/update-category.component';
+import { modalCategoryComponent } from '../../../modals/modal-category/modal-category.component';
 // Servicios
 import { CategoryService } from 'src/app/core/services/API/category.service';
 
@@ -96,7 +96,7 @@ export class CategoriesComponent implements OnInit {
 
 
    createCategory() {
-      const modalRef = this.ngModal.open(UpdateCategoryComponent);
+      const modalRef = this.ngModal.open(modalCategoryComponent);
       modalRef.componentInstance.action = 'Crear';
       modalRef.componentInstance.id_subject = this.id_subject;
       modalRef.result
@@ -105,7 +105,7 @@ export class CategoriesComponent implements OnInit {
    }
 
    updateCategory(category) {
-      const modalRef = this.ngModal.open(UpdateCategoryComponent);
+      const modalRef = this.ngModal.open(modalCategoryComponent);
       modalRef.componentInstance.action = 'Actualizar';
       modalRef.componentInstance.category = category;
       modalRef.result

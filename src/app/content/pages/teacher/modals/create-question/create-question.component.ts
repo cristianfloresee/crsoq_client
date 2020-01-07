@@ -5,7 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 // ngx-toastr
 import { ToastrService } from 'ngx-toastr';
-// Servicios
+// Services
 import { SubjectService } from 'src/app/core/services/API/subject.service';
 import { CategoryService } from 'src/app/core/services/API/category.service';
 import { SessionService } from 'src/app/core/services/API/session.service';
@@ -13,7 +13,7 @@ import { SubcategoryService } from 'src/app/core/services/API/subcategory';
 import { QuestionService } from 'src/app/core/services/API/question.service';
 // rxjs
 import { Subscription } from 'rxjs';
-// Constantes
+// Constants
 import { DIFFICULTIES, IMAGE_EXTS } from 'src/app/config/constants';
 
 @Component({

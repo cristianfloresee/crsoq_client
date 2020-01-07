@@ -68,7 +68,7 @@
 
                   <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : questionForm.controls.description.invalid && questionForm.controls.description.touched }">
                      <label class="form-control-label">Pregunta:</label>
-                     <input type="text" class="form-control m-input" formControlName="description" maxLength="15"
+                     <input type="text" class="form-control m-input" formControlName="description" maxLength="500"
                         autocomplete="nope">
                      <!--===================== ERRORES DE NOMBRE =====================-->
                      <div class="form-control-feedback" *ngIf="questionForm.controls['description'].hasError('required') && (questionForm.controls['description'].dirty || questionForm.controls['description'].touched)">

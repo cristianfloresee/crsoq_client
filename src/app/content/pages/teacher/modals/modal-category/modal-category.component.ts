@@ -8,21 +8,21 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 // rxjs
 import { Subscription } from 'rxjs';
-// Servicios
+// Services
 import { SubjectService } from 'src/app/core/services/API/subject.service';
 import { CategoryService } from 'src/app/core/services/API/category.service';
 import { SessionService } from 'src/app/core/services/API/session.service';
 import { WorkspaceService } from 'src/app/core/services/API/workspace.service';
 
 @Component({
-   selector: 'cw-update-category',
-   templateUrl: './update-category.component.html',
-   styleUrls: ['./update-category.component.scss']
+   selector: 'cw-modal-category',
+   templateUrl: './modal-category.component.html',
+   styleUrls: ['./modal-category.component.scss']
 })
-export class UpdateCategoryComponent implements OnInit, OnDestroy {
-   @Input() id_subject; // Necesario cuando creo una pregunta desde una asignatura
-   @Input() category; // Necesario cuando voy a actualizar una categoría
-   @Input() action; // Título del modal
+export class modalCategoryComponent implements OnInit, OnDestroy {
+   @Input() id_subject; // Necesario cuando creo una pregunta desde una asignatura (optional)
+   @Input() category; // Necesario cuando voy a actualizar una categoría (optional)
+   @Input() action; // Modal title (required)
 
    // Form
    categoryForm: FormGroup;

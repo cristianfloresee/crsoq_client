@@ -15,7 +15,7 @@ import { SweetAlertOptions } from 'sweetalert2';
 // Constants
 import { SWAL_DELETE_SUBCATEGORY, SWAL_SUCCESS_DELETE_SUBCATEGORY } from 'src/app/config/swal_config';
 // Modals
-import { UpdateCategoryComponent } from '../../../modals/modal-category/update-category.component';
+import { modalCategoryComponent } from '../../../modals/modal-category/modal-category.component';
 import { SubcategoryService } from 'src/app/core/services/API/subcategory';
 import { ModalSubcategoryComponent } from '../../../modals/modal-subcategory/modal-subcategory.component';
 

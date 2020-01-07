@@ -1,11 +1,11 @@
 //ANGULAR IMPORTS
-import { Component, OnInit, Input, Output, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, ViewChild, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 //NG2-VALIDATION
 //import { CustomValidators } from 'ng2-validation';
 //RXJS
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 //MODELOS
 import { User } from '../../../../core/models/user.model';
 //SERVICIOS
@@ -18,7 +18,7 @@ import { ToastrService } from 'ngx-toastr';
    templateUrl: './register.component.html',
    styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
 
    @Input() action: string;
    @Output() actionChange = new Subject<string>();
@@ -26,6 +26,10 @@ export class RegisterComponent implements OnInit {
    model: any = { email: '' };
    registerForm: FormGroup;
    loading: boolean;
+
+   // Form Changes
+   phoneChanges$: Subscription;
+   documentChanges$: Subscription;
 
    constructor(
       private toastr: ToastrService,
@@ -51,7 +55,7 @@ export class RegisterComponent implements OnInit {
    }
 
    ngOnInit() {
-
+      this.checkValidFields();
    }
 
    loginPage() {
@@ -100,5 +104,44 @@ export class RegisterComponent implements OnInit {
          return { areEquals: true }
       }
    }
+
+   checkValidFields() {
+      this.phoneChanges$ = this.registerForm.get('phone').valueChanges.subscribe((changes) => {
+         const new_value = this.validNumbers(changes);
+         if (changes.length != new_value.length) {
+            this.registerForm.patchValue({ phone: new_value, }, { emitEvent: false });
+            this.registerForm.get('phone').markAsPristine();
+         }
+      });
+
+      this.documentChanges$ = this.registerForm.get('document').valueChanges.subscribe((changes) => {
+         const new_value = this.validDocumentValue(changes);
+         console.log("document: ", changes);
+         if (changes.length != new_value.length) {
+            this.registerForm.patchValue({ document: new_value, }, { emitEvent: false });
+            this.registerForm.get('document').markAsPristine();
+         }
+      });
+   }
+
+   ngOnDestroy() {
+      this.phoneChanges$.unsubscribe();
+      this.documentChanges$.unsubscribe();
+   }
+
+   // Función Global: Util Service
+   validNumbers(value) {
+      return value.replace(/[^0-9]/g, '');
+   }
+
+   validDocumentValue(rut) {
+      let largo_rut = rut.length;
+      //SI EL INPUT TIENE MAS DE 9 DIGITOS BORRO EL ULTIMO DIGITO
+      if (largo_rut > 9) rut = rut.substring(0, largo_rut - 1);
+      else rut = rut.replace(/[^0-9\K\k]/g, ''); //REEMPLAZO CUALQUIER VALOR DISTINTO DE 0-9Kk
+
+      return rut;
+   }
+
 
 }

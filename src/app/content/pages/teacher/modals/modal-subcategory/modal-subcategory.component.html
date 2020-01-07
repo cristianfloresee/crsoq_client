@@ -43,7 +43,7 @@
 
          <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : subcategoryForm.controls.name.invalid && subcategoryForm.controls.name.touched }">
             <label class="form-control-label">Nombre de la Subcategoría:</label>
-            <input type="text" class="form-control m-input" formControlName="name" maxLength="15" autocomplete="nope">
+            <input type="text" class="form-control m-input" formControlName="name" maxLength="50">
 
             <div class="form-control-feedback" *ngIf="subcategoryForm.controls['name'].hasError('required') && (subcategoryForm.controls['name'].dirty || subcategoryForm.controls['name'].touched)">
                Este campo es requerido.

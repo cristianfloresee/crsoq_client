@@ -31,7 +31,7 @@ export class CreateCourseComponent implements OnInit, OnDestroy {
    options_subject;
    options_calendar;
 
-   //DETECCIÓN DE CAMBIOS EN EL FORM
+   // Form Changes
    nameChanges$: Subscription;
    subjectChanges$: Subscription;
    courseGoalChanges$: Subscription;
@@ -193,6 +193,7 @@ export class CreateCourseComponent implements OnInit, OnDestroy {
       });
    }
 
+   // Función Global: Util Service
    validNumbers(value) {
       return value.replace(/[^0-9]/g, '');
    }

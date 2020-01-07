@@ -85,8 +85,6 @@ import { EditSubjectComponent } from './content/pages/admin/subject/edit-subject
 //COMPONENTE INDIVIDUAL
 import { YearDatepickerComponent } from './content/pages/admin/calendar/year-datepicker/year-datepicker.component';
 import { CreateCourseComponent } from './content/pages/teacher/modals/create-course/create-course.component';
-import { CreateCategoryComponent } from './content/pages/teacher/modals/create-category/create-category.component';
-import { CreateSubcategoryComponent } from './content/pages/teacher/modals/create-subcategory/create-subcategory.component';
 import { CreateQuestionComponent } from './content/pages/teacher/modals/create-question/create-question.component';
 
 import { SidemenuService } from './core/services/sidemenu.service';
@@ -103,7 +101,7 @@ import { EditLessonComponent } from './content/pages/teacher/modals/edit-lesson/
 import { UpdateActivityComponent } from './content/pages/teacher/modals/update-activity/update-activity.component';
 
 import { UpdateQuestionComponent } from './content/pages/teacher/modals/update-question/update-question.component';
-import { UpdateCategoryComponent } from './content/pages/teacher/modals/modal-category/update-category.component';
+import { modalCategoryComponent } from './content/pages/teacher/modals/modal-category/modal-category.component';
 import { SubjectInitComponent } from './content/pages/teacher/modals/subject-init/subject-init.component';
 import { DualListComponent } from './content/pages/teacher/shared/dual-list/dual-list.component';
 import { ModalSubcategoryComponent } from './content/pages/teacher/modals/modal-subcategory/modal-subcategory.component';
@@ -137,8 +135,6 @@ const config: SocketIoConfig = { url: environment.apiUrl, options: {} };
       CreateSubjectComponent,
       EditSubjectComponent,
       CreateCourseComponent,
-      CreateCategoryComponent,
-      CreateSubcategoryComponent,
       CreateQuestionComponent,
       YearDatepickerComponent,
       DeleteCourseComponent,
@@ -151,7 +147,7 @@ const config: SocketIoConfig = { url: environment.apiUrl, options: {} };
       EditLessonComponent,
       UpdateActivityComponent,
       UpdateQuestionComponent,
-      UpdateCategoryComponent,
+      modalCategoryComponent,
       SubjectInitComponent,
       DualListComponent,
       ModalSubcategoryComponent,
@@ -256,8 +252,6 @@ const config: SocketIoConfig = { url: environment.apiUrl, options: {} };
       EditSubjectComponent,
       CreateCourseComponent,
       CreateQuestionComponent,
-      CreateCategoryComponent,
-      CreateSubcategoryComponent,
       DeleteCourseComponent,
       CreateModuleComponent,
       AddStudentComponent,
@@ -267,7 +261,7 @@ const config: SocketIoConfig = { url: environment.apiUrl, options: {} };
       EditLessonComponent,
       UpdateActivityComponent,
       UpdateQuestionComponent,
-      UpdateCategoryComponent,
+      modalCategoryComponent,
       SubjectInitComponent,
       ModalSubcategoryComponent,
       QuestionSearchComponent,

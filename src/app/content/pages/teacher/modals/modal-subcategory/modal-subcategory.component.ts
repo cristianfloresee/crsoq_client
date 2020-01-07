@@ -8,13 +8,12 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 // rxjs
 import { Subscription } from 'rxjs';
-// Servicios
+// Services
 import { SubjectService } from 'src/app/core/services/API/subject.service';
 import { CategoryService } from 'src/app/core/services/API/category.service';
 import { SessionService } from 'src/app/core/services/API/session.service';
-import { WorkspaceService } from 'src/app/core/services/API/workspace.service';
 import { SubcategoryService } from 'src/app/core/services/API/subcategory';
-// Constantes
+// Constants
 import { TOAST_SUCCESS_CREATE_SUBCATEGORY, TOAST_ERROR_CREATE_SUBCATEGORY } from 'src/app/config/toastr_config';
 
 @Component({
@@ -23,11 +22,13 @@ import { TOAST_SUCCESS_CREATE_SUBCATEGORY, TOAST_ERROR_CREATE_SUBCATEGORY } from
    styleUrls: ['./modal-subcategory.component.scss']
 })
 export class ModalSubcategoryComponent implements OnInit, OnDestroy {
-   @Input() action;
+   @Input() action; // Required
    @Input() id_subject;
    @Input() subcategory;
    // Form
    subcategoryForm: FormGroup;
+
+
 
    id_user;
    // Opciones de selector
@@ -42,7 +43,6 @@ export class ModalSubcategoryComponent implements OnInit, OnDestroy {
       private _subjectSrv: SubjectService,
       private _categorySrv: CategoryService,
       private _subcategorySrv: SubcategoryService,
-      private _worskspaceSrv: WorkspaceService,
       private _sessionSrv: SessionService,
       private toastr: ToastrService
    ) { }
@@ -55,11 +55,13 @@ export class ModalSubcategoryComponent implements OnInit, OnDestroy {
 
       // Establece opción por defecto si recibe 'id_subject'
       if (this.id_subject) this.subcategoryForm.patchValue({ id_subject: this.id_subject });
+      // Solo si voy a editar subcategoría??
       if (this.subcategory) {
-         console.log("METAPOD: ", this.subcategory);
          this.loadFormData();
-         this.checkFormChanges();
       }
+      this.checkFormChanges();
+
+
    }
 
    initFormData() {
@@ -81,18 +83,19 @@ export class ModalSubcategoryComponent implements OnInit, OnDestroy {
    }
 
    loadFormOptions() {
-      // Si recibo 'id_subject' (cuando intento crear una subcategorías desde una sección asignatura)
-      if (this.id_subject) {
-         this.getCategories({ id_subject: this.id_subject });
-      }
-      else {
+      // Si recibo 'id_subject' (crear subcategorías desde configuración de asignatura)
+      if (this.id_subject) this.getCategories({ id_subject: this.id_subject });
+      else { // Cuando intento actualizar??
          this._subjectSrv.getSubjectsOptions({ id_user: this.id_user })
             .subscribe(
                (result: any) => {
                   this.options_subject = result;
-                  this.getCategories({ id_subject: this.subcategory.id_subject });
+                  if (this.subcategory) {
+                     this.getCategories({ id_subject: this.subcategory.id_subject });
+                  }
+
                   //if(result && result.length == 0) this.show_message = true;
-                  console.log("bulba_result: ", result);
+
                },
                error => {
                   console.log("error:", error);
@@ -108,7 +111,6 @@ export class ModalSubcategoryComponent implements OnInit, OnDestroy {
          .subscribe(
             result => {
                this.options_category = result;
-               console.log("CATEGORIES: ", result);
             },
             error => {
                console.log("error:", error);
@@ -152,34 +154,40 @@ export class ModalSubcategoryComponent implements OnInit, OnDestroy {
          );
    }
 
+
+
+
+   //> CheckThis!!!!
    checkFormChanges() {
       this.subscriptions$.add(this.subcategoryForm.get('id_subject').valueChanges
          .subscribe((changes) => {
             this.subcategoryForm.controls.id_category.setValue('');
-
             if (changes) {
                this.getCategories({ id_subject: changes });
-               if (changes == this.subcategory.id_subject) this.subcategoryForm.get('id_subject').markAsPristine();
+               if(this.subcategory && changes == this.subcategory.id_subject) this.subcategoryForm.get('id_subject').markAsPristine();
             }
             else this.options_category = [];
 
          })
       );
 
-      this.subscriptions$.add(this.subcategoryForm.get('id_category').valueChanges
-         .subscribe((changes) => {
-            if (changes == this.subcategory.id_category) this.subcategoryForm.get('id_category').markAsPristine();
-         })
-      );
+      if (this.subcategory) {
+         this.subscriptions$.add(this.subcategoryForm.get('id_category').valueChanges
+            .subscribe((changes) => {
+               if (changes == this.subcategory.id_category) this.subcategoryForm.get('id_category').markAsPristine();
+            })
+         );
 
-      this.subscriptions$.add(this.subcategoryForm.get('name').valueChanges
-         .subscribe((changes) => {
-            if (changes == this.subcategory.name) this.subcategoryForm.get('name').markAsPristine();
-         })
-      );
+         this.subscriptions$.add(this.subcategoryForm.get('name').valueChanges
+            .subscribe((changes) => {
+               if (changes == this.subcategory.name) this.subcategoryForm.get('name').markAsPristine();
+            })
+         );
+      }
+
    }
 
-   ngOnDestroy(){
+   ngOnDestroy() {
       this.subscriptions$.unsubscribe();
    }
 

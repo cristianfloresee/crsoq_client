@@ -10,7 +10,7 @@
       <div class="m-portlet__body">
          <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : calendarForm.controls.year.invalid && calendarForm.controls.year.touched }">
             <label class="form-control-label">Año:</label>
-            <input type="number" class="form-control m-input" formControlName="year" autocomplete="nope">
+            <input type="text" maxlength="4" class="form-control m-input" formControlName="year" autocomplete="nope">
             <!--===================== ERRORES DE NOMBRE =====================-->
             <div class="form-control-feedback" *ngIf="calendarForm.controls['year'].hasError('required') && (calendarForm.controls['year'].dirty || calendarForm.controls['year'].touched)">
                Este campo es requerido.

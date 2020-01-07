@@ -10,7 +10,7 @@
          <div class="m-portlet__body">
             <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : subjectForm.controls.name.invalid && subjectForm.controls.name.touched }">
                <label class="form-control-label">Nombre:</label>
-               <input type="text" class="form-control m-input" formControlName="name" maxLength="20" autocomplete="nope">
+               <input type="text" class="form-control m-input" formControlName="name" maxLength="20">
                <!--===================== ERRORES DE NOMBRE =====================-->
                <div class="form-control-feedback" *ngIf="subjectForm.controls['name'].hasError('required') && (subjectForm.controls['name'].dirty || subjectForm.controls['name'].touched)">
                   Este campo es requerido.
