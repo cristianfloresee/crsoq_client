@@ -5,12 +5,12 @@
    </button>
 </div>
 
-<form [formGroup]="subjectForm" (ngSubmit)="editSubject(subjectForm.value)" class="m-form m-form--state m-form--label-align-right">
+<form [formGroup]="subjectForm" (ngSubmit)="formSubmit(subjectForm.value)" class="m-form m-form--state m-form--label-align-right">
       <div class="modal-body">
          <div class="m-portlet__body">
             <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : subjectForm.controls.name.invalid && subjectForm.controls.name.touched }">
                <label class="form-control-label">Nombre:</label>
-               <input type="text" class="form-control m-input" formControlName="name" maxLength="20">
+               <input type="text" class="form-control m-input" formControlName="name" maxLength="50">
                <!--===================== ERRORES DE NOMBRE =====================-->
                <div class="form-control-feedback" *ngIf="subjectForm.controls['name'].hasError('required') && (subjectForm.controls['name'].dirty || subjectForm.controls['name'].touched)">
                   Este campo es requerido.

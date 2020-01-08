@@ -13,6 +13,7 @@ export const TOAST_SUCCESS_CREATE_SUBJECT = Object.assign({}, TOAST_SUCCESS, { m
 export const TOAST_SUCCESS_UPDATE_SUBJECT = Object.assign({}, TOAST_SUCCESS, { message: 'La asignatura ha sido actualizada correctamente.' });
 export const TOAST_SUCCESS_DELETE_SUBJECT = Object.assign({}, TOAST_SUCCESS, { message: 'La asignatura ha sido eliminada correctamente.' });
 export const TOAST_ERROR_CREATE_SUBJECT = Object.assign({}, TOAST_ERROR, { message: 'La asignatura no ha podido ser creada.' });
+export const TOAST_ERROR_UPDATE_SUBJECT = Object.assign({}, TOAST_ERROR, { message: 'La asignatura no ha podido ser actualizada.' });
 
 // Opciones toastr de los workspaces
 export const TOAST_SUCCESS_UPDATE_WORKSPACES = Object.assign({}, TOAST_SUCCESS, { message: 'Los workspaces se han actualizado correctamente.' });

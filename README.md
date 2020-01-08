@@ -146,10 +146,10 @@ ng g component content/pages/admin -is --spec=false
 
 ng g component content/pages/admin/calendar --spec false
 ng g component content/pages/admin/calendar/create-calendar --spec false
-ng g component content/pages/admin/calendar/edit-calendar --spec false
+ng g component content/pages/admin/calendar/modal-calendar --spec false
 
 ng g component content/pages/admin/subject --spec false
-ng g component content/pages/admin/subject/edit-subject --spec false
+ng g component content/pages/admin/subject/modal-subject --spec false
 ng g component content/pages/admin/subject/create-subject --spec false
 
 

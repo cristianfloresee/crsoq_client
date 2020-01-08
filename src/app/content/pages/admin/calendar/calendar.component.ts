@@ -6,8 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // Services
 import { CalendarService } from 'src/app/core/services/API/calendar.service';
 // Components
-import { CreateCalendarComponent } from './create-calendar/create-calendar.component';
-import { EditCalendarComponent } from './edit-calendar/edit-calendar.component';
+import { ModalCalendarComponent } from './modal-calendar/modal-calendar.component';
 // ngx-sweetalert2
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
 // Constants
@@ -78,12 +77,15 @@ export class CalendarComponent implements OnInit {
    }
 
    openCalendarEdit(calendar) {
-      const modalRef = this.ngModal.open(EditCalendarComponent);
+      const modalRef = this.ngModal.open(ModalCalendarComponent);
+      modalRef.componentInstance.action = 'Actualizar';
       modalRef.componentInstance.calendar = calendar;
 
-      modalRef.result.then((result) => {
-         if (result) this.getCalendars()
-      });
+      modalRef.result.then(
+         (result) => {
+            if (result) this.getCalendars();
+         },
+         () => { });
    }
 
 
@@ -104,10 +106,13 @@ export class CalendarComponent implements OnInit {
    }
 
    openCreateCalendar() {
-      const modalRef = this.ngModal.open(CreateCalendarComponent);
-      modalRef.result.then((result) => {
-         if (result) this.getCalendars()
-      });
+      const modalRef = this.ngModal.open(ModalCalendarComponent);
+      modalRef.componentInstance.action = 'Crear';
+      modalRef.result.then(
+         (result) => {
+            if (result) this.getCalendars();
+         },
+         () => { });
    }
 
    // ----------------------------------------

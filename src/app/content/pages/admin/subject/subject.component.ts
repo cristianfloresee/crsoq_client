@@ -9,8 +9,7 @@ import { SwalComponent } from '@toverux/ngx-sweetalert2';
 import { SubjectService } from '../../../../core/services/API/subject.service';
 //import { SocketService } from '../../../../core/services/socket.service';
 // Modals
-import { EditSubjectComponent } from './edit-subject/edit-subject.component';
-import { CreateSubjectComponent } from './create-subject/create-subject.component';
+import { ModalSubjectComponent } from './modal-subject/modal-subject.component';
 // Constants
 import { SWAL_DELETE_SUBJECT, SWAL_SUCCESS_DELETE_SUBJECT } from 'src/app/config/swal_config';
 import { PAGE_SIZES } from 'src/app/config/constants';
@@ -94,8 +93,9 @@ export class SubjectComponent implements OnInit {
    }
 
    openSubjectEdit(subject) {
-      const modalRef = this.ngModal.open(EditSubjectComponent);
+      const modalRef = this.ngModal.open(ModalSubjectComponent);
       modalRef.componentInstance.subject = subject;
+      modalRef.componentInstance.action = 'Actualizar';
 
       modalRef.result.then((result) => {
          if (result) this.getSubjects()
@@ -108,10 +108,13 @@ export class SubjectComponent implements OnInit {
    }
 
    createSubject() {
-      const modalRef = this.ngModal.open(CreateSubjectComponent);
-      modalRef.result.then((result) => {
-         if (result) this.getSubjects()
-      });
+      const modalRef = this.ngModal.open(ModalSubjectComponent);
+      modalRef.componentInstance.action = 'Crear';
+      modalRef.result.then(
+         (result) => {
+            if (result) this.getSubjects()
+         },
+         () => {});
    }
 
    deleteSubject(id_subject) {

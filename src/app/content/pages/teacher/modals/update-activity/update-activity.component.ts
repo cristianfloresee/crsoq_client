@@ -20,7 +20,8 @@ import { ActivityParticipationService } from 'src/app/core/services/API/activity
    styleUrls: ['./update-activity.component.scss']
 })
 export class UpdateActivityComponent implements OnInit, OnDestroy {
-   @Input() activity;
+   @Input() action; // Required
+   @Input() activity; // Optional
    @Input() id_course;
 
    // Form para Creación

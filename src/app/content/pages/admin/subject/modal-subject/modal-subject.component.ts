@@ -8,16 +8,16 @@ import { SubjectService } from 'src/app/core/services/API/subject.service';
 // ngx-toastr
 import { ToastrService } from 'ngx-toastr';
 // Constants
-import { TOAST_SUCCESS_CREATE_SUBJECT, TOAST_SUCCESS_UPDATE_SUBJECT, TOAST_ERROR_CREATE_SUBJECT } from 'src/app/config/toastr_config';
+import { TOAST_SUCCESS_CREATE_SUBJECT, TOAST_SUCCESS_UPDATE_SUBJECT, TOAST_ERROR_CREATE_SUBJECT, TOAST_ERROR_UPDATE_SUBJECT } from 'src/app/config/toastr_config';
 
 
 @Component({
-   selector: 'cw-edit-subject',
-   templateUrl: './edit-subject.component.html',
-   styleUrls: ['./edit-subject.component.scss']
+   selector: 'cw-modal-subject',
+   templateUrl: './modal-subject.component.html',
+   styleUrls: ['./modal-subject.component.scss']
 })
-export class EditSubjectComponent implements OnInit {
-   @Input() subject;
+export class ModalSubjectComponent implements OnInit {
+   @Input() subject; // Optional (only in update actions)
    @Input() action; // Required
 
    subjectForm: FormGroup;
@@ -30,10 +30,13 @@ export class EditSubjectComponent implements OnInit {
    ) { }
 
    ngOnInit() {
-      console.log("CALENDARIO: ", this.subject);
+
       this.initFormData();
-      this.loadFormData();
-      this.checkFormChanges();
+      if (this.subject) {
+         this.loadFormData();
+         this.checkFormChanges();
+      }
+
    }
 
    initFormData() {
@@ -57,23 +60,9 @@ export class EditSubjectComponent implements OnInit {
          });
    }
 
-   editSubject(subject) {
-      this._subjectSrv.updateSubject(subject, this.subject.id_subject)
-         .subscribe(
-            () => {
-               this.activeModal.close(true);
-               this.toastr.success(TOAST_SUCCESS_UPDATE_SUBJECT.message, TOAST_SUCCESS_UPDATE_SUBJECT.title);
-            },
-            error => {
-               console.log("error:", error);
-               this.activeModal.close(false);
-               // if (error.error.code && error.error.code == '23505') {
-               //    this.toastr.error('El período ya existe.', 'Ha ocurrido un error!');
-               // } else {
-               //    this.toastr.error('El período no ha sido actualizado.', 'Ha ocurrido un error!');
-               // }
-            }
-         );
+   formSubmit(subject) {
+      if (this.subject) this.updateSubject(subject);
+      else this.createSubject(subject);
    }
 
    createSubject(subject) {
@@ -89,10 +78,29 @@ export class EditSubjectComponent implements OnInit {
                this.activeModal.close(false);
                if (error.error.code && error.error.code == '23505') {
                   this.toastr.error('El período ya existe.', 'Ha ocurrido un error!');
-               }else{
+               } else {
                   this.toastr.error(TOAST_ERROR_CREATE_SUBJECT.message, TOAST_ERROR_CREATE_SUBJECT.title);
                }
 
+            }
+         );
+   }
+
+   updateSubject(subject) {
+      this._subjectSrv.updateSubject(subject, this.subject.id_subject)
+         .subscribe(
+            () => {
+               this.activeModal.close(true);
+               this.toastr.success(TOAST_SUCCESS_UPDATE_SUBJECT.message, TOAST_SUCCESS_UPDATE_SUBJECT.title);
+            },
+            error => {
+               console.log("error:", error);
+               this.activeModal.close(false);
+               if (error.error.code && error.error.code == '23505') {
+                  this.toastr.error('El período ya existe.', 'Ha ocurrido un error!');
+               } else {
+                  this.toastr.error(TOAST_ERROR_UPDATE_SUBJECT.message, TOAST_ERROR_UPDATE_SUBJECT.title);
+               }
             }
          );
    }

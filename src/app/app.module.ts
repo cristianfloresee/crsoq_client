@@ -77,10 +77,8 @@ import { StudentGuard } from './core/services/guards/role-student.guard';
 //ENTRY COMPONENTS (MODAL)
 import { EditUserComponent } from './content/pages/admin/user/edit-user/edit-user.component';
 import { CreateUserComponent } from './content/pages/admin/user/create-user/create-user.component';
-import { CreateCalendarComponent } from './content/pages/admin/calendar/create-calendar/create-calendar.component';
-import { EditCalendarComponent } from './content/pages/admin/calendar/edit-calendar/edit-calendar.component';
-import { CreateSubjectComponent } from './content/pages/admin/subject/create-subject/create-subject.component';
-import { EditSubjectComponent } from './content/pages/admin/subject/edit-subject/edit-subject.component';
+import { ModalCalendarComponent } from './content/pages/admin/calendar/modal-calendar/modal-calendar.component';
+import { ModalSubjectComponent } from './content/pages/admin/subject/modal-subject/modal-subject.component';
 
 //COMPONENTE INDIVIDUAL
 import { YearDatepickerComponent } from './content/pages/admin/calendar/year-datepicker/year-datepicker.component';
@@ -130,10 +128,8 @@ const config: SocketIoConfig = { url: environment.apiUrl, options: {} };
       AppComponent,
       CreateUserComponent,
       EditUserComponent,
-      CreateCalendarComponent,
-      EditCalendarComponent,
-      CreateSubjectComponent,
-      EditSubjectComponent,
+      ModalCalendarComponent,
+      ModalSubjectComponent,
       CreateCourseComponent,
       CreateQuestionComponent,
       YearDatepickerComponent,
@@ -246,10 +242,8 @@ const config: SocketIoConfig = { url: environment.apiUrl, options: {} };
       // Modals
       CreateUserComponent,
       EditUserComponent,
-      CreateCalendarComponent,
-      EditCalendarComponent,
-      CreateSubjectComponent,
-      EditSubjectComponent,
+      ModalCalendarComponent,
+      ModalSubjectComponent,
       CreateCourseComponent,
       CreateQuestionComponent,
       DeleteCourseComponent,

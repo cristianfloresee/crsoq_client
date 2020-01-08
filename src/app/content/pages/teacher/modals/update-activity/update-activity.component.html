@@ -1,5 +1,5 @@
 <div class="modal-header">
-   <h4 class="modal-title">Actualizar Actividad</h4>
+   <h4 class="modal-title">{{action}} Actividad</h4>
    <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
       <span aria-hidden="true">&times;</span>
    </button>
@@ -55,7 +55,7 @@
 
                   <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : activityForm.controls.name.invalid && activityForm.controls.name.touched }">
                      <label class="form-control-label">Nombre de la Actividad:</label>
-                     <input type="text" class="form-control m-input" formControlName="name" maxLength="15" autocomplete="nope">
+                     <input type="text" class="form-control m-input" formControlName="name" maxLength="50" autocomplete="nope">
                      <!--===================== ERRORES DE NOMBRE =====================-->
                      <div class="form-control-feedback" *ngIf="activityForm.controls['name'].hasError('required') && (activityForm.controls['name'].dirty || activityForm.controls['name'].touched)">
                         Este campo es requerido.
@@ -157,6 +157,6 @@
    </div>
    <div class="modal-footer">
       <button type="button" class="btn btn-info" (click)="activeModal.close()">Cerrar</button>
-      <button type="submit" class="btn btn-info" [disabled]="(activityForm.pristine && add_winners.length == 0 && delete_winners.length == 0) || activityForm.invalid">Actualizar</button>
+      <button type="submit" class="btn btn-info" [disabled]="(activityForm.pristine && add_winners.length == 0 && delete_winners.length == 0) || activityForm.invalid">{{action}}</button>
    </div>
 </form>

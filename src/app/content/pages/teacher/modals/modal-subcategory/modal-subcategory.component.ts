@@ -119,8 +119,7 @@ export class ModalSubcategoryComponent implements OnInit, OnDestroy {
 
    submitSubcategory(subcategory) {
       if (this.id_subject) this.createSubcategory(subcategory);
-      if (this.subcategory) this.updateSubcategory(subcategory)
-
+      else if (this.subcategory) this.updateSubcategory(subcategory);
    }
 
    createSubcategory(subcategory) {

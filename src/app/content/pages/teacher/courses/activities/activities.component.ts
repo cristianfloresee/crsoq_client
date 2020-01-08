@@ -97,19 +97,23 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
 
    createActivity() {
       const modalRef = this.ngModal.open(CreateActivityComponent);
+      modalRef.componentInstance.action = 'Crear';
       modalRef.componentInstance.id_course = this.id_course;
-      modalRef.result.then((result) => {
-         if (result) this.getActivities()
-      });
+      modalRef.result.then(
+         (result) => { if (result) this.getActivities() },
+         () => { }
+      );
    }
 
    updateActivity(activity) {
       const modalRef = this.ngModal.open(UpdateActivityComponent, { size: 'lg' });
+      modalRef.componentInstance.action = 'Actualizar';
       modalRef.componentInstance.id_course = this.id_course;
       modalRef.componentInstance.activity = activity;
-      modalRef.result.then((result) => {
-         if (result) this.getActivities();
-      });
+      modalRef.result.then(
+         (result) => { if (result) this.getActivities() },
+         () => { }
+      );
    }
 
    updateWinners(activity) {
@@ -118,9 +122,10 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
       });
       modalRef.componentInstance.id_course = this.id_course;
       modalRef.componentInstance.activity = activity;
-      modalRef.result.then((result) => {
-         if (result) this.getActivities();
-      });
+      modalRef.result.then(
+         (result) => { if (result) this.getActivities() },
+         () => { }
+      );
    }
 
    getActivities() {
