@@ -11,17 +11,17 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
 // ngx-toastr
 import { ToastrService } from 'ngx-toastr';
-// Constantes
+// Constants
 import { DIFFICULTIES, PAGE_SIZES } from 'src/app/config/constants';
 import { SWAL_DELETE_QUESTION, SWAL_SUCCESS_DELETE_QUESTION } from 'src/app/config/swal_config';
 import { SWAL_DELETE_LESSON_QUESTION, SWAL_SUCCESS_DELETE_LESSON_QUESTION } from 'src/app/config/swal_config';
 import { TOAST_SUCCESS_UPDATE_QUESTIONS, TOAST_ERROR_UPDATE_QUESTIONS } from 'src/app/config/toastr_config';
-// Servicios
+// Services
 import { CategoryService } from 'src/app/core/services/API/category.service';
 import { SessionService } from 'src/app/core/services/API/session.service';
 import { SubcategoryService } from 'src/app/core/services/API/subcategory';
 import { LessonQuestionService } from 'src/app/core/services/API/lesson-question.service';
-// Componentes
+// Components
 import { CreateQuestionComponent } from '../create-question/create-question.component';
 
 @Component({

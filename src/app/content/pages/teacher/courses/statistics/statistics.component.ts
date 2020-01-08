@@ -1,7 +1,7 @@
 // Angular
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-// RxJS
+// rxjs
 import { Subscription } from 'rxjs';
 // ng-bootstrap
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -10,7 +10,6 @@ import { StatisticsService } from 'src/app/core/services/API/statistics.service'
 import { CourseService } from 'src/app/core/services/API/course.service';
 // Modals
 import { StudentPointsComponent } from '../../modals/student-points/student-points.component';
-
 
 @Component({
     selector: 'cw-statistics',
@@ -31,9 +30,9 @@ export class StatisticsComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
+        private ngModal: NgbModal,
         private _statisticsSrv: StatisticsService,
-        private _courseSrv: CourseService,
-        private ngModal: NgbModal
+        private _courseSrv: CourseService
     ) { }
 
     ngOnInit() {
@@ -80,7 +79,6 @@ export class StatisticsComponent implements OnInit {
     }
 
     initChart(student_points: Array<any>) {
-
 
         let students = student_points.map(student => `${student.name} ${student.last_name}`);
         let question_points = student_points.map(student => student.question_points);

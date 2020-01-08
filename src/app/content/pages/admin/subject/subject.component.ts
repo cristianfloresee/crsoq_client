@@ -1,8 +1,10 @@
 // Angular
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 // ng-bootstrap
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+// ngx-sweetalert2
+import { SwalComponent } from '@toverux/ngx-sweetalert2';
 // Services
 import { SubjectService } from '../../../../core/services/API/subject.service';
 //import { SocketService } from '../../../../core/services/socket.service';
@@ -11,8 +13,6 @@ import { EditSubjectComponent } from './edit-subject/edit-subject.component';
 import { CreateSubjectComponent } from './create-subject/create-subject.component';
 // Constants
 import { SWAL_DELETE_SUBJECT, SWAL_SUCCESS_DELETE_SUBJECT } from 'src/app/config/swal_config';
-// ngx-sweetalert2
-import { SwalComponent } from '@toverux/ngx-sweetalert2';
 import { PAGE_SIZES } from 'src/app/config/constants';
 
 @Component({

@@ -142,12 +142,11 @@ export class ModalSubcategoryComponent implements OnInit, OnDestroy {
 
       this._subcategorySrv.updateSubcategory(subcategory.id_subcategory, subcategory.id_category, subcategory.name)
          .subscribe(
-            result => {
+            () => {
                this.activeModal.close(true);
                this.toastr.success(TOAST_SUCCESS_CREATE_SUBCATEGORY.message, TOAST_SUCCESS_CREATE_SUBCATEGORY.title);
             },
             error => {
-               console.log("error code:", error);
                this.activeModal.close(false);
                this.toastr.error(TOAST_ERROR_CREATE_SUBCATEGORY.message, TOAST_ERROR_CREATE_SUBCATEGORY.title);
             }
@@ -164,6 +163,7 @@ export class ModalSubcategoryComponent implements OnInit, OnDestroy {
             this.subcategoryForm.controls.id_category.setValue('');
             if (changes) {
                this.getCategories({ id_subject: changes });
+               // Optional chaining: (changes == this.subcategory?.id_subject)
                if(this.subcategory && changes == this.subcategory.id_subject) this.subcategoryForm.get('id_subject').markAsPristine();
             }
             else this.options_category = [];

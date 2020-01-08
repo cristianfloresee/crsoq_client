@@ -11,9 +11,9 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 // ngx-sweetalert2
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
-// Constantes
+// Constants
 import { SWAL_DELETE_STUDENT, SWAL_SUCCESS_DELETE_STUDENT } from 'src/app/config/swal_config';
-// Servicios
+// Services
 import { EnrollmentService } from 'src/app/core/services/API/enrollments.service';
 import { UserService } from 'src/app/core/services/API/user.service';
 

@@ -54,10 +54,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 // ngx-sweetaler2
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
-// Constantes
+// Constants
 import { SWAL_DELETE_LESSON_QUESTION, SWAL_SUCCESS_DELETE_LESSON_QUESTION } from 'src/app/config/swal_config';
 import { DIFFICULTIES, PAGE_SIZES } from 'src/app/config/constants';
-// Servicios
+// Services
 import { LessonQuestionService } from 'src/app/core/services/API/lesson-question.service';
 import { CategoryService } from 'src/app/core/services/API/category.service';
 import { SessionService } from 'src/app/core/services/API/session.service';

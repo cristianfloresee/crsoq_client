@@ -8,12 +8,12 @@ import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 // ng-bootstrap
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-// Constantes
+// Constants
 import { PAGE_SIZES } from 'src/app/config/constants';
-// Servicios
+// Services
 import { ModuleService } from 'src/app/core/services/API/module.service';
 import { LessonService } from 'src/app/core/services/API/lesson.service';
-// Componentes
+// Components
 import { PlayQuestion2Component } from '../modals/play-question2/play-question2.component';
 
 @Component({

@@ -1,10 +1,10 @@
 // Angular
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-//COMPONENTES
+// Components
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { CreateUserComponent } from './create-user/create-user.component';
-//SERVICIOS
+// Services
 import { UserService } from '../../../../core/services/API/user.service';
 // ng-bootstrap
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -13,8 +13,6 @@ import { SwalComponent } from '@toverux/ngx-sweetalert2';
 // Constants
 import { SWAL_DELETE_USER, SWAL_SUCCESS_DELETE_USER } from 'src/app/config/swal_config';
 import { PAGE_SIZES } from 'src/app/config/constants';
-
-
 
 @Component({
    selector: 'cw-user',

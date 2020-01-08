@@ -2,7 +2,7 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { NavigationEnd, Router } from '@angular/router';
-// RxJS
+// rxjs
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 // ngx-toastr
@@ -47,7 +47,6 @@ export class AppComponent implements OnInit {
    count = 1;
    socket_estudiante_count = 1;
 
-   // Listeners
    subscriptions$: Subscription;
 
    activityStarted$: Subscription;
@@ -69,7 +68,7 @@ export class AppComponent implements OnInit {
       this.subscriptions$ = new Subscription();
 
       // @JorgeCano
-      // Intento trabajar el ruteo de forma reactiva con asyncpipes en el template pero tuvo problemas.
+      // Intento trabajar el ruteo de forma reactiva con async pipes en el template pero tuvo problemas.
       // Para hacerlo con async pipes habría que borrar el suscribe.
 
       // Obtiene el nombre de la página actual

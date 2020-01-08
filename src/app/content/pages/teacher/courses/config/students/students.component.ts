@@ -13,10 +13,9 @@ import { Subscription } from 'rxjs';
 import { SWAL_DELETE_STUDENT, SWAL_SUCCESS_DELETE_STUDENT } from 'src/app/config/swal_config';
 // ngx-sweetalert2
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
-// Servicios
+// Services
 import { EnrollmentService } from 'src/app/core/services/API/enrollments.service';
 import { SessionService } from 'src/app/core/services/API/session.service';
-
 
 @Component({
    selector: 'cw-students',

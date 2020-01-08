@@ -1,14 +1,13 @@
+// Angular
 import { Injectable } from '@angular/core';
-//SERVICIOS
 import { Router, NavigationEnd } from '@angular/router';
 //OBJECT-PATH
 import * as objectPath from 'object-path';
-//RXJS
+// rxjs
 import { BehaviorSubject, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
-//CONSTANTES
+// Constants
 import { PAGE_TITLES } from '../../../config/constants';
-//MODELOS
 
 @Injectable()
 export class SubheaderService {

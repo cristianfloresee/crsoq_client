@@ -1,16 +1,16 @@
-//ANGULAR IMPORTS
+// Angular
 import { Component, OnInit, Input, Output, ViewChild, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 //NG2-VALIDATION
 //import { CustomValidators } from 'ng2-validation';
-//RXJS
+// rxjs
 import { Subject, Subscription } from 'rxjs';
-//MODELOS
+// Models
 import { User } from '../../../../core/models/user.model';
-//SERVICIOS
+// Services
 import { UserService } from '../../../../core/services/API/user.service';
-//NGX-TOASTR
+// ngx-toastr
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

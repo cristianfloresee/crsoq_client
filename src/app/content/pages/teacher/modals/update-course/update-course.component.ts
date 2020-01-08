@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 // ngx-toastr
 import { ToastrService } from 'ngx-toastr';
-// Servicios
+// Services
 import { SubjectService } from 'src/app/core/services/API/subject.service';
 import { CalendarService } from 'src/app/core/services/API/calendar.service';
 import { CourseService } from 'src/app/core/services/API/course.service';

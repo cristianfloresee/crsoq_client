@@ -4,9 +4,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // ngx-toastr
 import { ToastrService } from 'ngx-toastr';
-// Rxjs
+// rxjs
 import { Subscription } from 'rxjs';
-// Servicios
+// Services
 import { EnrollmentService } from 'src/app/core/services/API/enrollments.service';
 import { SessionService } from 'src/app/core/services/API/session.service';
 import { SidemenuService } from 'src/app/core/services/sidemenu.service';

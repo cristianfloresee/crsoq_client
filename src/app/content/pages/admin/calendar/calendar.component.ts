@@ -1,11 +1,11 @@
-//ANGULAR
+// Angular
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-//NG-BOOTSTRAP
+// ng-bootstrap
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-//SERVICIOS
+// Services
 import { CalendarService } from 'src/app/core/services/API/calendar.service';
-//COMPONENTES
+// Components
 import { CreateCalendarComponent } from './create-calendar/create-calendar.component';
 import { EditCalendarComponent } from './edit-calendar/edit-calendar.component';
 // ngx-sweetalert2
@@ -13,7 +13,6 @@ import { SwalComponent } from '@toverux/ngx-sweetalert2';
 // Constants
 import { SWAL_DELETE_CALENDAR, SWAL_SUCCESS_DELETE_CALENDAR } from 'src/app/config/swal_config';
 import { PAGE_SIZES } from 'src/app/config/constants';
-
 
 @Component({
    selector: 'cw-calendar',

@@ -10,16 +10,16 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 // ngx-sweetaler2
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
-// Constantes
+// Constants
 import { DIFFICULTIES, PAGE_SIZES } from 'src/app/config/constants';
 import { SWAL_DELETE_QUESTION, SWAL_SUCCESS_DELETE_QUESTION } from 'src/app/config/swal_config';
 // Modals
 import { UpdateQuestionComponent } from '../../modals/update-question/update-question.component';
-// Servicios
+import { CreateQuestionComponent } from '../../modals/create-question/create-question.component';
+// Services
 import { CategoryService } from 'src/app/core/services/API/category.service';
 import { SessionService } from 'src/app/core/services/API/session.service';
 import { SubcategoryService } from 'src/app/core/services/API/subcategory';
-import { CreateQuestionComponent } from '../../modals/create-question/create-question.component';
 import { QuestionService } from 'src/app/core/services/API/question.service';
 
 @Component({

@@ -1,13 +1,15 @@
+// Angular
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-//NG-BOOTSTRAP
+// rxjs
+import { Subscription } from 'rxjs';
+// ng-bootstrap
 import { NgbActiveModal, NgbDate, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
-//NGX-TOASTR
+// ngx-toastr
 import { ToastrService } from 'ngx-toastr';
-//SERVICIOS
+// Services
 import { ModuleService } from 'src/app/core/services/API/module.service';
-import { Subscription } from 'rxjs';
 import { LessonService } from 'src/app/core/services/API/lesson.service';
 
 @Component({

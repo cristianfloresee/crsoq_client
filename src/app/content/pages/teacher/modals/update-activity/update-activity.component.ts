@@ -8,7 +8,7 @@ import { NgbActiveModal, NgbDate, NgbDateStruct } from '@ng-bootstrap/ng-bootstr
 import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 // ngx-toastr
 import { ToastrService } from 'ngx-toastr';
-// Servicios
+// Services
 import { ModuleService } from 'src/app/core/services/API/module.service';
 import { LessonService } from 'src/app/core/services/API/lesson.service';
 import { ActivityService } from 'src/app/core/services/API/activity.service';

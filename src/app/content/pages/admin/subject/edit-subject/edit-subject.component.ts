@@ -1,11 +1,14 @@
+// Angular
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-//NG-BOOTSTRAP
+// ng-bootstrap
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-//SERVICIOS
+// Services
 import { SubjectService } from 'src/app/core/services/API/subject.service';
-//NGX-TOASTR
+// ngx-toastr
 import { ToastrService } from 'ngx-toastr';
+// Constants
+import { TOAST_SUCCESS_CREATE_SUBJECT, TOAST_SUCCESS_UPDATE_SUBJECT, TOAST_ERROR_CREATE_SUBJECT } from 'src/app/config/toastr_config';
 
 
 @Component({
@@ -15,6 +18,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class EditSubjectComponent implements OnInit {
    @Input() subject;
+   @Input() action; // Required
+
    subjectForm: FormGroup;
    subjectFormChanges$;
    constructor(
@@ -55,9 +60,9 @@ export class EditSubjectComponent implements OnInit {
    editSubject(subject) {
       this._subjectSrv.updateSubject(subject, this.subject.id_subject)
          .subscribe(
-            result => {
+            () => {
                this.activeModal.close(true);
-               this.toastr.success('El período ha sido actualizado correctamente.', 'Período actualizado!');
+               this.toastr.success(TOAST_SUCCESS_UPDATE_SUBJECT.message, TOAST_SUCCESS_UPDATE_SUBJECT.title);
             },
             error => {
                console.log("error:", error);
@@ -67,6 +72,27 @@ export class EditSubjectComponent implements OnInit {
                // } else {
                //    this.toastr.error('El período no ha sido actualizado.', 'Ha ocurrido un error!');
                // }
+            }
+         );
+   }
+
+   createSubject(subject) {
+
+      return this._subjectSrv.createSubject(subject)
+         .subscribe(
+            () => {
+               this.activeModal.close(true);
+               this.toastr.success(TOAST_SUCCESS_CREATE_SUBJECT.message, TOAST_SUCCESS_CREATE_SUBJECT.title);
+            },
+            error => {
+               console.log("error code:", error);
+               this.activeModal.close(false);
+               if (error.error.code && error.error.code == '23505') {
+                  this.toastr.error('El período ya existe.', 'Ha ocurrido un error!');
+               }else{
+                  this.toastr.error(TOAST_ERROR_CREATE_SUBJECT.message, TOAST_ERROR_CREATE_SUBJECT.title);
+               }
+
             }
          );
    }

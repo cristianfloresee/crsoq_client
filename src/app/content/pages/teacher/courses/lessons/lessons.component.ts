@@ -10,13 +10,13 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 // ngx-sweetaler2
 import { SwalComponent } from '@toverux/ngx-sweetalert2';
-// Constantes
+// Constants
 import { SWAL_DELETE_LESSON, SWAL_SUCCESS_DELETE_LESSON } from 'src/app/config/swal_config';
 import { PAGE_SIZES } from 'src/app/config/constants';
-// Servicios
+// Services
 import { ModuleService } from 'src/app/core/services/API/module.service';
 import { LessonService } from 'src/app/core/services/API/lesson.service';
-// Componentes
+// Components
 import { EditLessonComponent } from '../../modals/edit-lesson/edit-lesson.component';
 import { CreateLessonComponent } from '../../modals/create-lesson/create-lesson.component';
 

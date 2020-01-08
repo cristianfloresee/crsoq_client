@@ -1,12 +1,11 @@
-//ANGULAR
-import { Component, OnInit, Input } from '@angular/core';
+// Angular
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-//NG-BOOTSTRAP
+// ng-bootstrap
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-//SERVICIOS
-
-//NGX-TOASTR
+// ngx-toastr
 import { ToastrService } from 'ngx-toastr';
+// Services
 import { SubjectService } from 'src/app/core/services/API/subject.service';
 
 @Component({

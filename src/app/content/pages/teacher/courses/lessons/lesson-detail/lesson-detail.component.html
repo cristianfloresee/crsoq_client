@@ -165,7 +165,7 @@
                   <th>Categoría</th>
                   <th>Subcategoría</th>
                   <th>Dificultad</th>
-                  <th>Compartida</th>
+                  <!-- <th>Compartida</th> -->
                   <th>Ganadores</th>
                   <th>Estado</th>
                   <th>Fecha de Adición</th>
@@ -182,11 +182,13 @@
                   <td>{{question.category}}</td>
                   <td>{{question.subcategory}}</td>
                   <td>
+
                      <span style="font-size:0.8rem; margin-top: 3px; color: #ffffff" class="center m-badge m-badge--wide"
                         [ngClass]="(question.difficulty == 1) ? 'm-badge--success' : (question.difficulty == 2 ? 'm-badge--warning' : 'm-badge--danger')">
                         {{question.difficulty == 1 ? 'Fácil' : question.difficulty == 2 ? 'Medio' : 'Díficil'}}
                      </span>
                   </td>
+                  <!--
                   <td>
                      <span style="width: 100%">
                         <span class="m-badge m-badge--dot" [ngClass]="(question.shared)?'m-badge--success':'m-badge--danger'"></span>
@@ -194,7 +196,7 @@
                         <span class="m--font-bold" [ngClass]="(question.shared)?'m--font-success':'m--font-danger'">
                            {{question.shared ? 'Si': 'No'}}</span>
                      </span>
-                  </td>
+                  </td>-->
 
                   <!-- ARREGLAR -->
                   <td style="text-align: center">
@@ -216,7 +218,6 @@
 
 
                   <td class="nowrap">
-                     {{question.status}}
                       <span style="width: 100%">
                         <span class="m-badge m-badge--dot" [ngClass]="(question.status == 1) ? 'm-badge--warning': (question.status == 2 || question.status == 3 || question.status == 4) ? 'm-badge--success' : 'm-badge--danger'"></span>
                         &nbsp;

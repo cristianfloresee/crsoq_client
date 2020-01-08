@@ -1,11 +1,13 @@
-//MODULOS ANGULAR
+// Angular
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
-//COMPONENTES LAYOUT
+// Layout Components
 import { HeaderComponent } from './header/header.component';
+import { SubheaderComponent } from './subheader/subheader.component';
+import { AsideComponent } from './aside/aside.component';
 import { FooterComponent } from './footer/footer.component';
 //COMPONENTES LAYOUT > HEADER
 import { BrandComponent } from './header/brand/brand.component';
@@ -20,22 +22,20 @@ import { SearchDropdownComponent } from './header/topbar/search-dropdown/search-
 
 //LOADING-BAR
 import { LoadingBarModule } from '@ngx-loading-bar/core';
-//BOOTSTRAP
+// ngx-bootstrap
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-//ANGULAR MATERIAL
+// Angular Material
 import { MatProgressBarModule, MatTabsModule, MatButtonModule, MatTooltipModule } from '@angular/material';
-//PERFECT-SCROLLBAR
+// ngx-perfect-scrollbar
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-import { LanguageSelectorComponent } from './header/topbar/language-selector/language-selector.component';
-import { CoreModule } from '../../core/core.module';
-import { SubheaderComponent } from './subheader/subheader.component';
-import { AsideComponent } from './aside/aside.component';
-
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
    // suppressScrollX: true
 };
+
+import { LanguageSelectorComponent } from './header/topbar/language-selector/language-selector.component';
+import { CoreModule } from '../../core/core.module';
 
 @NgModule({
    exports: [

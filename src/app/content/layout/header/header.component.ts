@@ -1,6 +1,7 @@
+// Angular
 import { Component, ChangeDetectionStrategy, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { NavigationCancel, NavigationEnd, NavigationStart, RouteConfigLoadEnd, RouteConfigLoadStart, Router } from '@angular/router';
-// LOADING-BAR
+// ngx-loader
 import { LoadingBarService } from '@ngx-loading-bar/core';
 
 @Component({

@@ -9,7 +9,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 // Modals
 import { DeleteCourseComponent } from '../../../modals/delete-course/delete-course.component';
-// Servicios
+// Services
 import { CourseService } from 'src/app/core/services/API/course.service';
 import { SessionService } from 'src/app/core/services/API/session.service';
 import { SubjectService } from 'src/app/core/services/API/subject.service';

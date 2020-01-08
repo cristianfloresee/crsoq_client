@@ -1,5 +1,5 @@
 <div class="modal-header">
-   <h4 class="modal-title">Editar Asignatura</h4>
+   <h4 class="modal-title">{{action}} Asignatura</h4>
    <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
       <span aria-hidden="true">&times;</span>
    </button>
@@ -21,6 +21,6 @@
       </div>
       <div class="modal-footer">
          <button type="button" class="btn btn-info" (click)="activeModal.close()">Cerrar</button>
-         <button type="submit" class="btn btn-info" [disabled]="subjectForm.pristine || subjectForm.invalid">Editar</button>
+         <button type="submit" class="btn btn-info" [disabled]="subjectForm.pristine || subjectForm.invalid">{{action}}</button>
       </div>
    </form>

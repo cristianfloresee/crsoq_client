@@ -1,12 +1,14 @@
+// Angular
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-//NG-BOOTSTRAP
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-//NGX-TOASTR
-import { ToastrService } from 'ngx-toastr';
-//SERVICIOS
-import { ModuleService } from 'src/app/core/services/API/module.service';
+// rxjs
 import { Subscription } from 'rxjs';
+// ng-bootstrap
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+// ngx-toastr
+import { ToastrService } from 'ngx-toastr';
+// Services
+import { ModuleService } from 'src/app/core/services/API/module.service';
 
 @Component({
    selector: 'cw-edit-module',
