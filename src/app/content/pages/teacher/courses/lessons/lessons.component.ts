@@ -17,7 +17,7 @@ import { PAGE_SIZES } from 'src/app/config/constants';
 import { ModuleService } from 'src/app/core/services/API/module.service';
 import { LessonService } from 'src/app/core/services/API/lesson.service';
 // Components
-import { EditLessonComponent } from '../../modals/edit-lesson/edit-lesson.component';
+import { ModalLessonComponent } from '../../modals/modal-lesson/modal-lesson.component';
 import { CreateLessonComponent } from '../../modals/create-lesson/create-lesson.component';
 
 @Component({
@@ -130,7 +130,8 @@ export class LessonsComponent implements OnInit, OnDestroy {
 
 
    updateClass(_class) {
-      const modalRef = this.ngModal.open(EditLessonComponent);
+      const modalRef = this.ngModal.open(ModalLessonComponent);
+      modalRef.componentInstance.action = 'Actualizar';
       modalRef.componentInstance.lesson = _class;
       modalRef.componentInstance.options_module = this.options_module;
       modalRef.result.then((result) => {

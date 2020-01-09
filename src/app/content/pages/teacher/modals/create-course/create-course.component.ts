@@ -111,7 +111,7 @@ export class CreateCourseComponent implements OnInit, OnDestroy {
          subject: ['', Validators.required],
          year: ['', Validators.required],
          semester: ['', Validators.required],
-         name: ['', [Validators.required, Validators.maxLength(15)]],
+         name: ['', [Validators.required, Validators.maxLength(30)]],
          active: [''],
          goalsForm: this.fb.group({
             course_goal: ['', Validators.required],

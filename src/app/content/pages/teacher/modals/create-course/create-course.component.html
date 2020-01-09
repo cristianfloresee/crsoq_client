@@ -1,5 +1,5 @@
 <div class="modal-header">
-   <h4 class="modal-title">{{action}} Curso</h4>
+   <h4 class="modal-title">{{action}} Cursox</h4>
    <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
       <span aria-hidden="true">&times;</span>
    </button>
@@ -58,7 +58,7 @@
 
          <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : courseForm.controls.name.invalid && courseForm.controls.name.touched }">
             <label class="form-control-label">Nombre del Curso:</label>
-            <input type="text" class="form-control m-input" formControlName="name" maxLength="15" autocomplete="nope">
+            <input type="text" class="form-control m-input" formControlName="name" maxLength="30">
             <!--===================== ERRORES DE NOMBRE =====================-->
             <div class="form-control-feedback" *ngIf="courseForm.controls['name'].hasError('required') && (courseForm.controls['name'].dirty || courseForm.controls['name'].touched)">
                Este campo es requerido.

@@ -1,11 +1,11 @@
 <div class="modal-header">
-   <h4 class="modal-title">Actualiza Clase</h4>
+   <h4 class="modal-title">{{action}} Clase</h4>
    <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
       <span aria-hidden="true">&times;</span>
    </button>
 </div>
 
-<form [formGroup]="lessonForm" (ngSubmit)="updateLesson(lessonForm.value)" class="m-form m-form--state m-form--label-align-right">
+<form [formGroup]="lessonForm" (ngSubmit)="formSubmit(lessonForm.value)" class="m-form m-form--state m-form--label-align-right">
    <div class="modal-body">
       <div class="m-portlet__body">
 
@@ -26,7 +26,7 @@
 
          <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : lessonForm.controls.description.invalid && lessonForm.controls.description.touched }">
             <label class="form-control-label">Descripción:</label>
-            <input type="text" class="form-control m-input" formControlName="description" maxLength="15" autocomplete="nope">
+            <input type="text" class="form-control m-input" formControlName="description" maxLength="150" autocomplete="nope">
             <!--===================== ERRORES DE NOMBRE =====================-->
             <div class="form-control-feedback" *ngIf="lessonForm.controls['description'].hasError('required') && (lessonForm.controls['description'].dirty || lessonForm.controls['description'].touched)">
                Este campo es requerido.
@@ -72,6 +72,6 @@
    </div>
    <div class="modal-footer">
       <button type="button" class="btn btn-info" (click)="activeModal.close()">Cerrar</button>
-      <button type="submit" class="btn btn-info" [disabled]="lessonForm.pristine || lessonForm.invalid">Actualizar</button>
+      <button type="submit" class="btn btn-info" [disabled]="lessonForm.pristine || lessonForm.invalid">{{action}}</button>
    </div>
 </form>

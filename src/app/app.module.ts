@@ -88,14 +88,13 @@ import { CreateQuestionComponent } from './content/pages/teacher/modals/create-q
 import { SidemenuService } from './core/services/sidemenu.service';
 import { utilService } from './core/services/utils.service';
 import { DeleteCourseComponent } from './content/pages/teacher/modals/delete-course/delete-course.component';
-import { CreateModuleComponent } from './content/pages/teacher/modals/create-module/create-module.component';
 import { AddStudentComponent } from './content/pages/teacher/courses/config/students/add-student/add-student.component';
-import { EditModuleComponent } from './content/pages/teacher/modals/edit-module/edit-module.component';
+import { ModalModuleComponent } from './content/pages/teacher/modals/modal-module/modal-module.component';
 
 
 import { CreateActivityComponent } from './content/pages/teacher/modals/create-activity/create-activity.component';
 import { CreateLessonComponent } from './content/pages/teacher/modals/create-lesson/create-lesson.component';
-import { EditLessonComponent } from './content/pages/teacher/modals/edit-lesson/edit-lesson.component';
+import { ModalLessonComponent } from './content/pages/teacher/modals/modal-lesson/modal-lesson.component';
 import { UpdateActivityComponent } from './content/pages/teacher/modals/update-activity/update-activity.component';
 
 import { UpdateQuestionComponent } from './content/pages/teacher/modals/update-question/update-question.component';
@@ -134,13 +133,12 @@ const config: SocketIoConfig = { url: environment.apiUrl, options: {} };
       CreateQuestionComponent,
       YearDatepickerComponent,
       DeleteCourseComponent,
-      CreateModuleComponent,
       AddStudentComponent,
-      EditModuleComponent,
+      ModalModuleComponent,
       //FileSelectDirective,
       CreateActivityComponent,
       CreateLessonComponent,
-      EditLessonComponent,
+      ModalLessonComponent,
       UpdateActivityComponent,
       UpdateQuestionComponent,
       modalCategoryComponent,
@@ -247,12 +245,11 @@ const config: SocketIoConfig = { url: environment.apiUrl, options: {} };
       CreateCourseComponent,
       CreateQuestionComponent,
       DeleteCourseComponent,
-      CreateModuleComponent,
       AddStudentComponent,
-      EditModuleComponent,
+      ModalModuleComponent,
       CreateActivityComponent,
       CreateLessonComponent,
-      EditLessonComponent,
+      ModalLessonComponent,
       UpdateActivityComponent,
       UpdateQuestionComponent,
       modalCategoryComponent,

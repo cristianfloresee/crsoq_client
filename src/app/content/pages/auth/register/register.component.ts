@@ -50,7 +50,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
          'conditions': [false, Validators.required]
       },
          { validator: this.equalPasswords('password', 'password2') }
-
       );
    }
 

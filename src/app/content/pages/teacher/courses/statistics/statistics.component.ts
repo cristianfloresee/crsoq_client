@@ -153,7 +153,7 @@ export class StatisticsComponent implements OnInit {
     }
 
     updateClass(_class) {
-        //const modalRef = this.ngModal.open(EditLessonComponent);
+        //const modalRef = this.ngModal.open(ModalLessonComponent);
         //modalRef.componentInstance.lesson = _class;
         //modalRef.componentInstance.options_module = this.options_module;
     }
