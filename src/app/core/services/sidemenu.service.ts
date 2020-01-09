@@ -2,9 +2,9 @@
 import { Injectable, OnInit } from '@angular/core';
 // rxjs
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-// Constantes
+// Constants
 import { MENU, MENU_ADMIN } from 'src/app/config/menu';
-// Servicios
+// Services
 import { CourseService } from './API/course.service';
 import { SessionService } from './API/session.service';
 import { utilService } from './utils.service';

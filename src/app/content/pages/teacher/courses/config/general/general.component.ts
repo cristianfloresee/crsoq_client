@@ -24,7 +24,8 @@ import { CalendarService } from 'src/app/core/services/API/calendar.service';
    styleUrls: ['./general.component.scss']
 })
 export class GeneralComponent implements OnInit {
-   @Input() id_course;
+   @Input() id_course; // Required
+
    //FORMULARIO
    courseForm: FormGroup;
    id_user;
@@ -51,25 +52,24 @@ export class GeneralComponent implements OnInit {
       this.subscriptions$ = new Subscription();
       this.initFormData();
       this.loadFormOptions(); //ARREGLAR ESTO DESPUES PORQUE PUEDE CAMBIAR CON EL USO DE SOCKETS..
+      
       this.checkFormChanges();
    }
 
    ngOnChanges() {
-      this.getCourses();
-      //      else console.log("nepelio: ", this.options_calendar)
+      this.getCourseDetail(this.id_course);
    }
 
-   getCourses() {
-      this._courseSrv.getCourseDetail(this.id_course)
+   getCourseDetail(id_course) {
+      this._courseSrv.getCourseDetail(id_course)
          .subscribe(value => {
-            console.log("value: ", value);
             this.course = value;
             setTimeout(() => {
                if (this.options_calendar) this.loadFormData(value);
-               else console.log("nepelio: ", this.options_calendar)
+               else console.log("xx: ", this.options_calendar)
             }, 200)
 
-         })
+         });
    }
 
    deleteCourse() {
@@ -93,51 +93,42 @@ export class GeneralComponent implements OnInit {
       });
    }
 
-   loadFormData(value) {
-      //
-      let _year = this.options_calendar.find(element => element.year == value.year);
-      let _semester = _year.options.find(element => element.semester == value.semester);
+   loadFormData(course) {
+      let _year = this.options_calendar.find(element => element.year == course.year);
+      let _semester = _year.options.find(element => element.semester == course.semester);
 
-      //ASIGNA LOS VALORES AL FORM
+      console.log("loadFormData: ", course);
       this.courseForm.setValue({
-         subject: value.id_subject,
-         name: value.name,
-         code: value.code.toUpperCase(),
+         subject: course.id_subject,
+         name: course.name,
+         code: course.code.toUpperCase(),
          //active: this.activePipe.transform(value.active),
-         active: value.active,
+         active: course.active,
          year: _year.options,
          semester: _semester.id_calendar,
          goalsForm: {
-            course_goal: value.course_goal.toString(),
-            student_goal: value.student_goal.toString()
+            course_goal: course.course_goal.toString(),
+            student_goal: course.student_goal.toString()
          }
-      })
+      });
    }
 
    resetFormData() {
       this.loadFormData(this.course);
-      this.courseForm.markAsPristine();
+      //this.courseForm.markAsPristine();
    }
 
    loadFormOptions() {
-      //CARGA LAS ASIGNATURAS
       this._subjectSrv.getSubjectsOptions()
          .subscribe(
-            result => {
-               this.options_subject = result;
-
-            },
+            result =>  this.options_subject = result,
             error => {
                console.log("error:", error);
             });
       //CARGA LOS AÑOS Y SEMESTRES (CALENDARIO)
       this._calendarSrv.getCalendarsOptions()
          .subscribe(
-            result => {
-               console.log("calendars: ", result);
-               this.options_calendar = this.formatCalendarOptions(result);
-               // console.log("option_calendar: ", this.options_calendar);
-            },
+            result => this.options_calendar = this.formatCalendarOptions(result),
             error => {
                console.log("error:", error);
             });
@@ -204,7 +195,7 @@ export class GeneralComponent implements OnInit {
       this.subscriptions$.add(this.courseForm.controls.goalsForm.get('course_goal').valueChanges
          .subscribe((changes) => {
             let new_value = this.validNumbers(changes)
-            if (changes.length != new_value.length) {
+            if (changes && changes.length != new_value.length) {
                this.courseForm.patchValue({ goalsForm: { course_goal: new_value, } }, { emitEvent: false });
                this.courseForm.controls['goalsForm'].get('course_goal').markAsPristine();
             }
@@ -218,7 +209,7 @@ export class GeneralComponent implements OnInit {
       this.subscriptions$.add(this.courseForm.controls.goalsForm.get('student_goal').valueChanges
          .subscribe((changes) => {
             let new_value = this.validNumbers(changes)
-            if (changes.length != new_value.length) {
+            if (changes && changes.length != new_value.length) {
                this.courseForm.patchValue({ goalsForm: { student_goal: new_value, } }, { emitEvent: false });
                this.courseForm.controls['goalsForm'].get('student_goal').markAsPristine();
             }
@@ -237,7 +228,7 @@ export class GeneralComponent implements OnInit {
 
    //QUITA VALORES QUE NO SEAN NÚMEROS
    validNumbers(value: string) {
-      return value.replace(/[^0-9]/g, '');
+      return value; //value.replace(/[^0-9]/g, '');
    }
 
    ngOnDestroy() {
@@ -249,7 +240,7 @@ export class GeneralComponent implements OnInit {
       let _course = { id_calendar: course.semester, id_subject: course.subject, name: course.name, active: course.active, course_goal: course.goalsForm.course_goal, student_goal: course.goalsForm.student_goal }
       this._courseSrv.updateCourse(this.id_course, _course)
          .subscribe(
-            result => {
+            () => {
                this.toastr.success('El curso ha sido creado correctamente.', 'Curso creado!');
             },
             error => {

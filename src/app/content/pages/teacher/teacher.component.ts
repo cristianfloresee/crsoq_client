@@ -20,8 +20,6 @@ import { TOAST_ERROR_DELETE_QUESTIONS, TOAST_ERROR_DELETE_COURSES, TOAST_ERROR_D
 // Components
 import { CreateCourseComponent } from './modals/create-course/create-course.component';
 import { modalCategoryComponent } from './modals/modal-category/modal-category.component';
-
-//>
 import { ModalSubcategoryComponent } from './modals/modal-subcategory/modal-subcategory.component';
 
 import { CreateQuestionComponent } from './modals/create-question/create-question.component';
@@ -81,8 +79,8 @@ export class TeacherComponent implements OnInit {
 
    ngOnInit() {
       this.id_user = this._sessionSrv.userSubject.value.id_user;
-      this.getLastCourses();
-      this.getLastCategories();
+      this.getLastCourses(this.id_user);
+      this.getLastCategories(this.id_user);
       this.getLastSubcategories();
       this.getLastQuestions();
 
@@ -236,9 +234,6 @@ export class TeacherComponent implements OnInit {
       });
    }
 
-   
-
-   
 
    updateSubcategory(subcategory) {
       console.log("SUBCATEGORY: ", subcategory);
@@ -263,8 +258,8 @@ export class TeacherComponent implements OnInit {
          .catch(reason => reason);
    }
 
-   getLastCourses() {
-      this._courseSrv.getLatestUpdatedCourses({ id_user: this.id_user, page_size: 3 })
+   getLastCourses(id_user) {
+      this._courseSrv.getLatestUpdatedCourses({ id_user, page_size: 3 })
          .subscribe(
             (result: any) => {
                console.log("last courses: ", result);
@@ -412,8 +407,8 @@ export class TeacherComponent implements OnInit {
          );
    }
 
-   getLastCategories() {
-      this._categorySrv.getLastCategories({ id_user: this.id_user, page_size: 5 })
+   getLastCategories(id_user) {
+      this._categorySrv.getLastCategories({ id_user, page_size: 5 })
          .subscribe(
             (result: any) => {
                this.categories = result;
@@ -466,8 +461,8 @@ export class TeacherComponent implements OnInit {
    deleteCourse(id_course) {
       this._courseSrv.deleteCourse(id_course)
          .subscribe(
-            result => {
-               this.getLastCourses();
+            () => {
+               this.getLastCourses(this.id_user);
                this.successSwal2.show();
             },
             error => {
@@ -479,8 +474,8 @@ export class TeacherComponent implements OnInit {
    deleteCategory(id_category) {
       this._categorySrv.deleteCategory(id_category)
          .subscribe(
-            result => {
-               this.getLastCategories();
+            () => {
+               this.getLastCategories(this.id_user);
                this.successSwal3.show();
             },
             error => {
@@ -517,7 +512,7 @@ export class TeacherComponent implements OnInit {
       modalRef.componentInstance.course = course;
       modalRef.componentInstance.action = 'Actualizar';
       modalRef.result.then((result) => {
-         if (result) this.getLastCourses()
+         if (result) this.getLastCourses(this.id_user)
       });
    }
 

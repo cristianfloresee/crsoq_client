@@ -40,7 +40,7 @@
 
          <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : activityForm.controls.name.invalid && activityForm.controls.name.touched }">
             <label class="form-control-label">Nombre de la Actividad:</label>
-            <input type="text" class="form-control m-input" formControlName="name" maxLength="15" autocomplete="nope">
+            <input type="text" class="form-control m-input" formControlName="name" maxLength="35" autocomplete="nope">
             <!--===================== ERRORES DE NOMBRE =====================-->
             <div class="form-control-feedback" *ngIf="activityForm.controls['name'].hasError('required') && (activityForm.controls['name'].dirty || activityForm.controls['name'].touched)">
                Este campo es requerido.

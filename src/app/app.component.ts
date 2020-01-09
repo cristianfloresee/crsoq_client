@@ -64,7 +64,10 @@ export class AppComponent implements OnInit {
       private _activitySrv: ActivityService,
       private _classQuestionSrv: LessonQuestionService,
       private toastr: ToastrService
-   ) {
+   ) { }
+
+
+   ngOnInit() {
       this.subscriptions$ = new Subscription();
 
       // @JorgeCano
@@ -73,10 +76,13 @@ export class AppComponent implements OnInit {
 
       // Obtiene el nombre de la página actual
       this.router.events
-         .pipe(filter(event => event instanceof NavigationEnd))
+         .pipe(filter(event => {
+            console.log("event: ", event);
+            return event instanceof NavigationEnd
+         }))
          .subscribe((event) => {
             // Obtiene la url después de todas la reedirecciones
-            console.log(' + router.events() (on app.component)');
+            console.log(' + router.events() (on app.component): ', event);
             let url = event['urlAfterRedirects']
             //let url = event['urlAfterRedirects'];
             this._roleSrv.checkUrlRole(url);
@@ -84,12 +90,6 @@ export class AppComponent implements OnInit {
             console.log("nombre de la página: ", this._pageSrv.getCurrentPageConfig());
             //this.layoutConfigService.setModel({ page: objectPath.get(this.pageConfigService.getCurrentPageConfig(), 'config') }, true);
          });
-
-   }
-
-
-
-   ngOnInit() {
 
       // this._sessionSrv.updateSession()
       //    .subscribe(
@@ -115,59 +115,59 @@ export class AppComponent implements OnInit {
 
       // Detecta los cambios de la variable global 'role' (después usar redux en vez de servicios)
       this._roleSrv.role$
-      .subscribe((role) => {
+         .subscribe((role) => {
 
-         this.current_role = role; // { role, index, name, url }
-         console.log(" + role$ (on app.component):", role);
+            this.current_role = role; // { role, index, name, url }
+            console.log(" + role$ (on app.component):", role);
 
 
-         if (role && role.role == 3) {
+            if (role && role.role == 3) {
 
-            if (!this.classStarted$) {
-               this.classStarted$ = this._classSrv.listenClassStartedToStudents()
-                  .subscribe((data: any) => {
+               if (!this.classStarted$) {
+                  this.classStarted$ = this._classSrv.listenClassStartedToStudents()
+                     .subscribe((data: any) => {
 
-                     console.log("statusClassUpdated: ", data);
+                        console.log("statusClassUpdated: ", data);
 
-                     // this.getActivities();
-                     // 1: no iniciada, 2: iniciada, 3: terminada.
-                     // if(data.)
-                     this.toastr.info(`Ha sido iniciada una clase para la asignatura ${data.subject}.`, 'Clase Iniciada!');
-                  })
+                        // this.getActivities();
+                        // 1: no iniciada, 2: iniciada, 3: terminada.
+                        // if(data.)
+                        this.toastr.info(`Ha sido iniciada una clase para la asignatura ${data.subject}.`, 'Clase Iniciada!');
+                     })
+               }
+
+               if (!this.activityStarted$) {
+                  this.activityStarted$ = this._activitySrv.listenActivityStartedToStudents()
+                     .subscribe((data: any) => {
+
+                        console.log("activityStarted: ", data);
+
+                        // this.getActivities();
+                        // 1: no iniciada, 2: iniciada, 3: terminada.
+                        // if(data.)
+                        this.toastr.info(`Ha sido iniciada una actividad para la asignatura ${data.subject}.`, 'Actividad Iniciada!');
+                     })
+               }
+
+               if (!this.classQuestionStarted$) {
+                  this.classQuestionStarted$ = this._classQuestionSrv.listenClassQuestionStartedToStudents()
+                     .subscribe((data: any) => {
+
+                        console.log("classQuestionStarted: ", data);
+
+                        // this.getActivities();
+                        // 1: no iniciada, 2: iniciada, 3: terminada.
+                        // if(data.)
+                        this.toastr.info(`Ha sido iniciada una pregunta para la asignatura ${data.subject}.`, 'Pregunta Iniciada!');
+                     })
+               }
+            }
+            else {
+               // Buscar una forma de desconecte el listener cuando se cierra sesión o se cambia de role.
+               //if(this.classStarted$) this.classStarted$.unsubscribe();
             }
 
-            if (!this.activityStarted$) {
-               this.activityStarted$ = this._activitySrv.listenActivityStartedToStudents()
-                  .subscribe((data: any) => {
-
-                     console.log("activityStarted: ", data);
-
-                     // this.getActivities();
-                     // 1: no iniciada, 2: iniciada, 3: terminada.
-                     // if(data.)
-                     this.toastr.info(`Ha sido iniciada una actividad para la asignatura ${data.subject}.`, 'Actividad Iniciada!');
-                  })
-            }
-
-            if (!this.classQuestionStarted$) {
-               this.classQuestionStarted$ = this._classQuestionSrv.listenClassQuestionStartedToStudents()
-                  .subscribe((data: any) => {
-
-                     console.log("classQuestionStarted: ", data);
-
-                     // this.getActivities();
-                     // 1: no iniciada, 2: iniciada, 3: terminada.
-                     // if(data.)
-                     this.toastr.info(`Ha sido iniciada una pregunta para la asignatura ${data.subject}.`, 'Pregunta Iniciada!');
-                  })
-            }
-         }
-         else {
-            // Buscar una forma de desconecte el listener cuando se cierra sesión o se cambia de role.
-            //if(this.classStarted$) this.classStarted$.unsubscribe();
-         }
-
-      });
+         });
 
    }
 

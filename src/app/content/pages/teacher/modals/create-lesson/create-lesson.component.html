@@ -24,7 +24,7 @@
 
             <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : lessonForm.controls.description.invalid && lessonForm.controls.description.touched }">
                <label class="form-control-label">Descripción:</label>
-               <input type="text" class="form-control m-input" formControlName="description" maxLength="15" autocomplete="nope">
+               <input type="text" class="form-control m-input" formControlName="description" maxLength="500" autocomplete="nope">
                <!--===================== ERRORES DE NOMBRE =====================-->
                <div class="form-control-feedback" *ngIf="lessonForm.controls['description'].hasError('required') && (lessonForm.controls['description'].dirty || lessonForm.controls['description'].touched)">
                   Este campo es requerido.

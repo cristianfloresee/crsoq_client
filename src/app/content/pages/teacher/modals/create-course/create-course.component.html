@@ -58,7 +58,7 @@
 
          <div [ngClass]="{'form-group m-form__group' : true, 'has-danger' : courseForm.controls.name.invalid && courseForm.controls.name.touched }">
             <label class="form-control-label">Nombre del Curso:</label>
-            <input type="text" class="form-control m-input" formControlName="name" maxLength="30">
+            <input type="text" class="form-control m-input" formControlName="name" maxLength="50">
             <!--===================== ERRORES DE NOMBRE =====================-->
             <div class="form-control-feedback" *ngIf="courseForm.controls['name'].hasError('required') && (courseForm.controls['name'].dirty || courseForm.controls['name'].touched)">
                Este campo es requerido.

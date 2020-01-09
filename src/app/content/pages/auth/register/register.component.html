@@ -65,7 +65,7 @@
 
       <div class="form-group has-feedback">
          <input class="form-control" type="text" placeholder="Apellido Paterno" formControlName="lastname" minlegth="4"
-            maxlength="20" autocomplete="nope" required />
+            maxlength="35" required />
          <span class="text-danger" *ngIf="registerForm.controls['lastname'].hasError('required') && (registerForm.controls['lastname'].dirty || registerForm.controls['lastname'].touched)">
             Este campo es requerido
          </span>
@@ -73,7 +73,7 @@
 
       <div class="form-group has-feedback">
          <input class="form-control" type="text" placeholder="Apellido Materno" formControlName="middlename" minlegth="4"
-            maxlength="20" autocomplete="nope" required />
+            maxlength="35" required />
          <span class="text-danger" *ngIf="registerForm.controls['middlename'].hasError('required') && (registerForm.controls['middlename'].dirty || registerForm.controls['middlename'].touched)">
             Este campo es requerido
          </span>
@@ -110,7 +110,7 @@
       </div>
 
       <div class="form-group has-feedback">
-         <input class="form-control" type="text" placeholder="Nombre de Usuario" formControlName="username" maxlength="20" required />
+         <input class="form-control" type="text" placeholder="Nombre de Usuario" formControlName="username" maxlength="35" required />
          <span class="text-danger" *ngIf="registerForm.controls['username'].hasError('required') && (registerForm.controls['username'].dirty || registerForm.controls['username'].touched)">
             Este campo es requerido
          </span>

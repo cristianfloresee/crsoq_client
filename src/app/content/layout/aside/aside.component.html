@@ -6,9 +6,8 @@
    <ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
 
       <!-- [ngClass]="{ 'm-menu__item--active': isItemActive(current_role.url)}" -->
-      <li class="m-menu__item" aria-haspopup="true" [ngClass]="{ 'm-menu__item--active': isItemActive(current_role.url)}">
+      <li class="m-menu__item" aria-haspopup="true" [ngClass]="{ 'm-menu__item--active': isItemActive()}">
          <a [routerLinkActive]="['active']" [routerLink]="['/',current_role.url]" class="m-menu__link">
-            <i class="m-menu__link-icon flaticon-line-graph"></i>
             <span class="m-menu__link-title">
                <span class="m-menu__link-wrap">
                   <span class="m-menu__link-text">Inicio</span>
@@ -27,7 +26,7 @@
          </li>
          <!-- FIN SEPARADOR-->
          <li *ngFor="let item of my_menu" class="m-menu__item" aria-haspopup="true" [ngClass]="{ 'm-menu__item--active': isItemActive(item)}">
-            <a [routerLinkActive]="['active']" [routerLink]="[item.url]" class="m-menu__link m-menu__toggle">
+            <a [routerLinkActive]="['active']" [routerLink]="[item.parent, item.url]" class="m-menu__link m-menu__toggle">
                <!---->
                <span class="m-menu__link-text">{{item.title}}</span>
             </a>

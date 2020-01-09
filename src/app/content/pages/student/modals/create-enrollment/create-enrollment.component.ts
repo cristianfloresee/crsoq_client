@@ -1,8 +1,11 @@
 // Angular
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+// ng-bootstrap
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+// ngx-toastr
 import { ToastrService } from 'ngx-toastr';
+// Services
 import { CourseService } from 'src/app/core/services/API/course.service';
 
 // ngx-sweetalert2
@@ -50,10 +53,8 @@ export class CreateEnrollmentComponent implements OnInit {
    }
 
    searchCourse(code) {
-      //console.log("course: ", course);
-      // Busca cursos según su código
       this._courseSrv.getCoursesByCode(this.id_user, code)
-         .subscribe((data: any) => {
+         .subscribe((data: Array<any>) => {
             console.log("datax: ", data);
             this.search_results = data;
          })

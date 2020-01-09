@@ -4,7 +4,7 @@ import { NavigationEnd, Router } from '@angular/router';
 // rxjs
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-// Servicios
+// Services
 import { RoleService } from '../../../core/services/role.service';
 import { SidemenuService } from 'src/app/core/services/sidemenu.service';
 import { SessionService } from 'src/app/core/services/API/session.service';
@@ -72,6 +72,7 @@ export class AsideComponent implements OnInit {
       this.router.events
          .pipe(filter(event => event instanceof NavigationEnd))
          .subscribe(() => this.currentRouteUrl = this.router.url.split(/[?#]/)[0]); //QUITA LOS PARÁMETROS DE LA URL (EJEMPLO: ?id=2)
+
    }
 
    // Identifica si el item recibido del menú es la página activa
@@ -79,9 +80,11 @@ export class AsideComponent implements OnInit {
 
       // En inicio
       // Recibe vacío siempre, debe retonar true o false y pera en el else if
-      // Si la url no es '/' y inicia con '/admin/(user)'
+      // Si la url no es '/' e inicia con '/admin/(user)'
+      //console.log("item: ", item);
       if (!item && (this.currentRouteUrl === `/${this.current_role.url}`)) return true;
-      else if (item && item.url !== '/' && this.currentRouteUrl.startsWith(`${item.parent}(${item.url})`)) return true;
+      else if (item && item.url !== '/' && this.currentRouteUrl.startsWith(`${item.parent}${item.url}`)) return true;
+      //else if (item && item.url !== '/' && this.currentRouteUrl.startsWith(`${item.parent}(${item.url})`)) return true;
       return false;
    }
 
