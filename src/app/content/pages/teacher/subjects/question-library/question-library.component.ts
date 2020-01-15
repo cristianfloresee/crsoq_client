@@ -162,12 +162,15 @@ export class QuestionLibraryComponent implements OnInit, OnDestroy {
    }
 
    updateQuestion(question) {
+      console.log("updateQuestion...");
       const modalRef = this.ngModal.open(UpdateQuestionComponent, { size: "lg" });
       modalRef.componentInstance.id_subject = this.id_subject;
       modalRef.componentInstance.question = question; //##### DIFERENTE
       modalRef.componentInstance.action = 'Actualizar'; //##### DIFERENTE
       modalRef.result
-         .then((result) => { if (result) this.getQuestions() })
+         .then((result) => { 
+            console.log("getting new questions..");
+            if (result) this.getQuestions(); })
          .catch(reason => reason);
    }
 

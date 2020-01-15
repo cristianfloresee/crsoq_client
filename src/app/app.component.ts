@@ -77,17 +77,17 @@ export class AppComponent implements OnInit {
       // Obtiene el nombre de la página actual
       this.router.events
          .pipe(filter(event => {
-            console.log("event: ", event);
+            
             return event instanceof NavigationEnd
          }))
          .subscribe((event) => {
             // Obtiene la url después de todas la reedirecciones
-            console.log(' + router.events() (on app.component): ', event);
+            //console.log(' + router.events() (on app.component): ', event);
             let url = event['urlAfterRedirects']
             //let url = event['urlAfterRedirects'];
             this._roleSrv.checkUrlRole(url);
 
-            console.log("nombre de la página: ", this._pageSrv.getCurrentPageConfig());
+            //console.log("nombre de la página: ", this._pageSrv.getCurrentPageConfig());
             //this.layoutConfigService.setModel({ page: objectPath.get(this.pageConfigService.getCurrentPageConfig(), 'config') }, true);
          });
 

@@ -53,6 +53,10 @@ export class QuestionService {
       return this.http.get(API.QUESTIONS, { params });
    }
 
+   getFinishedQuestions(params){
+      return this.http.get(`${API.QUESTIONS}/finished`, { params });
+   }
+
    // Elimina una pregunta (eliminaría todas las participaciones de esa actividad)
    deleteQuestion(id_question) {
       return this.http.delete(`${API.QUESTIONS}/${id_question}`);

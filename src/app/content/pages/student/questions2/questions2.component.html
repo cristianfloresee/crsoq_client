@@ -1,10 +1,65 @@
-<!-- LEYENDA -->
-<div class="m-alert m-alert--icon m-alert--air m-alert--square alert alert-dismissible m--margin-bottom-30" role="alert">
-      <div class="m-alert__icon">
-         <i class="flaticon-exclamation m--font-brand"></i>
-      </div>
-      <div class="m-alert__text">
-         En esta sección se encuentran las preguntas realizadas durante el curso.
-      </div>
+<div class="m-alert m-alert--icon m-alert--air m-alert--square alert alert-dismissible m--margin-bottom-30"
+   role="alert">
+   <div class="m-alert__icon">
+      <i class="flaticon-exclamation m--font-brand"></i>
    </div>
-   <!-- FIN LEYENDA -->
+   <div class="m-alert__text">
+      En esta sección se encuentran las preguntas realizadas durante el curso.
+   </div>
+</div>
+
+
+<div class="m-portlet m-portlet--mobile">
+   <!-- CARD HEADER -->
+   <div class="m-portlet__head">
+      <!-- TITULO HEADER -->
+      <div class="m-portlet__head-caption">
+         <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+               Preguntas Realizadas
+            </h3>
+         </div>
+      </div>
+      <!-- FIN TITULO -->
+      <!-- ACCIONES HEADER -->
+
+      <!-- FIN ACCIONES HEADER -->
+   </div>
+   <!-- FIN CARD HEADER -->
+
+   <!-- CARD BODY -->
+   <div class="m-portlet__body">
+      <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
+
+         <table class="cw-table">
+            <thead>
+               <tr>
+                  <th class="center">#</th>
+                  <th>Pregunta</th>
+                  <th>Categoría</th>
+                  <th>Subcategoría</th>
+                  <th>Clase</th>
+                  <th>Dificultad</th>
+                  <!-- <th class="center">Acciones</th> -->
+               </tr>
+            </thead>
+            <tbody>
+               <tr *ngFor="let question of data; let i=index">
+                  <td>{{i+1}}</td>
+                  <td class="nowrap">{{question.question}}</td>
+                  <td>{{question.category}}</td>
+                  <td>{{question.subcategory}}</td>
+                  <td>{{question.class}}</td>
+                  <td>
+                     <span style="font-size:0.8rem; margin-top: 3px; color: #ffffff" class="center m-badge m-badge--wide"
+                        [ngClass]="(question.difficulty == 1) ? 'm-badge--success' : (question.difficulty == 2 ? 'm-badge--warning' : 'm-badge--danger')">
+                        {{question.difficulty == 1 ? 'Fácil' : question.difficulty == 2 ? 'Medio' : 'Díficil'}}
+                     </span>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+
+   </div>
+</div>

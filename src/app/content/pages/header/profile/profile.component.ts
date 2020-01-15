@@ -1,6 +1,8 @@
 // Angular
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+// ng-toastr
+import { ToastrService } from 'ngx-toastr';
 // Models
 import { User } from '../../../../core/models/user.model';
 // Services
@@ -24,17 +26,21 @@ export class ProfileComponent implements OnInit, OnDestroy {
       public _sessionSrv: SessionService,
       public _userSrv: UserService,
       public _loaderSrv: LoaderService,
-      public fb: FormBuilder
-   ) {
-      this.subscriptions$ = new Subscription();
-   }
+      public fb: FormBuilder,
+      private toastr: ToastrService
+   ) { }
 
    ngOnInit() {
+      this.subscriptions$ = new Subscription();
       this.user = this._sessionSrv.userSubject.value;
       this.subscriptions$.add(this._sessionSrv.user$
          .subscribe(value => this.user = value)
       );
 
+      this.initForm();
+   }
+
+   initForm(){
       this.profileForm = this.fb.group({
          'name': [this.user.name, [Validators.required]],
          'last_name': [this.user.last_name, [Validators.required, Validators.minLength(4)]],
@@ -53,12 +59,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
       return this._userSrv.updateUser(this.profileForm.value)
          .subscribe(
             (response) => {
+               this.toastr.success('El usuario ha sido actualizado correctamente.', 'Usuario actualizado!');
                console.log("response(profile.component): ", response);
                this._loaderSrv.hide();
             },
             (error) => {
                console.log("error: ", error);
                this._loaderSrv.hide();
+               this.toastr.error('El usuario no ha sido actualizado.', 'Ha ocurrido un error!');
             })
 
    }

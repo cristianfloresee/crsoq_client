@@ -76,7 +76,7 @@ export class AsideComponent implements OnInit {
    }
 
    // Identifica si el item recibido del menú es la página activa
-   isItemActive(item) {
+   isItemActive(item?) {
 
       // En inicio
       // Recibe vacío siempre, debe retonar true o false y pera en el else if

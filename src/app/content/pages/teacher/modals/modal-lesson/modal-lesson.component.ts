@@ -45,8 +45,7 @@ export class ModalLessonComponent implements OnInit, OnDestroy {
    ) {}
 
    ngOnInit() {
-      console.log("lesson: ", this.lesson);
-      console.log("data: ", this.options_module);
+     
       this.initFormData();
       if (this.lesson) {
          this.loadFormData(this.lesson);

@@ -2,13 +2,19 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-// Servicios
+// ngx-toastr
 import { ToastrService } from 'ngx-toastr';
+// ng-bootstrap
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+// Services
 import { ActivityService } from 'src/app/core/services/API/activity.service';
 // RxJS
 import { Subscription } from 'rxjs';
-// Constantes
+// Constants
 import { PAGE_SIZES } from 'src/app/config/constants';
+// Modals
+import { WinnersComponent } from '../../teacher/modals/winners/winners.component';
+
 
 @Component({
    selector: 'cw-activities2',
@@ -42,13 +48,12 @@ export class Activities2Component implements OnInit, OnDestroy {
       private route: ActivatedRoute,
       private fb: FormBuilder,
       private toastr: ToastrService,
-      private _activitySrv: ActivityService
-   ) {
-      this.subscriptions$ = new Subscription();
-   }
+      private _activitySrv: ActivityService,
+      private ngModal: NgbModal
+   ) { }
 
    ngOnInit() {
-
+      this.subscriptions$ = new Subscription();
       this.subscriptions$.add(this.route.paramMap
          .subscribe(params => {
             // Si había un socket room abierto lo cierro
@@ -157,9 +162,7 @@ export class Activities2Component implements OnInit, OnDestroy {
          );
    }
 
-   // ----------------------------------------
    // Filtra los registros de la tabla
-   // ----------------------------------------
    filterItems(params) {
       // Establece los params de filtro para no repetir la misma búsqueda
       this.f_mode = params.mode;
@@ -171,6 +174,16 @@ export class Activities2Component implements OnInit, OnDestroy {
 
    enterToActivity(_activity) {
       console.log("enterToActivity: ", _activity);
+   }
+
+   showWinners(activity){
+      
+      const modalRef = this.ngModal.open(WinnersComponent, {
+         windowClass: 'xlModal'
+      });
+
+      modalRef.componentInstance.id_course = this.id_course;
+      modalRef.componentInstance.activity = activity;
    }
 
 }

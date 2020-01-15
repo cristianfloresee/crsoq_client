@@ -20,8 +20,7 @@
                <li><b>Módulo: </b>{{class.module}}
                </li>
                <li><b>Clase: </b>{{class.description}}
-               <li><b>Estado (curren_question.status): </b>
-                  {{current_question?.status}} -
+               <li><b>Estado: </b>
                   {{
                   (!current_question) ? 'Esperando Pregunta.' :
                   (current_question && current_question.status == 2) ? 'Pregunta Iniciada. Esperando Participantes.' :
@@ -41,11 +40,11 @@
             <!-- PREGUNTA EN JUEGO Y BOTONES -->
             <div class="col-lg-8">
                <div [ngSwitch]="current_participation_status">
-                  <p *ngSwitchCase="1">🙄 en espera</p>
-                  <p *ngSwitchCase="2">🤚 no seleccionado</p>
-                  <p *ngSwitchCase="3">🤠 seleccionado</p>
-                  <p *ngSwitchCase="4">😭 perdedor</p>
-                  <p *ngSwitchCase="5">🥳 ganador</p>
+                  <h4 *ngSwitchCase="1">🙄 en espera</h4>
+                  <h4 *ngSwitchCase="2">🤚 no seleccionado</h4>
+                  <h4 *ngSwitchCase="3">🤠 seleccionado</h4>
+                  <h4 *ngSwitchCase="4">😭 perdedor</h4>
+                  <h4 *ngSwitchCase="5">🥳 ganador</h4>
                </div>
 
 

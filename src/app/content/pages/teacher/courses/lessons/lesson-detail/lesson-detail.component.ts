@@ -350,12 +350,10 @@ export class LessonDetailComponent implements OnInit, OnDestroy {
       const modalRef = this.ngModal.open(WinnersComponent, {
          windowClass: 'xlModal'
       });
-      // Pasar los params en un solo objeto?
       modalRef.componentInstance.id_course = this.id_course;
       modalRef.componentInstance.id_class = this.id_class;
       modalRef.componentInstance.question = question;
 
-      // Al cerrar el modal
       modalRef.result.then(
          (changes) => {
             if (changes) this.getClassQuestions(); // Si se realiza un cambio se recargan los datos

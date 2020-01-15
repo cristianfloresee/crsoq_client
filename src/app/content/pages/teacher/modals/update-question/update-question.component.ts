@@ -157,6 +157,7 @@ export class UpdateQuestionComponent implements OnInit, OnDestroy {
       this._questionSrv.updateQuestion(this.question.id_question, question.subcategory, question.description, question.difficulty, question.image, question.shared)
          .subscribe(
             result => {
+               console.log("result: ", result);
                this.activeModal.close(true);
                this.toastr.success('La pregunta ha sido creada correctamente.', 'Pregunta creada!');
             },

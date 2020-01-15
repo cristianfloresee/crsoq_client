@@ -275,7 +275,7 @@ export class TeacherComponent implements OnInit {
                   course.options = {
                      title: {
                         text: 'Preguntas:',
-                        right: '25',
+                        right: '0', //25
                         padding: [5, 0],
                         top: '40',
                         textStyle: {
@@ -293,7 +293,7 @@ export class TeacherComponent implements OnInit {
                         orient: 'vertical',
                         x: 'right',
                         y: 'middle',
-                        align: 'left',
+                        align: 'right',
                         itemWidth: 32,
                         data: ['Faltantes', 'Realizadas'],
                         itemStyle: {
@@ -303,7 +303,7 @@ export class TeacherComponent implements OnInit {
                            color: '#666674',
                            fontWeight: 600,
                            fontFamily: 'sans-serif',
-                           fontSize: 14,
+                           fontSize: 13, // 14 
                            padding: [0, 0, 0, 5]
                         }
                      },
@@ -312,8 +312,8 @@ export class TeacherComponent implements OnInit {
                            name: 'Preguntas',
                            type: 'pie',
                            selectedMode: 'single',
-                           radius: ['60%', '85%'],
-                           center: ['35%', '49%'],
+                           radius: ['60%', '75%'],
+                           center: ['33%', '49%'],
                            itemStyle: {
                               normal: {
                                  shadowBlur: 5,

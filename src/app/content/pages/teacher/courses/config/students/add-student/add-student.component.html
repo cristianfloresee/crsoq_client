@@ -19,7 +19,7 @@
 
          <div class="m-portlet__body">
             <div class="form-group m-form__group row">
-               <div class="col-lg-5">
+               <div class="col-lg-6">
 
                   <div>
                      <label class="form-control-label">Código de Curso:</label>
@@ -90,7 +90,7 @@
                   </div>
                </div>
 
-               <div class="col-xl-7">
+               <div class="col-xl-6">
 
 
 
@@ -104,7 +104,7 @@
                            <tr>
                               <th class="center">#</th>
                               <th>Estudiante</th>
-                              <th>Inscrito</th>
+                              <!-- <th>Inscrito</th> -->
                               <!-- <th class="center">Acciones</th> -->
                            </tr>
                         </thead>
@@ -112,7 +112,7 @@
                            <tr *ngFor="let student of students; let i=index">
                               <td>{{i+1}}</td>
                               <!-- <td class="nowrap">{{student.username}}</td> -->
-                              <td class="nowrap">
+                              <td colspan="2" class="nowrap">
                                     <div class="m-widget4__item">
 
                                           <div class="m-widget4__info">
@@ -126,7 +126,7 @@
 
                                        </div>
                               </td>
-                              <td>{{student.enrollment_date}}</td>
+                              <!-- <td>{{student.enrollment_date}}</td> -->
                               <!-- <td>{{student.email}}</td>
                                  <td>{{student.active}}</td>
                                  <td class="nowrap">{{student.enrollment_date }}</td>

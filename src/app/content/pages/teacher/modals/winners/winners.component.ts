@@ -1,8 +1,8 @@
-// + Vista que se utilizará para las 'preguntas' y 'actividades'
 
+//> Corregir el gráfico.
 // Angular
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 // ng-bootstrap
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 // ngx-toaster
@@ -13,7 +13,6 @@ import { TOAST_SUCCESS_UPDATE_WINNERS, TOAST_ERROR_UPDATE_WINNERS } from 'src/ap
 import { ActivityParticipationService } from 'src/app/core/services/API/activity_participation.service';
 import { UserQuestionClassService } from 'src/app/core/services/API/user_question_class.service';
 import { ActivityService } from 'src/app/core/services/API/activity.service';
-//import { EnrollmentService } from 'src/app/core/services/API/enrollments.service';
 
 import { EChartOption } from 'echarts';
 
@@ -76,8 +75,7 @@ export class WinnersComponent implements OnInit {
       public activeModal: NgbActiveModal,
       private _activitySrv: ActivityService,
       private _activityParticipationsSrv: ActivityParticipationService,
-      private _userQuestionClassSrv: UserQuestionClassService,
-      //private _enrollmentSrv: EnrollmentService
+      private _userQuestionClassSrv: UserQuestionClassService
    ) { }
 
    ngOnInit() {
@@ -114,10 +112,10 @@ export class WinnersComponent implements OnInit {
          this._activitySrv.getStudentsByActivityID(this.activity.id_activity)
             .subscribe(
                (result: any) => {
-                  console.log("students: ", result);
                   this.data_students = this.formatStudentArray(result);
                   console.log("participacion formateada: ", this.data_students);
                   this.getOverview(this.data_students);
+                  this.initializeChartOptions();
                },
                (error) => {
                   console.log("error:", error);
@@ -267,9 +265,8 @@ export class WinnersComponent implements OnInit {
 
    }
 
+   
    initializeChartOptions() {
-
-      console.log("initializeChartOptions...");
 
       let legend_data = [];
       let series_data = [];
@@ -361,10 +358,11 @@ export class WinnersComponent implements OnInit {
          ]
       }];
 
+      let description = (this.question ? this.question.description : this.activity.name);
       // Echart Options
       this.option = {
          title: {
-            text: this.question.description,
+            text: description,
             subtext: 'Gráfico de Participación',
             textStyle: {
                fontSize: 14,
@@ -378,7 +376,7 @@ export class WinnersComponent implements OnInit {
             type: 'sunburst',
             highlightPolicy: 'ancestor',
             data: data,
-            radius: ['20%', '100%'],
+            radius: ['20%', '80%'],
             label: {
                rotate: 'radial', // number (90 a -90), 'radial', 'tange',
                fontWeight: 600,
@@ -465,7 +463,6 @@ export class WinnersComponent implements OnInit {
          series_data.push({
             name: item,
             value: this.overview.values[item],
-
          });
          selected[item] = this.overview.values[item] > 0;
       }

@@ -107,7 +107,7 @@
                   <th>Estado</th>
                   <th>Fecha de Creación</th>
                   <th>Fecha de Actualización</th>
-                  <th class="center">Acciones</th>
+                  <!-- <th class="center">Acciones</th> -->
                </tr>
             </thead>
 
@@ -127,7 +127,7 @@
                         </ng-template>
                      </div>
 
-                     <a (click)="updateWinners(activity)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
+                     <a (click)="showWinners(activity)" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill">
                         <i class="la la-info-circle"></i>
                      </a>
 
@@ -144,7 +144,7 @@
                   </td>
                   <td>{{activity.created_at | timeAgo}}</td>
                   <td>{{activity.updated_at | timeAgo}}</td>
-                  <td>
+                  <!--<td>
                      <span style="overflow:visible;position:relative;width:110px;display:block;text-align:center">
 
                            <button (click)="enterToActivity(activity)" [ngClass]="{'btn-success': activity.status == 2}" class="btn m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill"
@@ -152,7 +152,7 @@
                                  <i class="la la-play"></i>
                            </button>
                      </span>
-                  </td>
+                  </td>-->
                </tr>
             </tbody>
          </table>

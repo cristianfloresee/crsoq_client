@@ -78,7 +78,6 @@ export class LessonsComponent implements OnInit, OnDestroy {
             this.loadFormOptions();
             this.getClasses();
          });
-
    }
 
    initFormData() {
